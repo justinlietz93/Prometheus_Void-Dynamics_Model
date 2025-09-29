@@ -1,8 +1,8 @@
 # CORRECTIONS
 
 >
-> Author: Justin K. Lietz 
-> ORCID: 0009-0008-9028-1366 
+> Author: Justin K. Lietz
+> ORCID: 0009-0008-9028-1366
 > Date: August 9, 2025
 >
 > This research is protected under a dual-license to foster open academic

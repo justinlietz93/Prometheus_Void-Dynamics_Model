@@ -12,7 +12,7 @@
 > See LICENSE file for full terms.
 ---
 
-### 1. Objective
+## 1. Objective
 
 As outlined in our Effective Field Theory (EFT) roadmap, we must rigorously derive the coefficients of the general Lagrangian from the underlying discrete VDM simulation. Earlier work separated temporal and spatial (interaction) contributions.
 
@@ -93,6 +93,7 @@ Thus the spatial gradient term appears with coefficient $J a^2$.
 #### 3.2 Variational Derivation from a Discrete Action
 
 Define:
+
 - Lattice spacing $a$, dimension $d$.
 - Time step $\Delta t$, times $t_n = n \Delta t$.
 - Field $W_i^n = W(\mathbf{x}_i, t_n)$.
@@ -129,6 +130,7 @@ $$
 $$
 
 Edge-counting conventions:
+
 - Per undirected edge counted once: coefficient $\kappa$, wave speed $c^2 = \kappa a^2$.
 - Per site with both $\pm\mu$ neighbors in a sum $\tfrac{1}{2}\sum_{j\in N(i)} J (W_j-W_i)^2$: $\kappa = 2J$, so $c^2 = 2 J a^2$.
 

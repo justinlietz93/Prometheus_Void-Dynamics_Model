@@ -1,5 +1,3 @@
-
-
 # A More Rigorous Approach: The VDM as an Effective Field Theory
 
 >
