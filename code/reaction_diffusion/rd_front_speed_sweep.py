@@ -13,7 +13,7 @@ under: write_ups/code/outputs/logs/rd_front_speed_sweep_YYYYMMDDThhmmssZ.csv
 
 Usage (PowerShell, always in venv):
   & .\venv\Scripts\Activate.ps1
-  python Prometheus_FUVDM/write_ups/code/physics/rd_front_speed_sweep.py
+  python Prometheus_VDM/write_ups/code/physics/rd_front_speed_sweep.py
 
 Optional flags:
   --Ds 0.5 1.0 2.0

@@ -1,4 +1,4 @@
-# FUVDM Overview
+# VDM Overview
 
 > Author: Justin K. Lietz  
 > ORCID: 0009-0008-9028-1366
@@ -78,7 +78,7 @@ $$
 References:  
 [kinetic_term_derivation.md](write_ups/effective_field_theory/kinetic_term_derivation.md), [effective_field_theory_approach.md](write_ups/effective_field_theory/effective_field_theory_approach.md)
 
-## FUVDM Dimensionless Constants (sanity set)
+## VDM Dimensionless Constants (sanity set)
 
 | Subsystem | Symbol | Definition | Meaning | Typical from runs |
 | --- | --- | --- | --- | --- |
@@ -87,12 +87,12 @@ References:
 | LBM | $\mathrm{Ma}$ | $\dfrac{U}{\sqrt{1/3}}$ | compressibility | 0.035–0.017 (low) |
 | RD | $\Pi_{Dr}$ | $\dfrac{D}{r L^{2}}$ | diffusion at scale $L$ | choose $L$ → report |
 | RD | $c^{\ast}$ | $\dfrac{c}{2\sqrt{D r}}$ | normalized KPP speed | ~0.95–1.0 |
-| FUVDM | $\Theta$ | fit scale in $\Theta\,\Delta m$ or $\Theta\,\|\nabla m\|$ | junction gating strength | $k \approx 1$, $b \approx 0$ |
-| FUVDM | $\Lambda$ | exploration/retention ratio | turnover vs. memory | as swept in heatmaps |
-| FUVDM | $\Gamma$ | retention fraction | memory persistence | ~0.3–0.75 (representative) |
-| FUVDM | $D_{a}$ | anisotropic diffusion index | transport anisotropy | {1, 3, 5, 7} |
-| FUVDM | $\kappa L$ | curvature × scale | path bending | linear vs. $\Theta\,\|\nabla m\|$ |
-| FUVDM | $g$ | void gain | stabilization strength | e.g., 0.5 |
+| VDM | $\Theta$ | fit scale in $\Theta\,\Delta m$ or $\Theta\,\|\nabla m\|$ | junction gating strength | $k \approx 1$, $b \approx 0$ |
+| VDM | $\Lambda$ | exploration/retention ratio | turnover vs. memory | as swept in heatmaps |
+| VDM | $\Gamma$ | retention fraction | memory persistence | ~0.3–0.75 (representative) |
+| VDM | $D_{a}$ | anisotropic diffusion index | transport anisotropy | {1, 3, 5, 7} |
+| VDM | $\kappa L$ | curvature × scale | path bending | linear vs. $\Theta\,\|\nabla m\|$ |
+| VDM | $g$ | void gain | stabilization strength | e.g., 0.5 |
 
 ## Core dimensionless groups (why they matter)
 

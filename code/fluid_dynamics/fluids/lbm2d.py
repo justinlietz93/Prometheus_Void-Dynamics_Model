@@ -180,7 +180,7 @@ class LBMConfig:
     forcing: tuple[float, float] = (0.0, 0.0)  # body force (fx, fy)
     periodic_x: bool = True
     periodic_y: bool = True
-    # FUVDM void dynamics coupling (bounded stabilizer)
+    # VDM void dynamics coupling (bounded stabilizer)
     void_enabled: bool = False
     void_domain: str = "standard_model"
     void_gain: float = 0.5
@@ -206,7 +206,7 @@ class LBM2D:
         # solid mask for bounce-back (False = fluid, True = solid)
         self.solid = np.zeros((self.ny, self.nx), dtype=bool)
 
-        # FUVDM void dynamics state and metrics
+        # VDM void dynamics state and metrics
         self.t = 0
         self.W = 0.5 * np.ones((self.ny, self.nx), dtype=np.float64)
         self.omega_eff = np.full((self.ny, self.nx), self.omega, dtype=np.float64)
@@ -382,7 +382,7 @@ class LBM2D:
         """Advance nsteps time steps."""
         for _ in range(nsteps):
             self.moments()
-            # FUVDM void-stabilized omega update
+            # VDM void-stabilized omega update
             if getattr(self.cfg, "void_enabled", False):
                 self._void_update()
             else:
