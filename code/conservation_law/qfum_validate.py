@@ -39,7 +39,7 @@ Dependencies
 - numpy, matplotlib, json, argparse, datetime
 
 Author: Justin K. Lietz
-Date: 2025-08-26
+Created: 2025-08-26
 """
 
 from __future__ import annotations

@@ -1,7 +1,7 @@
 # A Logarithmic First Integral for the Logistic On-Site Law in Void Dynamics
 
 Author: Justin K. Lietz  
-Date: 2025-08-26  
+Created: 2025-08-26  
 Keywords: logistic law; invariant; first integral; reaction–diffusion; dissipative systems; conservation
 
 Abstract

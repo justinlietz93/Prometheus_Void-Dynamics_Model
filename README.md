@@ -4,7 +4,8 @@
 > ORCID: [0009-0008-9028-1366](https://orcid.org/0009-0008-9028-1366)<br>
 > Contact: <justin@neuroca.ai>
 >
-> Date: August 9, 2025  
+> Created: August 9, 2025<br>
+> Updated: September 29, 2025
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles.
@@ -21,9 +22,15 @@ DOIs:
 
 ---
 
-***Current Status:*** Working on applying discovered RD concepts to neural plasticity in the Void Dynamics Intelligence Model (coming to public soon)
+## NOTE
 
-***Status Last Updated:*** Aug 25, 2025
+> **This organization is currently managed and operated by me (J. Lietz) alone as a solo developer / researcher. I may not respond by email right away. If you want to get my attention post in the discussion board briefly about what you'd like to talk about and let me know you sent me an email.**
+
+**Discussion Board:** https://github.com/orgs/Neuroca-Inc/discussions
+
+***Current Status:*** Setting up reproducible code for all the work I'm comfortable with sharing publicly. Code that directly runs my private Void Equations will call a private workflow and return the results so you can still see proof.
+
+***Status Last Updated:*** Sep 29, 2025
 
 This folder provides a public, paper-only view of the Void Dynamics program.
 It summarizes the theory and validation write-ups for review by physicists,
