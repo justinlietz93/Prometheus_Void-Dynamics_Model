@@ -41,7 +41,7 @@ This repository is available under two distinct licensing tracks:
 2. **Academic Citation Format**:
    ```
    @software{VDM_mathematical_frameworks_2025,
-     title={Mathematical Frameworks for Fully Unified Model Validation},
+     title={Mathematical Frameworks for Void Dynamics Model Validation},
      author={Lietz, Justin K.},
      year={2025},
      organization={Neuroca, Inc},
