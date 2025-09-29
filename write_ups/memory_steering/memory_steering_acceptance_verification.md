@@ -3,11 +3,13 @@
 >
 > Author: Justin K. Lietz  
 > ORCID: 0009-0008-9028-1366
+> Contact: <justin@neuroca.ai>
+>
 > Date: August 21, 2025
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles.
-> Commercial use requires written permission from Justin K. Lietz.
+> Commercial use requires written permission from the author..
 >
 > See LICENSE file for full terms.
 
@@ -75,7 +77,7 @@ Acceptance Criteria
    - With g = 0 (steering disabled), host system metrics (if coupled) match baseline within numerical tolerance.
 
 Validation Plan
-- Script: Prometheus_FUVDM/derivation/code/physics/memory_steering/memory_steering_acceptance.py
+- Script: Prometheus_FUVDM/write_ups/code/physics/memory_steering/memory_steering_acceptance.py
   - Experiments:
     1) Step response: s steps s0→s1; fit pole p from log residuals; verify M*.
     2) Canonical void: s ≡ 1, g = 1.5 λ; check M_final ≈ 0.6.
@@ -84,8 +86,8 @@ Validation Plan
     5) Lyapunov: constant s, verify ΔF_t ≤ 0 up to numerical jitter.
     6) Reproducibility: duplicate run with same seed, compare sequences.
   - Outputs:
-    - JSON: Prometheus_FUVDM/derivation/code/outputs/logs/memory_steering/memory_steering_acceptance_YYYYMMDDThhmmssZ.json
-    - Figures (PNG): Prometheus_FUVDM/derivation/code/outputs/figures/memory_steering/
+    - JSON: Prometheus_FUVDM/write_ups/code/outputs/logs/memory_steering/memory_steering_acceptance_YYYYMMDDThhmmssZ.json
+    - Figures (PNG): Prometheus_FUVDM/write_ups/code/outputs/figures/memory_steering/
       - step_response_YYYY....png
       - noise_suppression_YYYY....png
       - lyapunov_YYYY....png

@@ -2,11 +2,13 @@
 
 > Author: Justin K. Lietz  
 > ORCID: 0009-0008-9028-1366
+> Contact: <justin@neuroca.ai>
+>
 > Date: August 9, 2025
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles.
-> Commercial use requires written permission from Justin K. Lietz.
+> Commercial use requires written permission from the author.
 >
 > See LICENSE file for full terms.
 
@@ -23,8 +25,8 @@
   - Baseline grid (≥ 256²): |ν_fit − ν_th| / ν_th ≤ 5%.
   - Refinement (×2 linear res): error decreases consistent with scheme order.
 - Artifact paths:
-  - Figure: derivation/code/outputs/figures/fluid_dynamics/taylor_green_benchmark_{timestamp}.png
-  - Log: derivation/code/outputs/logs/fluid_dynamics/taylor_green_benchmark_{timestamp}.json
+  - Figure: write_ups/code/outputs/figures/fluid_dynamics/taylor_green_benchmark_{timestamp}.png
+  - Log: write_ups/code/outputs/logs/fluid_dynamics/taylor_green_benchmark_{timestamp}.json
 
 ### 2. Lid-driven cavity (square, no-slip walls, moving lid)
 
@@ -33,8 +35,8 @@
   - max_t ‖∇·v‖₂ ≤ 1e−6 (double).
   - Centerline profiles converge with grid (qualitative check; optional quantitative against literature).
 - Artifact paths:
-  - Figure: derivation/code/outputs/figures/fluid_dynamics/lid_cavity_benchmark_{timestamp}.png
-  - Log: derivation/code/outputs/logs/fluid_dynamics/lid_cavity_benchmark_{timestamp}.json
+  - Figure: write_ups/code/outputs/figures/fluid_dynamics/lid_cavity_benchmark_{timestamp}.png
+  - Log: write_ups/code/outputs/logs/fluid_dynamics/lid_cavity_benchmark_{timestamp}.json
 
 ## Logging schema
 
@@ -54,9 +56,9 @@
 - Always activate venv:
   & .\venv\Scripts\Activate.ps1
 - Taylor–Green:
-  python Prometheus_FUVDM/derivation/code/physics/fluid_dynamics/taylor_green_benchmark.py --nx 256 --ny 256 --tau 0.8 --steps 5000 --sample_every 50
+  python Prometheus_FUVDM/write_ups/code/physics/fluid_dynamics/taylor_green_benchmark.py --nx 256 --ny 256 --tau 0.8 --steps 5000 --sample_every 50
 - Lid cavity:
-  python Prometheus_FUVDM/derivation/code/physics/fluid_dynamics/lid_cavity_benchmark.py --nx 128 --ny 128 --tau 0.7 --U_lid 0.1 --steps 15000 --sample_every 200
+  python Prometheus_FUVDM/write_ups/code/physics/fluid_dynamics/lid_cavity_benchmark.py --nx 128 --ny 128 --tau 0.7 --U_lid 0.1 --steps 15000 --sample_every 200
 
 ## Notes
 

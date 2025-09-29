@@ -3,11 +3,13 @@
 >
 > Author: Justin K. Lietz  
 > ORCID: 0009-0008-9028-1366
+> Contact: <justin@neuroca.ai>
+>
 > Date: August 8, 2025
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles.
-> Commercial use requires written permission from Justin K. Lietz.
+> Commercial use requires written permission from the author..
 >
 > See LICENSE file for full terms.
 ---
@@ -16,7 +18,7 @@
 
 The primary goal of this derivation is to derive the reaction–diffusion PDE mapping
 ∂t φ = D ∇² φ + r φ − u φ²
-from the discrete update. A second-order Lorentzian EFT derivation (Klein–Gordon–like) is maintained as future work in [derivation/effective_field_theory_approach.md](effective_field_theory_approach.md:1). This removes internal contradictions while preserving historical EFT references below as scoped.
+from the discrete update. A second-order Lorentzian EFT derivation (Klein–Gordon–like) is maintained as future work in [write_ups/effective_field_theory_approach.md](effective_field_theory_approach.md:1). This removes internal contradictions while preserving historical EFT references below as scoped.
 
 ---
 
@@ -90,7 +92,7 @@ $$
 \lim_{\Delta t \to 0} \frac{W_i(t+\Delta t) - W_i(t)}{\Delta t} = \frac{\partial W_i}{\partial t}.
 $$
 
-Crucially, the second-order time derivative in the continuum equation is not imposed ad hoc; it follows from varying the continuum Lagrangian density fixed by the lattice derivation of the kinetic and gradient terms (see [derivation/kinetic_term_derivation.md](derivation/kinetic_term_derivation.md:78-116)):
+Crucially, the second-order time derivative in the continuum equation is not imposed ad hoc; it follows from varying the continuum Lagrangian density fixed by the lattice derivation of the kinetic and gradient terms (see [write_ups/kinetic_term_derivation.md](write_ups/kinetic_term_derivation.md:78-116)):
 $$
 \mathcal{L} \;=\; \frac{1}{2}(\partial_t \phi)^2 \;-\; J a^2\,(\nabla \phi)^2 \;-\; V(\phi).
 $$
@@ -204,7 +206,7 @@ In this bounded EFT the symmetric-limit VEV is $v = \mu/\sqrt{\lambda}$; a small
 
 #### 6.3 Units and calibration
 
-Using the physical map in [derivation/VDM_voxtrium_mapping.md](derivation/VDM_voxtrium_mapping.md:44-80), one has $\mu$ in GeV, $\lambda$ dimensionless, and
+Using the physical map in [write_ups/VDM_voxtrium_mapping.md](write_ups/VDM_voxtrium_mapping.md:44-80), one has $\mu$ in GeV, $\lambda$ dimensionless, and
 $$
 m_{\text{eff}} = \sqrt{2}\,\mu
 $$

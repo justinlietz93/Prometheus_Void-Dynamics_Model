@@ -3,7 +3,7 @@
 Copyright © 2025 Justin K. Lietz, Neuroca, Inc. All Rights Reserved.
 
 This research is protected under a dual-license to foster open academic
-research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from Justin K. Lietz.
+research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from the author..
 See LICENSE file for full terms.
 
 Q_VDM Logistic Invariant Validation
@@ -20,20 +20,20 @@ Purpose
 
 Usage
 - Basic run (double precision RK4):
-    python derivation/code/physics/conservation_law/qVDM_validate.py \\
+    python write_ups/code/physics/conservation_law/qVDM_validate.py \\
         --r 0.15 --u 0.25 --W0 0.12 0.62 --T 40 --dt 0.001 --solver rk4
 
 - Convergence sweep (3 stepsizes):
-    python derivation/code/physics/conservation_law/qVDM_validate.py \\
+    python write_ups/code/physics/conservation_law/qVDM_validate.py \\
         --r 0.15 --u 0.25 --W0 0.12 --T 10 --dt 0.002 0.001 0.0005 --solver rk4
 
 Outputs
 - Figures:
-    derivation/code/outputs/figures/conservation_law/qVDM_solution_overlay_UTC.png
-    derivation/code/outputs/figures/conservation_law/qVDM_Q_drift_UTC.png
-    derivation/code/outputs/figures/conservation_law/qVDM_convergence_UTC.png
+    write_ups/code/outputs/figures/conservation_law/qVDM_solution_overlay_UTC.png
+    write_ups/code/outputs/figures/conservation_law/qVDM_Q_drift_UTC.png
+    write_ups/code/outputs/figures/conservation_law/qVDM_convergence_UTC.png
 - JSON metrics:
-    derivation/code/outputs/logs/conservation_law/qVDM_metrics_UTC.json
+    write_ups/code/outputs/logs/conservation_law/qVDM_metrics_UTC.json
 
 Dependencies
 - numpy, matplotlib, json, argparse, datetime
@@ -55,7 +55,7 @@ from datetime import datetime, timezone
 from typing import List, Tuple, Dict
 import shutil
 
-# add repo-common IO helpers (derivation/code on sys.path)
+# add repo-common IO helpers (write_ups/code on sys.path)
 sys.path.append(str(Path(__file__).resolve().parents[2]))
 
 import numpy as np
@@ -65,7 +65,7 @@ import matplotlib.pyplot as plt
 BASE_OUTDIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "outputs"))
 FIG_DIR = os.path.join(BASE_OUTDIR, "figures", "conservation_law")
 LOG_DIR = os.path.join(BASE_OUTDIR, "logs", "conservation_law")
-ARXIV_FIG_DIR = "derivation/arxiv/RD_Methods_QA/figs"
+ARXIV_FIG_DIR = "write_ups/arxiv/RD_Methods_QA/figs"
 
 
 RUN_STAMP: str | None = None

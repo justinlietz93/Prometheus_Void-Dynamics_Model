@@ -3,19 +3,19 @@
 Copyright © 2025 Justin K. Lietz, Neuroca, Inc. All Rights Reserved.
 
 This research is protected under a dual-license to foster open academic
-research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from Justin K. Lietz.
+research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from the author..
 See LICENSE file for full terms.
 
 Lid-driven cavity (2-D) incompressibility benchmark for the fluids sector.
 
 CHANGE REASON:
-- Relocated into derivation/code/physics/fluid_dynamics per repo rules (no Prometheus_FUVDM/bench/).
-- Outputs follow RD harness: derivation/code/outputs/{figures,logs}.
+- Relocated into write_ups/code/physics/fluid_dynamics per repo rules (no Prometheus_FUVDM/bench/).
+- Outputs follow RD harness: write_ups/code/outputs/{figures,logs}.
 - Ensures JSON uses native Python types to avoid numpy serialization issues.
 
 Outputs (defaults):
-- Figures → derivation/code/outputs/figures/{script name}_{timestamp}.png
-- Logs    → derivation/code/outputs/logs/{script name}_{timestamp}.json
+- Figures → write_ups/code/outputs/figures/{script name}_{timestamp}.png
+- Logs    → write_ups/code/outputs/logs/{script name}_{timestamp}.json
 """
 
 import argparse
@@ -345,7 +345,7 @@ def main():
     ap.add_argument("--sample_every", type=int, default=200)
     ap.add_argument("--warmup", type=int, default=2000, help="steps to run before sampling (allow flow to settle)")
     ap.add_argument("--progress_every", type=int, default=None, help="print progress every N samples (default: sample_every)")
-    ap.add_argument("--outdir", type=str, default=None, help="base output dir; defaults to derivation/code/outputs")
+    ap.add_argument("--outdir", type=str, default=None, help="base output dir; defaults to write_ups/code/outputs")
     # Void dynamics exposure
     ap.add_argument("--void_domain", type=str, default="standard_model", help="FUVDM domain modulation preset")
     ap.add_argument("--void_gain", type=float, default=0.5, help="gain for ω_eff = ω0/(1+g|ΔW|)")

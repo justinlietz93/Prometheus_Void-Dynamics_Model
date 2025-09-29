@@ -3,11 +3,13 @@
 >
 > Author: Justin K. Lietz  
 > ORCID: 0009-0008-9028-1366
+> Contact: <justin@neuroca.ai>
+>
 > Date: August 9, 2025
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles.
-> Commercial use requires written permission from Justin K. Lietz.
+> Commercial use requires written permission from the author..
 >
 > See LICENSE file for full terms.
 ---
@@ -22,7 +24,7 @@ The objective of this document is to derive the kinetic prefactor (wave-function
 
 ### 2. Temporal Kinetic Term
 
-The temporal part of the kinetic term arises from the discrete “kinetic energy” (see `derivation/discrete_conservation.md`):
+The temporal part of the kinetic term arises from the discrete “kinetic energy” (see `write_ups/discrete_conservation.md`):
 
 $$
 \mathcal{K}_i = \frac{1}{2}\left(\frac{dW_i}{dt}\right)^2

@@ -2,11 +2,13 @@
 >
 > Author: Justin K. Lietz  
 > ORCID: 0009-0008-9028-1366
+> Contact: <justin@neuroca.ai>
+>
 > Date: August 9, 2025
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles.
-> Commercial use requires written permission from Justin K. Lietz.
+> Commercial use requires written permission from the author..
 >
 > See LICENSE file for full terms.
 
@@ -53,8 +55,8 @@ Fixes implemented
 Output routing and naming
 
 - Defaults to:
-  - Figures → derivation/code/outputs/figures/
-  - Logs → derivation/code/outputs/logs/
+  - Figures → write_ups/code/outputs/figures/
+  - Logs → write_ups/code/outputs/logs/
 - Filenames: script_name_YYYYMMDDThhmmssZ.ext (UTC timestamp).
 - Overridable via CLI: --outdir, --figure, --log.
 - See [main()](code/physics/rd_front_speed_experiment.py:359).
@@ -85,7 +87,7 @@ Representative results (logged)
 - Parameters: D=1.0, r=0.25, N=1024, T=80, level=0.1, fit 0.6–0.9
 - Metrics: c_meas ≈ 0.953, c_th = 1.0, rel_err ≈ 0.047, R² ≈ 0.999996 (pass)
 - Gradient cross-check: c_meas_grad ≈ 0.945, rel_err_grad ≈ 0.055, R²_grad ≈ 0.99995
-- Outputs auto-saved under derivation/code/outputs/{figures,logs}/
+- Outputs auto-saved under write_ups/code/outputs/{figures,logs}/
 
 Troubleshooting
 
@@ -108,5 +110,5 @@ Reproduction checklist
 3) Run example command above; confirm:
    - rel_err ≤ 0.05
    - R² ≥ 0.98
-   - Outputs written to derivation/code/outputs/{figures,logs}/
+   - Outputs written to write_ups/code/outputs/{figures,logs}/
 4) Archive the produced JSON and PNG under version control as needed.
