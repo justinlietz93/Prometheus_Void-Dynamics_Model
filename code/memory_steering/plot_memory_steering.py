@@ -8,7 +8,7 @@ See LICENSE file for full terms.
 Plotting helper for memory-steering experiments.
 
 - Parses outputs/memory_steering_results.csv (supports 4- or 5-column stability).
-- Produces figures in outputs/.
+- Produces figures under figures/memory_steering/.
 - Prints a concise metrics summary that directly tests the three predictions:
   1) Junction logistic collapse
   2) Curvature scaling in the ray limit
@@ -21,12 +21,23 @@ Usage:
 """
 
 import os
+import sys
 import math
+from pathlib import Path
+from typing import Optional
 import numpy as np
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
+CODE_ROOT = Path(__file__).resolve().parents[1]
+if str(CODE_ROOT) not in sys.path:
+    sys.path.append(str(CODE_ROOT))
+
+import common.io_paths as io_paths
+
+DOMAIN = "memory_steering"
 
 
 def parse_results(src: str):
@@ -157,10 +168,16 @@ def pivot_heatmap(SB: np.ndarray, value_index: int = 3):
 
 
 def plot_all(src: str = os.path.join("outputs", "memory_steering_results.csv"),
-             outdir: str = "outputs"):
+             outdir: Optional[str] = None):
     if not os.path.exists(src):
         raise SystemExit(f"[error] Missing {src}. Generate it first with: python3 -m VDM_rt.utils.memory_steering_experiments > {src}")
-    os.makedirs(outdir, exist_ok=True)
+
+    original_fig_root = io_paths.FIGURES_ROOT
+    original_log_root = io_paths.LOGS_ROOT
+    if outdir:
+        io_paths.FIGURES_ROOT = Path(outdir).expanduser()
+
+    figures_base = io_paths.FIGURES_ROOT / DOMAIN
 
     Jx, Jp, Cx, Cy, SB, Sx, Smy, Sse, Sseed, Ssign = parse_results(src)
 
@@ -176,7 +193,7 @@ def plot_all(src: str = os.path.join("outputs", "memory_steering_results.csv"),
     ax1.set_title("Junction logistic collapse")
     ax1.legend(loc="lower right")
     fig1.tight_layout()
-    p1 = os.path.join(outdir, "junction_logistic.png")
+    p1 = io_paths.figure_path(DOMAIN, "junction_logistic")
     fig1.savefig(p1, dpi=160)
 
     # ---------- Plot 2: Curvature scaling ----------
@@ -192,11 +209,11 @@ def plot_all(src: str = os.path.join("outputs", "memory_steering_results.csv"),
     ax2.set_title("Curvature scaling")
     ax2.legend(loc="upper left")
     fig2.tight_layout()
-    p2 = os.path.join(outdir, "curvature_scaling.png")
+    p2 = io_paths.figure_path(DOMAIN, "curvature_scaling")
     fig2.savefig(p2, dpi=160)
 
     # ---------- Plot 2b: Curvature scaling (signed) ----------
-    p_signed = os.path.join(outdir, "curvature_scaling_signed.png")
+    p_signed = None
     if Sx.size > 0:
         fig2b, ax2b = plt.subplots(figsize=(6, 4))
         sign_labels = {0: "baseline", 1: "flip_grad", 2: "flip_theta"}
@@ -214,10 +231,8 @@ def plot_all(src: str = os.path.join("outputs", "memory_steering_results.csv"),
         ax2b.set_title("Curvature scaling (signed invariance)")
         ax2b.legend(loc="upper left", fontsize=8)
         fig2b.tight_layout()
+        p_signed = io_paths.figure_path(DOMAIN, "curvature_scaling_signed")
         fig2b.savefig(p_signed, dpi=160)
-    else:
-        # No signed data present; do not create a figure
-        pass
 
     # ---------- Plot 3: Stability band heatmaps ----------
     fig3, ax3 = plt.subplots(1, 2, figsize=(11, 4))
@@ -244,13 +259,13 @@ def plot_all(src: str = os.path.join("outputs", "memory_steering_results.csv"),
         ax3[0].text(0.5, 0.5, "No stability data", ha="center", va="center")
         ax3[1].axis("off")
     fig3.tight_layout()
-    p3 = os.path.join(outdir, "stability_band.png")
+    p3 = io_paths.figure_path(DOMAIN, "stability_band")
     fig3.savefig(p3, dpi=160)
 
     # ---------- Plot 3b: Stability band heatmaps per Gamma (slices) ----------
     p3_ret_by_gamma = p3_fid_by_gamma = p3_auc_by_gamma = p3_snr_by_gamma = None
     if SB.size > 0:
-        def _slice_by_gamma(value_index: int, label: str, cmap: str, out_name: str):
+        def _slice_by_gamma(value_index: int, label: str, cmap: str, slug: str):
             Da = SB[:, 0]; Lam = SB[:, 1]; Gam = SB[:, 2]; Val = SB[:, value_index]
             mask = np.isfinite(Da) & np.isfinite(Lam) & np.isfinite(Gam) & np.isfinite(Val)
             if not np.any(mask):
@@ -300,19 +315,19 @@ def plot_all(src: str = os.path.join("outputs", "memory_steering_results.csv"),
             if im_last is not None:
                 cbar = fig_g.colorbar(im_last, ax=axes_g[:nGam].tolist(), fraction=0.02, pad=0.02)
                 cbar.set_label(label)
-            path = os.path.join(outdir, out_name)
+            path = io_paths.figure_path(DOMAIN, slug)
             fig_g.savefig(path, dpi=160)
-            return path
+            return str(path)
 
         # Generate per-Gamma panels for key metrics
-        p3_ret_by_gamma = _slice_by_gamma(3, "Retention", "viridis", "stability_retention_by_gamma.png")
-        p3_fid_by_gamma = _slice_by_gamma(5, "Fidelity_end", "magma", "stability_fidelity_by_gamma.png")
+        p3_ret_by_gamma = _slice_by_gamma(3, "Retention", "viridis", "stability_retention_by_gamma")
+        p3_fid_by_gamma = _slice_by_gamma(5, "Fidelity_end", "magma", "stability_fidelity_by_gamma")
         if SB.shape[1] > 8:
-            tmp = _slice_by_gamma(8, "AUC_end", "plasma", "stability_auc_by_gamma.png")
+            tmp = _slice_by_gamma(8, "AUC_end", "plasma", "stability_auc_by_gamma")
             if tmp:
                 p3_auc_by_gamma = tmp
         if SB.shape[1] > 9:
-            tmp = _slice_by_gamma(9, "SNR_end", "cividis", "stability_snr_by_gamma.png")
+            tmp = _slice_by_gamma(9, "SNR_end", "cividis", "stability_snr_by_gamma")
             if tmp:
                 p3_snr_by_gamma = tmp
 
@@ -345,7 +360,7 @@ def plot_all(src: str = os.path.join("outputs", "memory_steering_results.csv"),
     else:
         axes[2].text(0.5, 0.5, "No stability data", ha="center", va="center")
     fig.tight_layout()
-    p4 = os.path.join(outdir, "memory_steering_summary.png")
+    p4 = io_paths.figure_path(DOMAIN, "memory_steering_summary")
     fig.savefig(p4, dpi=160)
 
     # ---------- Metrics summary (text) ----------
@@ -454,15 +469,13 @@ def plot_all(src: str = os.path.join("outputs", "memory_steering_results.csv"),
         print("[STABILITY] no data")
 
     # Report saved plot paths (signed plot may be absent if no data)
-    saved = [p1, p2, p3, p4]
-    if 'p_signed' in locals():
-        saved.append(p_signed)
+    saved = [str(p1), str(p2), str(p3), str(p4)]
+    if p_signed:
+        saved.append(str(p_signed))
     # Add per-Gamma heatmaps if created
-    for extra_name in ("p3_ret_by_gamma", "p3_fid_by_gamma", "p3_auc_by_gamma", "p3_snr_by_gamma"):
-        if extra_name in locals():
-            extra_val = locals()[extra_name]
-            if extra_val:
-                saved.append(extra_val)
+    for extra_val in (p3_ret_by_gamma, p3_fid_by_gamma, p3_auc_by_gamma, p3_snr_by_gamma):
+        if extra_val:
+            saved.append(str(extra_val))
 
     # -------- Acceptance gates + JSON verdict emission --------
     import json
@@ -644,14 +657,12 @@ def plot_all(src: str = os.path.join("outputs", "memory_steering_results.csv"),
 
     # Emit JSON verdict
     now_utc = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    logdir = os.path.join("Prometheus_VDM", "derivation", "code", "outputs", "logs", "memory_steering")
-    os.makedirs(logdir, exist_ok=True)
-    verdict_path = os.path.join(logdir, f"memory_steering_verdict_{now_utc}.json")
+    verdict_path = io_paths.log_path(DOMAIN, f"memory_steering_verdict_{now_utc}", failed=not overall_pass)
     verdict = {
         "verdict": "PASS" if overall_pass else "FAIL",
         "timestamp_utc": now_utc,
         "source_csv": src,
-        "figures_outdir": outdir,
+        "figures_outdir": str(figures_base),
         "figures": saved,
         "checks": {
             "junction_logistic": {
@@ -711,16 +722,21 @@ def plot_all(src: str = os.path.join("outputs", "memory_steering_results.csv"),
             }
         }
     }
-    with open(verdict_path, "w") as f:
-        json.dump(verdict, f, indent=2)
+    io_paths.write_log(verdict_path, verdict)
 
     print(f"VERDICT: {'PASS' if overall_pass else 'FAIL'}")
     print(f"Saved verdict JSON: {verdict_path}")
     print("Saved plots:", *saved)
 
     # Optional strict failure for CI
-    if _env_bool("VDM_STRICT", False) and not overall_pass:
+    strict_mode = _env_bool("VDM_STRICT", False)
+    if strict_mode and not overall_pass:
+        io_paths.FIGURES_ROOT = original_fig_root
+        io_paths.LOGS_ROOT = original_log_root
         raise SystemExit(2)
+
+    io_paths.FIGURES_ROOT = original_fig_root
+    io_paths.LOGS_ROOT = original_log_root
 
 
 if __name__ == "__main__":
@@ -731,11 +747,5 @@ if __name__ == "__main__":
             "memory_steering", "memory_steering_results.csv"
         )
     )
-    outdir = os.environ.get(
-        "VDM_RESULTS_OUT",
-        os.path.join(
-            "Prometheus_VDM", "derivation", "code", "outputs", "figures",
-            "memory_steering"
-        )
-    )
+    outdir = os.environ.get("VDM_RESULTS_OUT")
     plot_all(src, outdir)

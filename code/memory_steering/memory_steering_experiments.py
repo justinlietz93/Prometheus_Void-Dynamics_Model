@@ -52,6 +52,7 @@ import contextlib
 import math
 import os
 import sys
+from pathlib import Path
 from typing import List, Optional, Sequence, Tuple
 
 import numpy as np
@@ -67,6 +68,12 @@ from vdm.memory_steering import (
     update_memory,
     y_junction_adjacency,
 )
+
+CODE_ROOT = Path(__file__).resolve().parents[1]
+if str(CODE_ROOT) not in sys.path:
+    sys.path.append(str(CODE_ROOT))
+
+import common.io_paths as io_paths
 
 
 # ---------------------------
@@ -384,7 +391,12 @@ def run_curvature_scaling(
 # 2b) Curvature: calibration and signed-test helpers
 # ---------------------------
 
-def calibrate_curvature_on_arcs(R_values=(20.0, 40.0, 80.0), n_points=200, noise=0.0, out_png="outputs/curvature_calibration.png"):
+def calibrate_curvature_on_arcs(
+    R_values=(20.0, 40.0, 80.0),
+    n_points=200,
+    noise=0.0,
+    out_png: Optional[Path | str] = None,
+):
     """
     Synthetic calibration: draw circular arcs of radius R and verify the polyline_curvature
     estimator returns kappa ≈ 1/R (±20%).
@@ -398,7 +410,10 @@ def calibrate_curvature_on_arcs(R_values=(20.0, 40.0, 80.0), n_points=200, noise
     Returns:
         results: list of (R, kappa_mean, kappa_std, frac_error)
     """
-    os.makedirs(os.path.dirname(out_png), exist_ok=True)
+    if out_png is None:
+        out_png = io_paths.figure_path("memory_steering", "curvature_calibration")
+    path = Path(out_png)
+    path.parent.mkdir(parents=True, exist_ok=True)
     try:  # pragma: no cover - matplotlib optional for headless runs
         import matplotlib.pyplot as plt
     except ModuleNotFoundError:
@@ -431,7 +446,7 @@ def calibrate_curvature_on_arcs(R_values=(20.0, 40.0, 80.0), n_points=200, noise
     ax.set_title("Curvature estimator calibration on circular arcs")
     ax.legend(loc="upper left", fontsize=8)
     fig.tight_layout()
-    fig.savefig(out_png, dpi=160)
+    fig.savefig(path, dpi=160)
     return res
 
 
@@ -800,7 +815,7 @@ def main():
 
         # 2b) Curvature: calibration unit test + signed falsification (12 X values)
         cal_res = calibrate_curvature_on_arcs(
-            R_values=(20.0, 40.0, 80.0), n_points=200, noise=0.0, out_png="outputs/curvature_calibration.png"
+            R_values=(20.0, 40.0, 80.0), n_points=200, noise=0.0
         )
         print("\n# Curvature calibration test (CSV): R, kappa_mean, kappa_std, frac_error")
         for (R, km, ks, fe) in cal_res:
