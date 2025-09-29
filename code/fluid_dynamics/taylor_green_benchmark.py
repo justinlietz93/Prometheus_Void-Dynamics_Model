@@ -3,19 +3,19 @@
 Copyright © 2025 Justin K. Lietz, Neuroca, Inc. All Rights Reserved.
 
 This research is protected under a dual-license to foster open academic
-research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from Justin K. Lietz.
+research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from the author..
 See LICENSE file for full terms.
 
 Taylor-Green vortex (2-D) viscosity recovery benchmark for the fluids sector.
 
 CHANGE REASON:
-- Relocated into derivation/code/physics/fluid_dynamics per repo rules (no Prometheus_FUVDM/bench/).
-- Outputs follow RD harness: derivation/code/outputs/{figures,logs}.
+- Relocated into write_ups/code/physics/fluid_dynamics per repo rules (no Prometheus_VDM/bench/).
+- Outputs follow RD harness: write_ups/code/outputs/{figures,logs}.
 - Ensures JSON uses native Python types (bool/float) to avoid numpy serialization issues.
 
 Outputs (defaults):
-- Figures → derivation/code/outputs/figures/{script name}_{timestamp}.png
-- Logs    → derivation/code/outputs/logs/{script name}_{timestamp}.json
+- Figures → write_ups/code/outputs/figures/{script name}_{timestamp}.png
+- Logs    → write_ups/code/outputs/logs/{script name}_{timestamp}.json
 """
 import argparse
 import json
@@ -72,7 +72,7 @@ def main():
     ap.add_argument("--k", type=float, default=2*math.pi)
     ap.add_argument("--steps", type=int, default=5000)
     ap.add_argument("--sample_every", type=int, default=50)
-    ap.add_argument("--outdir", type=str, default=None, help="base output dir; defaults to derivation/code/outputs")
+    ap.add_argument("--outdir", type=str, default=None, help="base output dir; defaults to write_ups/code/outputs")
     args = ap.parse_args()
 
     cfg = LBMConfig(nx=args.nx, ny=args.ny, tau=args.tau, periodic_x=True, periodic_y=True)

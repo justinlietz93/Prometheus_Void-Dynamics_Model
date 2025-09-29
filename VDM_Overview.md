@@ -1,12 +1,14 @@
-# FUVDM Overview
+# VDM Overview
 
 > Author: Justin K. Lietz  
 > ORCID: 0009-0008-9028-1366
+> Contact: <justin@neuroca.ai>
+>
 > Date: August 9, 2025  
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles.
-> Commercial use requires written permission from Justin K. Lietz.  
+> Commercial use requires written permission from the author..  
 > See LICENSE file for full terms.
 
 Note on scope and merge resolution
@@ -74,9 +76,9 @@ $$
 (EFT-3)
 
 References:  
-[kinetic_term_derivation.md](derivation/effective_field_theory/kinetic_term_derivation.md), [effective_field_theory_approach.md](derivation/effective_field_theory/effective_field_theory_approach.md)
+[kinetic_term_derivation.md](write_ups/effective_field_theory/kinetic_term_derivation.md), [effective_field_theory_approach.md](write_ups/effective_field_theory/effective_field_theory_approach.md)
 
-## FUVDM Dimensionless Constants (sanity set)
+## VDM Dimensionless Constants (sanity set)
 
 | Subsystem | Symbol | Definition | Meaning | Typical from runs |
 | --- | --- | --- | --- | --- |
@@ -85,12 +87,12 @@ References:
 | LBM | $\mathrm{Ma}$ | $\dfrac{U}{\sqrt{1/3}}$ | compressibility | 0.035–0.017 (low) |
 | RD | $\Pi_{Dr}$ | $\dfrac{D}{r L^{2}}$ | diffusion at scale $L$ | choose $L$ → report |
 | RD | $c^{\ast}$ | $\dfrac{c}{2\sqrt{D r}}$ | normalized KPP speed | ~0.95–1.0 |
-| FUVDM | $\Theta$ | fit scale in $\Theta\,\Delta m$ or $\Theta\,\|\nabla m\|$ | junction gating strength | $k \approx 1$, $b \approx 0$ |
-| FUVDM | $\Lambda$ | exploration/retention ratio | turnover vs. memory | as swept in heatmaps |
-| FUVDM | $\Gamma$ | retention fraction | memory persistence | ~0.3–0.75 (representative) |
-| FUVDM | $D_{a}$ | anisotropic diffusion index | transport anisotropy | {1, 3, 5, 7} |
-| FUVDM | $\kappa L$ | curvature × scale | path bending | linear vs. $\Theta\,\|\nabla m\|$ |
-| FUVDM | $g$ | void gain | stabilization strength | e.g., 0.5 |
+| VDM | $\Theta$ | fit scale in $\Theta\,\Delta m$ or $\Theta\,\|\nabla m\|$ | junction gating strength | $k \approx 1$, $b \approx 0$ |
+| VDM | $\Lambda$ | exploration/retention ratio | turnover vs. memory | as swept in heatmaps |
+| VDM | $\Gamma$ | retention fraction | memory persistence | ~0.3–0.75 (representative) |
+| VDM | $D_{a}$ | anisotropic diffusion index | transport anisotropy | {1, 3, 5, 7} |
+| VDM | $\kappa L$ | curvature × scale | path bending | linear vs. $\Theta\,\|\nabla m\|$ |
+| VDM | $g$ | void gain | stabilization strength | e.g., 0.5 |
 
 ## Core dimensionless groups (why they matter)
 
@@ -115,9 +117,9 @@ $$
 (RD-4)
 
 Representative defaults: $c_{\mathrm{meas}} \approx 0.953$ vs $c_{\mathrm{th}} = 1.0$, $\mathrm{rel\_err} \approx 0.047$, $R^{2} \approx 0.999996$ (meets gates)  
-Documentation: [rd_front_speed_validation.md](derivation/reaction_diffusion/rd_front_speed_validation.md)  
-Script: [rd_front_speed_experiment.py](derivation/code/physics/reaction_diffusion/rd_front_speed_experiment.py)  
-Sweep: [rd_front_speed_sweep.py](derivation/code/physics/reaction_diffusion/rd_front_speed_sweep.py)
+Documentation: [rd_front_speed_validation.md](write_ups/reaction_diffusion/rd_front_speed_validation.md)  
+Script: [rd_front_speed_experiment.py](write_ups/code/physics/reaction_diffusion/rd_front_speed_experiment.py)  
+Sweep: [rd_front_speed_sweep.py](write_ups/code/physics/reaction_diffusion/rd_front_speed_sweep.py)
 
 Linear dispersion about $\phi \approx 0$ (periodic, linearized RD) [PROVEN]
 
@@ -134,11 +136,11 @@ $$
 (RD-6)
 
 Representative defaults: median rel. error $\approx 1.45\times 10^{-3}$, $R^{2}_{\text{array}} \approx 0.99995$ (meets gates)  
-Documentation: [rd_dispersion_validation.md](derivation/reaction_diffusion/rd_dispersion_validation.md)  
-Script: [rd_dispersion_experiment.py](derivation/code/physics/reaction_diffusion/rd_dispersion_experiment.py)
+Documentation: [rd_dispersion_validation.md](write_ups/reaction_diffusion/rd_dispersion_validation.md)  
+Script: [rd_dispersion_experiment.py](write_ups/code/physics/reaction_diffusion/rd_dispersion_experiment.py)
 
 Consolidated plan and acceptance gates:  
-[rd_validation_plan.md](derivation/reaction_diffusion/rd_validation_plan.md)
+[rd_validation_plan.md](write_ups/reaction_diffusion/rd_validation_plan.md)
 
 Status log and edits:  
 [CORRECTIONS.md](CORRECTIONS.md)
@@ -176,8 +178,8 @@ $$
 (EFT-1′)
 
 References:  
-[discrete_to_continuum.md](derivation/foundations/discrete_to_continuum.md),  
-[kinetic_term_derivation.md](derivation/effective_field_theory/kinetic_term_derivation.md)
+[discrete_to_continuum.md](write_ups/foundations/discrete_to_continuum.md),  
+[kinetic_term_derivation.md](write_ups/effective_field_theory/kinetic_term_derivation.md)
 
 ## Scope boundaries and quarantine (policy)
 
@@ -193,13 +195,13 @@ $$
 
 EFT references:  
 
-- [effective_field_theory_approach.md](derivation/effective_field_theory/effective_field_theory_approach.md)  
-- [VDM_voxtrium_mapping.md](derivation/effective_field_theory/VDM_voxtrium_mapping.md)
+- [effective_field_theory_approach.md](write_ups/effective_field_theory/effective_field_theory_approach.md)  
+- [VDM_voxtrium_mapping.md](write_ups/effective_field_theory/VDM_voxtrium_mapping.md)
 
 ## Reproducibility and outputs
 
-- Figures → derivation/code/outputs/figures/  
-- Logs → derivation/code/outputs/logs/  
+- Figures → write_ups/code/outputs/figures/  
+- Logs → write_ups/code/outputs/logs/  
 - Filenames: {script name}_{timestamp}.png/json
 
 VDM_rt parity (independent runners; same metrics schema)  
@@ -221,13 +223,13 @@ VDM_rt parity (independent runners; same metrics schema)
 ## Memory steering and system notes
 
 - Memory-steering derivations and runtime integrations are tracked separately and must reference RD canonical terms when mapping to dynamics.  
-  See: [memory_steering_acceptance_verification.md](derivation/memory_steering/memory_steering_acceptance_verification.md)  
+  See: [memory_steering_acceptance_verification.md](write_ups/memory_steering/memory_steering_acceptance_verification.md)  
 - Runtime parity and plots reside under VDM_rt/core/*and VDM_rt/physics/* with explicit comments when driven by proven physics
 
 ## Finite-domain EFT modes (quarantined)
 
 - Finite-tube mode problem and energy scans adapt the EFT branch with bounded potentials and mass-matrix positivity  
-- Doc: [finite_tube_mode_analysis.md](derivation/tachyon_condensation/finite_tube_mode_analysis.md)
+- Doc: [finite_tube_mode_analysis.md](write_ups/tachyon_condensation/finite_tube_mode_analysis.md)
 
 ## Archive / informal content
 
@@ -240,9 +242,9 @@ VDM_rt parity (independent runners; same metrics schema)
 
 ## Appendix: Quick Links
 
-- Front speed: [rd_front_speed_validation.md](derivation/reaction_diffusion/rd_front_speed_validation.md),  
-  [rd_front_speed_experiment.py](derivation/code/physics/reaction_diffusion/rd_front_speed_experiment.py)  
-- Dispersion: [rd_dispersion_validation.md](derivation/reaction_diffusion/rd_dispersion_validation.md),  
-  [rd_dispersion_experiment.py](derivation/code/physics/reaction_diffusion/rd_dispersion_experiment.py)  
-- Plan: [rd_validation_plan.md](derivation/reaction_diffusion/rd_validation_plan.md)  
+- Front speed: [rd_front_speed_validation.md](write_ups/reaction_diffusion/rd_front_speed_validation.md),  
+  [rd_front_speed_experiment.py](write_ups/code/physics/reaction_diffusion/rd_front_speed_experiment.py)  
+- Dispersion: [rd_dispersion_validation.md](write_ups/reaction_diffusion/rd_dispersion_validation.md),  
+  [rd_dispersion_experiment.py](write_ups/code/physics/reaction_diffusion/rd_dispersion_experiment.py)  
+- Plan: [rd_validation_plan.md](write_ups/reaction_diffusion/rd_validation_plan.md)  
 - Status: [CORRECTIONS.md](CORRECTIONS.md)

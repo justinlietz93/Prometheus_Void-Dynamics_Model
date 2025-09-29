@@ -2,7 +2,7 @@
 Copyright © 2025 Justin K. Lietz, Neuroca, Inc. All Rights Reserved.
 
 This research is protected under a dual-license to foster open academic
-research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from Justin K. Lietz.
+research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from the author..
 See LICENSE file for full terms.
 
 Plotting helper for memory-steering experiments.
@@ -644,7 +644,7 @@ def plot_all(src: str = os.path.join("outputs", "memory_steering_results.csv"),
 
     # Emit JSON verdict
     now_utc = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    logdir = os.path.join("Prometheus_FUVDM", "derivation", "code", "outputs", "logs", "memory_steering")
+    logdir = os.path.join("Prometheus_VDM", "derivation", "code", "outputs", "logs", "memory_steering")
     os.makedirs(logdir, exist_ok=True)
     verdict_path = os.path.join(logdir, f"memory_steering_verdict_{now_utc}.json")
     verdict = {
@@ -727,14 +727,14 @@ if __name__ == "__main__":
     src = os.environ.get(
         "VDM_RESULTS_CSV",
         os.path.join(
-            "Prometheus_FUVDM", "derivation", "code", "outputs", "logs",
+            "Prometheus_VDM", "derivation", "code", "outputs", "logs",
             "memory_steering", "memory_steering_results.csv"
         )
     )
     outdir = os.environ.get(
         "VDM_RESULTS_OUT",
         os.path.join(
-            "Prometheus_FUVDM", "derivation", "code", "outputs", "figures",
+            "Prometheus_VDM", "derivation", "code", "outputs", "figures",
             "memory_steering"
         )
     )

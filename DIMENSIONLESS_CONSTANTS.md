@@ -2,11 +2,13 @@
 >
 > Author: Justin K. Lietz  
 > ORCID: 0009-0008-9028-1366
+> Contact: <justin@neuroca.ai>
+>
 > Date: August 9, 2025
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles.
-> Commercial use requires written permission from Justin K. Lietz.
+> Commercial use requires written permission from the author..
 >
 > See LICENSE file for full terms.
 
@@ -17,12 +19,12 @@
 | LBM       | $\mathrm{Ma}$ | $\mathrm{Ma} = \dfrac{U}{\sqrt{1/3}}$                       | compressibility            | 0.035–0.017 (low)               |
 | RD        | $\Pi_{Dr}$    | $\Pi_{Dr} = \dfrac{D}{r L^{2}}$                             | diffusion at scale $L$     | choose $L$ → report             |
 | RD        | $c^{*}$       | $c^{*} = \dfrac{c}{2\sqrt{D r}}$                            | normalized KPP speed       | $\approx 0.95$–$1.0$            |
-| FUVDM     | $\Theta$      | scale factor in $\Theta\,\Delta m$ or $\Theta \|\nabla m\|$ | junction gating strength   | $k \approx 1,\ b \approx 0$     |
-| FUVDM     | $\Lambda$     | exploration / retention ratio                               | turnover vs. memory        | as swept in heatmaps            |
-| FUVDM     | $\Gamma$      | retention fraction                                          | memory persistence         | $\approx 0.3$–$0.75$ avg (plots) |
-| FUVDM     | $D_a$         | anisotropic diffusion index                                 | transport anisotropy       | $\{1,3,5,7\}$                   |
-| FUVDM     | $\kappa L$    | curvature × scale                                           | path bending               | linear vs. $\Theta\|\nabla m\|$ |
-| FUVDM     | $g$           | void gain                                                   | stabilization strength     | e.g., 0.5                       |
+| VDM     | $\Theta$      | scale factor in $\Theta\,\Delta m$ or $\Theta \|\nabla m\|$ | junction gating strength   | $k \approx 1,\ b \approx 0$     |
+| VDM     | $\Lambda$     | exploration / retention ratio                               | turnover vs. memory        | as swept in heatmaps            |
+| VDM     | $\Gamma$      | retention fraction                                          | memory persistence         | $\approx 0.3$–$0.75$ avg (plots) |
+| VDM     | $D_a$         | anisotropic diffusion index                                 | transport anisotropy       | $\{1,3,5,7\}$                   |
+| VDM     | $\kappa L$    | curvature × scale                                           | path bending               | linear vs. $\Theta\|\nabla m\|$ |
+| VDM     | $g$           | void gain                                                   | stabilization strength     | e.g., 0.5                       |
 
 ## 1. **Void Debt Number** $\mathcal{D}$
 
@@ -107,7 +109,7 @@ $$
 ### Why these matter for the **overall theory**
 
 * In classical **fluids**, you mostly need $Re, Ma, \text{CFL}$.
-* In **FUVDM**, the proposed universal dimensionless group set is:
+* In **VDM**, the proposed universal dimensionless group set is:
 
 $$
 \{ \mathcal{D}, \Xi, \alpha, M_v, \Theta, \Sigma, \Lambda \}

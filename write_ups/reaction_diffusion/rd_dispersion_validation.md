@@ -2,11 +2,13 @@
 >
 > Author: Justin K. Lietz  
 > ORCID: 0009-0008-9028-1366
+> Contact: <justin@neuroca.ai>
+>
 > Date: August 9, 2025
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles. 
-> Commercial use requires written permission from Justin K. Lietz.
+> Commercial use requires written permission from the author..
 > 
 > See LICENSE file for full terms.
 
@@ -22,7 +24,7 @@ References (implementation)
 - Script: [rd_dispersion_experiment.py](code/physics/rd_dispersion_experiment.py:1)
 - Validation plan: [rd_validation_plan.md](rd_validation_plan.md:1)
 - Status log: [CORRECTIONS.md](CORRECTIONS.md:1)
-- VDM_rt parity runner: [rd_dispersion_runner.py](Prometheus_FUVDM/VDM_rt/physics/rd_dispersion_runner.py:1)
+- VDM_rt parity runner: [rd_dispersion_runner.py](Prometheus_VDM/VDM_rt/physics/rd_dispersion_runner.py:1)
 
 Method
 - Periodic BCs; explicit Euler on u_t = D u_xx + r u with dt respecting diffusion CFL.
@@ -34,8 +36,8 @@ Method
 
 Output routing and naming
 - Defaults:
-  - Figures → derivation/code/outputs/figures/
-  - Logs → derivation/code/outputs/logs/
+  - Figures → write_ups/code/outputs/figures/
+  - Logs → write_ups/code/outputs/logs/
 - Filenames: script_name_YYYYMMDDThhmmssZ.ext (UTC timestamp)
 - Overridable via CLI: --outdir, --figure, --log
 
@@ -70,7 +72,7 @@ Troubleshooting
 
 VDM_rt parity runner
 - Independent mirror (same metrics/output schema) for cross-stack parity:
-  - [rd_dispersion_runner.py](Prometheus_FUVDM/VDM_rt/physics/rd_dispersion_runner.py:1)
+  - [rd_dispersion_runner.py](Prometheus_VDM/VDM_rt/physics/rd_dispersion_runner.py:1)
 - Rationale is documented in-file (“CHANGE REASON”): physics proven via derivation; runtime mirror does not alter core dynamics.
 
 Reproduction checklist

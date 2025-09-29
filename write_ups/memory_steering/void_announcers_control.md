@@ -3,18 +3,20 @@
 >
 > Author: Justin K. Lietz  
 > ORCID: 0009-0008-9028-1366
+> Contact: <justin@neuroca.ai>
+>
 > Date: August 9, 2025
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles.
-> Commercial use requires written permission from Justin K. Lietz.
+> Commercial use requires written permission from the author..
 >
 > See LICENSE file for full terms.
 
 Status: [PLAUSIBLE] with concrete validation plan. Physics conserved (read-only sensing); optional bounded parameter advice does not inject forces.
 
 Purpose
-- Map FUVDM “void walker” observability to neural networks (MLP/RNN/attention) as measurement-only sensors.
+- Map VDM “void walker” observability to neural networks (MLP/RNN/attention) as measurement-only sensors.
 - Derive a graph Fokker–Planck limit for walker density on a feed-forward graph.
 - Define petition taxonomy (sat, grad, shear) and a scalar “void debt” functional.
 - Outline a bounded advisory policy to nudge numeric knobs without altering forward dynamics.
@@ -81,7 +83,7 @@ Failure Modes
 Minimal prototype (to be provided)
 - Script: code/physics/memory_steering/void_announcer_demo.py
 - Uses the fluids telemetry Bus/Reducer (imported) and a simple MLP.
-- Emits logs → derivation/code/outputs/logs/memory_steering and a diagnostic figure with petition markers on hidden-layer index space.
+- Emits logs → write_ups/code/outputs/logs/memory_steering and a diagnostic figure with petition markers on hidden-layer index space.
 
 Open Questions / Next Refinements
 - Replace proxies with principled Jacobian-trace estimators per layer for divergence analog.
@@ -95,5 +97,5 @@ Reproducibility Checklist
 - Keep observe vs advise runs archived with JSON and PNG artifacts.
 
 References
-- Fluid mapping powered this construction; see cavity announcers and CLI in [lid_cavity_benchmark.py](Prometheus_FUVDM/derivation/code/physics/fluid_dynamics/lid_cavity_benchmark.py:356).
-- Bus, Reducer, Walker API: [walkers.py](Prometheus_FUVDM/derivation/code/physics/fluid_dynamics/telemetry/walkers.py:1).
+- Fluid mapping powered this construction; see cavity announcers and CLI in [lid_cavity_benchmark.py](Prometheus_VDM/write_ups/code/physics/fluid_dynamics/lid_cavity_benchmark.py:356).
+- Bus, Reducer, Walker API: [walkers.py](Prometheus_VDM/write_ups/code/physics/fluid_dynamics/telemetry/walkers.py:1).

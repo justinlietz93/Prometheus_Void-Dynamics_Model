@@ -2,16 +2,18 @@
 
 >
 > Author: Justin K. Lietz 
-> ORCID: 0009-0008-9028-1366 
+> ORCID: 0009-0008-9028-1366
+> Contact: <justin@neuroca.ai>
+>
 > Date: August 9, 2025
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles.
-> Commercial use requires written permission from Justin K. Lietz.
+> Commercial use requires written permission from the author..
 >
 > See LICENSE file for full terms.
 
-Note (2025-08-20): Canonical model set to reaction–diffusion (RD); the second-order EFT is quarantined to EFT docs. Mass numerics are parameter-dependent (`m_eff=√(α−β)` in EFT). The “promote to second order” gap is closed via a discrete action derivation with wave speed `c^2=2 J a^2` (per-site convention), see [derivation/kinetic_term_derivation.md](kinetic_term_derivation.md:78).
+Note (2025-08-20): Canonical model set to reaction–diffusion (RD); the second-order EFT is quarantined to EFT docs. Mass numerics are parameter-dependent (`m_eff=√(α−β)` in EFT). The “promote to second order” gap is closed via a discrete action derivation with wave speed `c^2=2 J a^2` (per-site convention), see [write_ups/kinetic_term_derivation.md](kinetic_term_derivation.md:78).
 
 This document presents a comparative analysis with Bordag (Universe 2024, “Tachyon Condensation in a Chromomagnetic Center Vortex Background”) and enumerates required corrections.
 
@@ -215,4 +217,4 @@ precisely what I wrote; the “factor of 2” is the $\pm\mu$ neighbor pair. Cho
 
 ---
 
-This normalization aligns with [derivation/kinetic_term_derivation.md](kinetic_term_derivation.md:78); the action-based derivation supersedes the earlier heuristic step and makes any fixed choice of $J a^2$ unnecessary.
+This normalization aligns with [write_ups/kinetic_term_derivation.md](kinetic_term_derivation.md:78); the action-based derivation supersedes the earlier heuristic step and makes any fixed choice of $J a^2$ unnecessary.

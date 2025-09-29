@@ -2,12 +2,13 @@
 
 > Author: Justin K. Lietz  
 > ORCID: 0009-0008-9028-1366
-> 
+> Contact: <justin@neuroca.ai>
+>
 > Date: August 9, 2025  
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles.
-> Commercial use requires written permission from Justin K. Lietz.  
+> Commercial use requires written permission from the author..  
 > See LICENSE file for full terms.
 
 DOIs:
@@ -24,64 +25,108 @@ DOIs:
 
 ***Status Last Updated:*** Aug 25, 2025
 
-This folder provides a public, paper-only view of the Void Dynamics program. It summarizes the theory and validation write-ups for review by physicists, applied mathematicians, and scientifically minded engineers. Proprietary source code is not included yet.
+This folder provides a public, paper-only view of the Void Dynamics program.
+It summarizes the theory and validation write-ups for review by physicists,
+applied mathematicians, and scientifically minded engineers. Proprietary
+source code is not included yet.
+
+> **Classified dependency notice**
+>
+> Certain executable simulations load void-dynamics and memory-steering modules
+> from `secrets/`. If those files are missing, the code exits with:
+>
+> `Attempted to import classified code, ask the author for access to run this
+> simulation. Otherwise you can still view figures and logs.`
+>
+> Affected entry points include:
+>
+> * `code/fluid_dynamics/fluids/lbm2d.py` (and benchmarks such as
+>   `taylor_green_benchmark.py` and `lid_cavity_benchmark.py`).
+> * `code/memory_steering/memory_steering_experiments.py`.
+>
+> Contact the maintainer for access. After placing the classified modules in
+> `secrets/`, the simulations will run normally.
 
 ## What this is
 
-- A set of derivation papers that establish a clean baseline physics slice using reaction–diffusion (RD).
-- Additional documents that explore a future, quarantined effective field theory (EFT) branch, clearly labeled as future work.
-- Each paper separates what is proven from what is plausible or speculative and, where applicable, includes acceptance criteria for simple numerical checks.
+* A set of derivation papers that establish a clean baseline physics slice
+  using reaction–diffusion (RD).
+* Additional documents that explore a future, quarantined effective field
+  theory (EFT) branch, clearly labeled as future work.
+* Each paper separates what is proven from what is plausible or speculative
+  and, where applicable, includes acceptance criteria for simple numerical
+  checks.
 
 ## Why it relates to AI (brief)
 
-- The project studies how simple, local rules can yield stable, interpretable global behavior under resource constraints.
-- That design philosophy is relevant to AI systems that favor locality, event-driven updates, and transparent evaluation instead of opaque heuristics.
-- “Memory steering” (covered separately) frames slow routing bias and retention/decay as structured influences over faster dynamics, an analogy for directing computation without black-box shortcuts.
+* The project studies how simple, local rules can yield stable, interpretable
+  global behavior under resource constraints.
+* That design philosophy is relevant to AI systems that favor locality,
+  event-driven updates, and transparent evaluation instead of opaque
+  heuristics.
+* “Memory steering” (covered separately) frames slow routing bias and
+  retention/decay as structured influences over faster dynamics, an analogy
+  for directing computation without black-box shortcuts.
 
 ## What’s inside (papers)
 
-- Program overview and banner:
-  - [FUVDM_Overview.md](FUVDM_Overview.md)
-- Foundations:
-  - [discrete_to_continuum.md](derivation/foundations/discrete_to_continuum.md)
-  - [continuum_stack.md](derivation/foundations/continuum_stack.md)
-- Reaction–Diffusion (canonical baseline):
-  - [rd_front_speed_validation.md](derivation/reaction_diffusion/rd_front_speed_validation.md)
-  - [rd_dispersion_validation.md](derivation/reaction_diffusion/rd_dispersion_validation.md)
-  - [rd_validation_plan.md](derivation/reaction_diffusion/rd_validation_plan.md)
-- Memory Steering (slow routing bias; separate layer):
-  - [memory_steering_acceptance_verification.md](derivation/memory_steering/memory_steering_acceptance_verification.md)
-- Finite-domain EFT modes (quarantined future work):
-  - [finite_tube_mode_analysis.md](derivation/tachyon_condensation/finite_tube_mode_analysis.md)
-- Change log / scoping notes:
-  - [CORRECTIONS.md](CORRECTIONS.md)
+* Program overview and banner:
+  * [VDM_Overview.md](VDM_Overview.md)
+* Foundations:
+  * [discrete_to_continuum.md](write_ups/foundations/discrete_to_continuum.md)
+  * [continuum_stack.md](write_ups/foundations/continuum_stack.md)
+* Reaction–Diffusion (canonical baseline):
+  * [rd_front_speed_validation.md](write_ups/reaction_diffusion/rd_front_speed_validation.md)
+  * [rd_dispersion_validation.md](write_ups/reaction_diffusion/rd_dispersion_validation.md)
+  * [rd_validation_plan.md](write_ups/reaction_diffusion/rd_validation_plan.md)
+* Memory Steering (slow routing bias; separate layer):
+  * [memory_steering_acceptance_verification.md](write_ups/memory_steering/memory_steering_acceptance_verification.md)
+* Finite-domain EFT modes (quarantined future work):
+  * [finite_tube_mode_analysis.md](write_ups/tachyon_condensation/finite_tube_mode_analysis.md)
+* Change log / scoping notes:
+  * [CORRECTIONS.md](CORRECTIONS.md)
 
 ## What’s not included
 
-- Source code, executables, or private runtime harnesses.
-- Logs/figures or any artifacts that would be sufficient to easily reconstruct proprietary implementations, notebooks with clear falsifiable code will be provided soon.
-- Drafts outside the derivation index above.
+* Source code, executables, or private runtime harnesses.
+* Logs, figures, or any artifacts that would be sufficient to easily
+  reconstruct proprietary implementations. Notebooks with clear falsifiable
+  code will be provided soon.
+* Drafts outside the derivation index above.
 
 ## How to read these papers
 
-- Each file follows a consistent structure: Purpose · Assumptions/Parameters · Discrete law · Continuum limit · PDE/Action/Potential · Fixed points & stability · Dispersion · Conservation/Lyapunov · Numerical plan + acceptance · Results · Open questions.
-- Claim labels:
-  - [PROVEN] = sign/dimension/limit checks plus a minimal numerical test that passes stated tolerances.
-  - [PLAUSIBLE] = future work with rationale; quarantined until derivation + checks are complete.
-  - [SPECULATIVE] = exploratory; not used for baseline claims.
+* Each file follows a consistent structure: Purpose · Assumptions/Parameters ·
+  Discrete law · Continuum limit · PDE/Action/Potential · Fixed points &
+  stability · Dispersion · Conservation/Lyapunov · Numerical plan +
+  acceptance · Results · Open questions.
+* Claim labels:
+  * [PROVEN] = sign/dimension/limit checks plus a minimal numerical test that
+    passes stated tolerances.
+  * [PLAUSIBLE] = future work with rationale; quarantined until derivation +
+    checks are complete.
+  * [SPECULATIVE] = exploratory; not used for baseline claims.
 
 ## Licensing and scope
 
-- These materials are shared for academic review and discussion. Commercial use requires prior written permission. See the project’s license notice in the distribution or parent repository materials.
-- The scope stays within theoretical physics and simulation. Broad cosmological claims are withheld or clearly labeled until backed by derivation + numeric checks.
+* These materials are shared for academic review and discussion. Commercial
+  use requires prior written permission. See the project’s license notice in
+  the distribution or parent repository materials.
+* The scope stays within theoretical physics and simulation. Broad
+  cosmological claims are withheld or clearly labeled until backed by
+  derivation + numeric checks.
 
 ## Citations
 
-- When referencing specific results, cite the overview and the relevant validation paper, for example:
-  - [FUVDM_Overview.md](FUVDM_Overview.md)
-  - [rd_front_speed_validation.md](derivation/reaction_diffusion/rd_front_speed_validation.md)
-  - [rd_dispersion_validation.md](derivation/reaction_diffusion/rd_dispersion_validation.md)
+* When referencing specific results, cite the overview and the relevant
+  validation paper, for example:
+  * [VDM_Overview.md](VDM_Overview.md)
+  * [rd_front_speed_validation.md](write_ups/reaction_diffusion/rd_front_speed_validation.md)
+  * [rd_dispersion_validation.md](write_ups/reaction_diffusion/rd_dispersion_validation.md)
 
 ## Contact
 
-- For scope questions or clarifications about acceptance criteria, refer to the headers in the overview and topic files listed above. If you are reading this as part of a paper-only bundle, the maintainer’s contact is provided alongside the distribution materials.
+* For scope questions or clarifications about acceptance criteria, refer to the
+  headers in the overview and topic files listed above. If you are reading this
+  as part of a paper-only bundle, the maintainer’s contact is provided alongside
+  the distribution materials.
