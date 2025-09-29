@@ -2,7 +2,7 @@
 
 Purpose
 
-- Domain-scoped simulation and benchmark scripts. These are the source of truth for producing physics figures and logs under derivation/code/outputs/.
+- Domain-scoped simulation and benchmark scripts. These are the source of truth for producing physics figures and logs under write_ups/code/outputs/.
 
 Directory layout
 
@@ -18,20 +18,20 @@ Directory layout
 
 Output routing
 
-- Figures → derivation/code/outputs/figures/{domain}/
-- Logs    → derivation/code/outputs/logs/{domain}/
+- Figures → write_ups/code/outputs/figures/{domain}/
+- Logs    → write_ups/code/outputs/logs/{domain}/
 - Filenames: <script_name>_YYYYMMDDThhmmssZ.ext (UTC timestamp)
 - Override paths via CLI flags --outdir, --figure, --log when provided by the script.
 
 Conventions
 
-- Location: derivation/code/{domain}/*.py
+- Location: write_ups/code/{domain}/*.py
 - Scripts must:
   - Accept reproducible CLI (with seeds where applicable).
   - Emit JSON logs with theory, params, metrics, outputs.figure, timestamp.
   - Emit a PNG figure (unless explicitly headless by design).
   - Record a pass/fail gate in metrics when applicable.
-- Heavy numerics go here; unit tests belong under derivation/code/tests/{domain}/.
+- Heavy numerics go here; unit tests belong under write_ups/code/tests/{domain}/.
 
 Examples
 

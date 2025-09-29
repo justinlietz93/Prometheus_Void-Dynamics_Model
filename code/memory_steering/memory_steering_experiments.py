@@ -2,33 +2,33 @@
 Copyright © 2025 Justin K. Lietz, Neuroca, Inc. All Rights Reserved.
 
 This research is protected under a dual-license to foster open academic
-research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from Justin K. Lietz.
+research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from the author..
 See LICENSE file for full terms.
 
 Memory-Driven Steering (experiments): rigorous mapping to your derivations + three falsifiable tests
 
 What this file does (experiments layer)
 - Generates datasets (and prints CSV) to test the three predictions introduced in
-  [derivation/memory_steering.md](derivation/memory_steering.md:1) from the Voxtrium note
-  [derivation/voxtrium/voxtrium_message.txt](derivation/voxtrium/voxtrium_message.txt:1):
+  [write_ups/memory_steering.md](write_ups/memory_steering.md:1) from the Voxtrium note
+  [write_ups/voxtrium/voxtrium_message.txt](write_ups/voxtrium/voxtrium_message.txt:1):
   1) Junction logistic collapse:  P(A) ≈ σ(Θ Δm)
   2) Curvature scaling:           ⟨κ_path⟩ ∝ Θ |∇m|
   3) Stability band:              robust memory for D_a ≳ Λ with intermediate Γ
 
 How this maps to your φ-EFT derivations (orthogonal layer)
 - The fast φ-sector continuum equation and invariants are already derived in
-  [derivation/discrete_to_continuum.md](derivation/discrete_to_continuum.md:121-128):
+  [write_ups/discrete_to_continuum.md](write_ups/discrete_to_continuum.md:121-128):
       □φ + α φ² − (α − β) φ = 0,   v = 1 − β/α,   m_eff² = α − β.
 - The kinetic normalization c² = 2 J a² is rigorously obtained from a discrete action in
-  [derivation/kinetic_term_derivation.md](derivation/kinetic_term_derivation.md:121-128).
+  [write_ups/kinetic_term_derivation.md](write_ups/kinetic_term_derivation.md:121-128).
 - The memory-steering layer (M) is slow and biases routing only; it does not modify φ propagation,
-  the vacuum/mass results, nor the on-site invariant Q_VDM from [derivation/symmetry_analysis.md](derivation/symmetry_analysis.md:141-148).
+  the vacuum/mass results, nor the on-site invariant Q_VDM from [write_ups/symmetry_analysis.md](write_ups/symmetry_analysis.md:141-148).
 
-Dimensionless groups used implicitly in the tests (see [derivation/memory_steering.md](derivation/memory_steering.md:1))
+Dimensionless groups used implicitly in the tests (see [write_ups/memory_steering.md](write_ups/memory_steering.md:1))
 - Θ = η M0        (steering strength)
 - D_a = γ R0 T / M0,   Λ = δ T,   Γ = κ T / L²
 - We choose simple graph-native rulers (L, T, M0, R0) inside each test to demonstrate collapse
-  and leave the physical alignment to φ’s (a, τ) to [derivation/VDM_voxtrium_mapping.md](derivation/VDM_voxtrium_mapping.md:44-80).
+  and leave the physical alignment to φ’s (a, τ) to [write_ups/VDM_voxtrium_mapping.md](write_ups/VDM_voxtrium_mapping.md:44-80).
 
 Outputs (printed to stdout when run)
 - Junction logistic:            “Theta*Delta_m, P(A)”
@@ -40,142 +40,55 @@ Usage
 - The plotting helper (separate) converts the combined CSV into figures saved in outputs/.
 """
 
+# Classified dependency notice:
+#   This module relies on the classified memory-steering implementation under
+#   `secrets/`. Without access, importing the primitives will raise an error
+#   instructing users to request permission.
+
 from __future__ import annotations
 
 import math
 import sys
 import os
 import contextlib
+import importlib.util
 from dataclasses import dataclass
 from typing import Iterable, List, Optional, Sequence, Tuple
+from pathlib import Path
 
 import numpy as np
 
-# Steering primitives (robust import: module or script)
-try:
-    from VDM_rt.core.memory_steering import (
-        build_graph_laplacian,
-        update_memory,
-        transition_probs,
-        sample_next_neighbor,
-        compute_dimensionless_groups,
-        y_junction_adjacency,
-        collect_junction_choices,
-    )
-except Exception as e1:
-    # Second-chance import: add repo root to sys.path if running as a script
-    try:
-        import os as _os, sys as _sys
-        _repo_root = _os.path.abspath(_os.path.join(_os.path.dirname(__file__), _os.pardir, _os.pardir))
-        if _repo_root not in _sys.path:
-            _sys.path.insert(0, _repo_root)
-        from VDM_rt.core.memory_steering import (
-            build_graph_laplacian,
-            update_memory,
-            transition_probs,
-            sample_next_neighbor,
-            compute_dimensionless_groups,
-            y_junction_adjacency,
-            collect_junction_choices,
-        )
-    except Exception as e2:
-        print("[warn] falling back to local copies of simple helpers:", e2, file=sys.stderr)
+CLASSIFIED_MESSAGE = (
+    "Attempted to import classified code, ask the author for access to run this "
+    "simulation. Otherwise you can still view figures and logs."
+)
 
-        def build_graph_laplacian(A: np.ndarray) -> np.ndarray:
-            A = np.asarray(A)
-            deg = np.sum((A != 0) & (~np.eye(A.shape[0], dtype=bool)), axis=1).astype(np.float64)
-            return np.diag(deg) - (A != 0).astype(np.float64)
 
-        def transition_probs(i: int, neighbors: Sequence[int], m: np.ndarray, theta: float) -> np.ndarray:
-            neigh = np.asarray(list(neighbors), dtype=int)
-            if neigh.size == 0:
-                return np.empty((0,), dtype=np.float64)
-            z = theta * m[neigh]
-            z = z - np.max(z)
-            exps = np.exp(z)
-            s = exps.sum()
-            if s <= 0.0 or not np.isfinite(s):
-                return np.ones_like(exps) / exps.size
-            return exps / s
+def _load_classified_memory_primitives():
+    secrets_root = Path(__file__).resolve().parents[2] / "secrets"
+    candidates = [
+        secrets_root / "VDM_rt" / "core" / "memory_steering.py",
+        secrets_root / "memory_steering" / "memory_steering.py",
+    ]
+    for path in candidates:
+        if path.exists():
+            spec = importlib.util.spec_from_file_location("classified_memory_steering", path)
+            if spec and spec.loader:
+                module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(module)
+                return module
+    raise ImportError(CLASSIFIED_MESSAGE)
 
-        def sample_next_neighbor(
-            i: int, neighbors: Sequence[int], m: np.ndarray, theta: float, rng: Optional[np.random.Generator] = None
-        ) -> Optional[int]:
-            neigh = np.asarray(list(neighbors), dtype=int)
-            if neigh.size == 0:
-                return None
-            p = transition_probs(i, neigh, m, theta)
-            if rng is None:
-                rng = np.random.default_rng()
-            idx = int(rng.choice(neigh.size, p=p))
-            return int(neigh[idx])
 
-        def y_junction_adjacency(len_in: int = 5, len_a: int = 5, len_b: int = 5) -> Tuple[np.ndarray, int, int, int]:
-            J = len_in
-            a_start = J + 1
-            b_start = J + 1 + len_a
-            N = len_in + 1 + len_a + len_b
-            A = np.zeros((N, N), dtype=np.int8)
-            for t in range(1, len_in):
-                A[t - 1, t] = 1
-                A[t, t - 1] = 1
-            if len_in > 0:
-                A[len_in - 1, J] = 1
-                A[J, len_in - 1] = 1
-            last = J
-            for k in range(len_a):
-                n = a_start + k
-                A[last, n] = 1
-                A[n, last] = 1
-                last = n
-            last = J
-            for k in range(len_b):
-                n = b_start + k
-                A[last, n] = 1
-                A[n, last] = 1
-                last = n
-            return A, J, a_start, b_start
+_memory_module = _load_classified_memory_primitives()
 
-        def collect_junction_choices(
-            A: np.ndarray,
-            m: np.ndarray,
-            J: int,
-            a_next: int,
-            b_next: int,
-            theta: float,
-            trials: int = 1000,
-            rng: Optional[np.random.Generator] = None,
-        ) -> Tuple[int, int]:
-            if rng is None:
-                rng = np.random.default_rng()
-            neighbors = np.where(A[J] != 0)[0]
-            neighbors = [n for n in neighbors if n in (a_next, b_next)]
-            if len(neighbors) != 2:
-                neigh = np.where(A[J] != 0)[0]
-                if neigh.size < 2:
-                    return (0, 0)
-                order = np.argsort(m[neigh])[::-1]
-                neighbors = [int(neigh[order[0]]), int(neigh[order[1]])]
-            counts = {neighbors[0]: 0, neighbors[1]: 0}
-            for _ in range(int(trials)):
-                p = transition_probs(J, neighbors, m, theta)
-                idx = int(rng.choice(2, p=p))
-                counts[neighbors[idx]] += 1
-            ca = counts.get(a_next, 0)
-            cb = counts.get(b_next, 0)
-            return (int(ca), int(cb))
-
-        def update_memory(m, r, L, gamma, delta, kappa, dt):
-            m = np.asarray(m, dtype=np.float64)
-            r = np.asarray(r, dtype=np.float64)
-            return m + dt * (gamma * r - delta * m - kappa * (L @ m))
-
-        def compute_dimensionless_groups(eta, M0, gamma, R0, T, delta, kappa, L_scale):
-            Theta = eta * float(M0)
-            Da = (gamma * R0 * T) / float(M0) if M0 != 0 else np.inf
-            Lam = delta * T
-            Gam = (kappa * T) / (L_scale ** 2) if L_scale != 0 else np.inf
-            return (float(Theta), float(Da), float(Lam), float(Gam))
+build_graph_laplacian = _memory_module.build_graph_laplacian
+update_memory = _memory_module.update_memory
+transition_probs = _memory_module.transition_probs
+sample_next_neighbor = _memory_module.sample_next_neighbor
+compute_dimensionless_groups = _memory_module.compute_dimensionless_groups
+y_junction_adjacency = _memory_module.y_junction_adjacency
+collect_junction_choices = _memory_module.collect_junction_choices
 
 
 # ---------------------------
@@ -223,7 +136,7 @@ def run_junction_logistic(theta: float = 2.0, delta_m_values: Sequence[float] = 
     Junction logistic collapse: P(A) ≈ σ(Θ Δm)
 
     Why this maps to the derivation:
-    - In [derivation/memory_steering.md](derivation/memory_steering.md:1) the steering index is n=exp(η M).
+    - In [write_ups/memory_steering.md](write_ups/memory_steering.md:1) the steering index is n=exp(η M).
       At a fork, the two outgoing neighbors (A,B) inherit memory values (m_A, m_B). The softmax routing
       P(i→j) ∝ exp(Θ m_j) reduces to a binary logistic:
           P(A) = σ(Θ (m_A − m_B)) = σ(Θ Δm).
@@ -269,7 +182,7 @@ def polyline_curvature(pts: np.ndarray) -> np.ndarray:
           κ ≈ 2 sin(Δθ/2) / ℓ
       (endpoints are set to 0). This delivers a robust, grid-agnostic estimator of path bending.
 
-    - In the derivation [derivation/memory_steering.md](derivation/memory_steering.md:1), rays obey r'' = ∇_⊥ ln n = Θ ∇_⊥ m
+    - In the derivation [write_ups/memory_steering.md](write_ups/memory_steering.md:1), rays obey r'' = ∇_⊥ ln n = Θ ∇_⊥ m
       (with n=exp(Θ m)). The magnitude of r'' along a path is proportional to |∇m| with a slope ∝ Θ. This function
       yields the ⟨κ_path⟩ metric used in the curvature scaling test ⟨κ_path⟩ ∝ Θ |∇m|.
     """
@@ -940,16 +853,10 @@ def main():
                 self.streams = streams
             def write(self, data):
                 for s in self.streams:
-                    try:
-                        s.write(data)
-                    except Exception:
-                        pass
+                    s.write(data)
             def flush(self):
                 for s in self.streams:
-                    try:
-                        s.flush()
-                    except Exception:
-                        pass
+                    s.flush()
 
         with open(csv_out, "w") as f:
             tee = Tee(sys.stdout, f)

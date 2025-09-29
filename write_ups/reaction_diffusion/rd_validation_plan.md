@@ -2,11 +2,13 @@
 >
 > Author: Justin K. Lietz  
 > ORCID: 0009-0008-9028-1366
+> Contact: <justin@neuroca.ai>
+>
 > Date: August 9, 2025
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles.
-> Commercial use requires written permission from Justin K. Lietz.
+> Commercial use requires written permission from the author..
 >
 > See LICENSE file for full terms.
 
@@ -30,8 +32,8 @@ Canonical scripts
 
 Output locations
 
-- Figures → derivation/code/outputs/figures/
-- Logs → derivation/code/outputs/logs/
+- Figures → write_ups/code/outputs/figures/
+- Logs → write_ups/code/outputs/logs/
 - Filenames: {script name}_{timestamp}.{png,json}
 - Overridable via CLI: --outdir, --figure, --log
 
@@ -75,7 +77,7 @@ Dispersion test
 Reproducibility checklist
 
 - Set seed and record it in logs (scripts do this by default).
-- Confirm output JSON/PNG saved under derivation/code/outputs/{logs,figures}/.
+- Confirm output JSON/PNG saved under write_ups/code/outputs/{logs,figures}/.
 - Verify acceptance metrics in JSON:
   - Front speed: metrics.passed = true
   - Dispersion: metrics.passed = true
@@ -96,13 +98,13 @@ Provenance and tagging
 Expected artifacts
 
 - Figures:
-  - derivation/code/outputs/figures/rd_front_speed_experiment_<UTC>.png
-  - derivation/code/outputs/figures/rd_dispersion_experiment_<UTC>.png
+  - write_ups/code/outputs/figures/rd_front_speed_experiment_<UTC>.png
+  - write_ups/code/outputs/figures/rd_dispersion_experiment_<UTC>.png
 - Logs:
-  - derivation/code/outputs/logs/rd_front_speed_experiment_<UTC>.json
-  - derivation/code/outputs/logs/rd_dispersion_experiment_<UTC>.json
+  - write_ups/code/outputs/logs/rd_front_speed_experiment_<UTC>.json
+  - write_ups/code/outputs/logs/rd_dispersion_experiment_<UTC>.json
 - Optional sweep CSV:
-  - derivation/code/outputs/logs/rd_front_speed_sweep_<UTC>.csv
+  - write_ups/code/outputs/logs/rd_front_speed_sweep_<UTC>.csv
 
 Open questions / next refinements
 

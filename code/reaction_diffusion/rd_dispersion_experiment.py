@@ -3,7 +3,7 @@
 Copyright © 2025 Justin K. Lietz, Neuroca, Inc. All Rights Reserved.
 
 This research is protected under a dual-license to foster open academic
-research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from Justin K. Lietz.
+research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from the author..
 See LICENSE file for full terms.
 
 RD dispersion validation (linear regime) for Fisher-KPP:
@@ -20,11 +20,11 @@ Method:
   - Compare measured growth rates to σ_d(m) (primary) and σ_c(k) (reference).
 
 Outputs (defaults):
-  - derivation/code/outputs/figures/{script name}_{timestamp}.png
-  - derivation/code/outputs/logs/{script name}_{timestamp}.json
+  - write_ups/code/outputs/figures/{script name}_{timestamp}.png
+  - write_ups/code/outputs/logs/{script name}_{timestamp}.json
 
 CLI example:
-  python Prometheus_FUVDM/derivation/code/physics/rd_dispersion_experiment.py --N 1024 --L 200 --D 1.0 --r 0.25 --T 10 --cfl 0.2 --seed 42
+  python Prometheus_FUVDM/write_ups/code/physics/rd_dispersion_experiment.py --N 1024 --L 200 --D 1.0 --r 0.25 --T 10 --cfl 0.2 --seed 42
 """
 import argparse
 import json
@@ -251,14 +251,14 @@ def main():
     parser.add_argument("--m_max", type=int, default=64, help="Max mode index m to fit (clamped by N//2).")
     parser.add_argument("--fit_start", type=float, default=0.1, help="fractional start of fit window")
     parser.add_argument("--fit_end", type=float, default=0.4, help="fractional end of fit window")
-    parser.add_argument("--outdir", type=str, default=None, help="base output dir; defaults to derivation/code/outputs next to this script")
+    parser.add_argument("--outdir", type=str, default=None, help="base output dir; defaults to write_ups/code/outputs next to this script")
     parser.add_argument("--figure", type=str, default=None, help="override figure path; otherwise script_name_timestamp.png in outdir/figures")
     parser.add_argument("--log", type=str, default=None, help="override log path; otherwise script_name_timestamp.json in outdir/logs")
     args = parser.parse_args()
 
     script_name = os.path.splitext(os.path.basename(__file__))[0]
     tstamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
-    # Follow repo convention: write to derivation/code/outputs/{figures,logs}/reaction_diffusion
+    # Follow repo convention: write to write_ups/code/outputs/{figures,logs}/reaction_diffusion
     default_base = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "outputs"))
     base_outdir = os.path.abspath(args.outdir) if args.outdir else default_base
     fig_dir = os.path.join(base_outdir, "figures", "reaction_diffusion")

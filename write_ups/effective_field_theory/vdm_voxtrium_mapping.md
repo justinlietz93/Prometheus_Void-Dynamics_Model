@@ -3,11 +3,13 @@
 >
 > Author: Justin K. Lietz  
 > ORCID: 0009-0008-9028-1366
+> Contact: <justin@neuroca.ai>
+>
 > Date: August 8, 2025
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles.
-> Commercial use requires written permission from Justin K. Lietz.
+> Commercial use requires written permission from the author..
 >
 > See LICENSE file for full terms.
 ---
@@ -17,11 +19,11 @@ Provide a concrete, units-rigorous bridge between the bottom-up VDM void scalar 
 
 References
 
-- [derivation/discrete_to_continuum.md](derivation/discrete_to_continuum.md:1)
-- [derivation/kinetic_term_derivation.md](derivation/kinetic_term_derivation.md:1)
-- [derivation/effective_field_theory_approach.md](derivation/effective_field_theory_approach.md:1)
-- [derivation/discrete_conservation.md](derivation/discrete_conservation.md:1)
-- [derivation/symmetry_analysis.md](derivation/symmetry_analysis.md:1)
+- [write_ups/discrete_to_continuum.md](write_ups/discrete_to_continuum.md:1)
+- [write_ups/kinetic_term_derivation.md](write_ups/kinetic_term_derivation.md:1)
+- [write_ups/effective_field_theory_approach.md](write_ups/effective_field_theory_approach.md:1)
+- [write_ups/discrete_conservation.md](write_ups/discrete_conservation.md:1)
+- [write_ups/symmetry_analysis.md](write_ups/symmetry_analysis.md:1)
 - [voxtrium_Overview.md](voxtrium_Overview.md:1)
 
 ---
@@ -30,10 +32,10 @@ References
 
 Known (VDM side)
 
-- Discrete on-site law:  dW/dt = (α − β) W − α W^2  ([derivation/symmetry_analysis.md](derivation/symmetry_analysis.md:20-21)).
+- Discrete on-site law:  dW/dt = (α − β) W − α W^2  ([write_ups/symmetry_analysis.md](write_ups/symmetry_analysis.md:20-21)).
 - Canonical RD mapping:  ∂tφ = D ∇²φ + r φ − u φ²  [optional −λ φ³].
-  EFT context only (future work):  □φ + α φ² − (α − β) φ = 0, with VEV v = 1 − β/α and m_eff² = α − β (see [derivation/discrete_to_continuum.md](derivation/discrete_to_continuum.md:120-127), [derivation/discrete_to_continuum.md](derivation/discrete_to_continuum.md:171-188), [derivation/discrete_to_continuum.md](derivation/discrete_to_continuum.md:219-228)).
-- Spatial kinetic normalization reads off a propagation speed `c^2 = 2 J a^2` (per-site convention) or `c^2 = \kappa a^2` with `\kappa = 2J`; there is no need to fix `J a^2`. See continuum normalization in [derivation/kinetic_term_derivation.md](derivation/kinetic_term_derivation.md:82-89).
+  EFT context only (future work):  □φ + α φ² − (α − β) φ = 0, with VEV v = 1 − β/α and m_eff² = α − β (see [write_ups/discrete_to_continuum.md](write_ups/discrete_to_continuum.md:120-127), [write_ups/discrete_to_continuum.md](write_ups/discrete_to_continuum.md:171-188), [write_ups/discrete_to_continuum.md](write_ups/discrete_to_continuum.md:219-228)).
+- Spatial kinetic normalization reads off a propagation speed `c^2 = 2 J a^2` (per-site convention) or `c^2 = \kappa a^2` with `\kappa = 2J`; there is no need to fix `J a^2`. See continuum normalization in [write_ups/kinetic_term_derivation.md](write_ups/kinetic_term_derivation.md:82-89).
 
 Known (Voxtrium side)
 
@@ -61,7 +63,7 @@ Define scale factors
 
 - Field scale φ_0 [GeV]
 - Time scale τ [GeV^−1]
-- Length scale a [GeV^−1] (also the lattice spacing used in [derivation/kinetic_term_derivation.md](derivation/kinetic_term_derivation.md:48-66))
+- Length scale a [GeV^−1] (also the lattice spacing used in [write_ups/kinetic_term_derivation.md](write_ups/kinetic_term_derivation.md:48-66))
 
 Dimensionalization map
 
@@ -202,7 +204,7 @@ This identifies a consistent translation between field excitations and Voxtrium�
 
 (E) Conservation/invariants
 
-- Retain the exact on-site invariant Q_VDM for diagnostics ([derivation/symmetry_analysis.md](derivation/symmetry_analysis.md:141-148)); for the full system rely on covariant conservation with J^ν. Explore hidden symmetries/Lyapunov structure for the discrete network to derive a true flux-form conservation law ([derivation/discrete_conservation.md](derivation/discrete_conservation.md:165-179)).
+- Retain the exact on-site invariant Q_VDM for diagnostics ([write_ups/symmetry_analysis.md](write_ups/symmetry_analysis.md:141-148)); for the full system rely on covariant conservation with J^ν. Explore hidden symmetries/Lyapunov structure for the discrete network to derive a true flux-form conservation law ([write_ups/discrete_conservation.md](write_ups/discrete_conservation.md:165-179)).
 
 ---
 
@@ -225,8 +227,8 @@ These values are placeholders for calibration; they demonstrate the algebraic co
 - [ ] Calibrate (φ_0, τ, a) to match a target m_eff and a low-velocity SIDM cross section, then re-express R_* and compare to [voxtrium_Overview.md](voxtrium_Overview.md:192-211).
 - [ ] Implement K_ret in the simulation/continuum solver; verify causal support and unit normalization against [voxtrium_Overview.md](voxtrium_Overview.md:231-235).
 - [ ] Define z-maps (z_1 = c_Ω Ξ, z_2 from fitted coupling scale) and validate p_i softmax stability in homogeneous vs. structured epochs ([voxtrium_Overview.md](voxtrium_Overview.md:236-239)).
-- [ ] Use [derivation/effective_field_theory_approach.md](derivation/effective_field_theory_approach.md:60-85) to include screening (λ φ^4) and check its impact on m_φ ~ 1/R_* and on (σ_T/m)(v).
-- [ ] Extend symmetry/Lyapunov search for the full discrete law to identify a flux-form conserved quantity, if it exists ([derivation/discrete_conservation.md](derivation/discrete_conservation.md:175-179)).
+- [ ] Use [write_ups/effective_field_theory_approach.md](write_ups/effective_field_theory_approach.md:60-85) to include screening (λ φ^4) and check its impact on m_φ ~ 1/R_* and on (σ_T/m)(v).
+- [ ] Extend symmetry/Lyapunov search for the full discrete law to identify a flux-form conserved quantity, if it exists ([write_ups/discrete_conservation.md](write_ups/discrete_conservation.md:175-179)).
 
 ---
 

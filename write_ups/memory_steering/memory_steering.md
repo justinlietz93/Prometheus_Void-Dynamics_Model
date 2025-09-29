@@ -3,11 +3,13 @@
 >
 > Author: Justin K. Lietz  
 > ORCID: 0009-0008-9028-1366
+> Contact: <justin@neuroca.ai>
+>
 > Date: August 9, 2025
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles.
-> Commercial use requires written permission from Justin K. Lietz.
+> Commercial use requires written permission from the author..
 >
 > See LICENSE file for full terms.
 ---
@@ -20,10 +22,10 @@ Establish a rigorous, minimal theory of how slowly stored structure (“memory�
 - Admits a clean graph discretization aligned with our runtime.
 
 Cross-refs:
-- Continuum φ-EOM, vacuum, mass: [derivation/discrete_to_continuum.md](derivation/discrete_to_continuum.md:121-128)
-- Kinetic normalization from a discrete action: [derivation/kinetic_term_derivation.md](derivation/kinetic_term_derivation.md:121-128)
-- Units/FRW/action embedding and retarded kernels: [derivation/VDM_voxtrium_mapping.md](derivation/VDM_voxtrium_mapping.md:106-121)
-- Source note (steering framework): [derivation/voxtrium/voxtrium_message.txt](derivation/voxtrium/voxtrium_message.txt:1)
+- Continuum φ-EOM, vacuum, mass: [write_ups/discrete_to_continuum.md](write_ups/discrete_to_continuum.md:121-128)
+- Kinetic normalization from a discrete action: [write_ups/kinetic_term_derivation.md](write_ups/kinetic_term_derivation.md:121-128)
+- Units/FRW/action embedding and retarded kernels: [write_ups/VDM_voxtrium_mapping.md](write_ups/VDM_voxtrium_mapping.md:106-121)
+- Source note (steering framework): [write_ups/voxtrium/voxtrium_message.txt](write_ups/voxtrium/voxtrium_message.txt:1)
 
 ---
 
@@ -116,11 +118,11 @@ Plot curvature vs. \( \Theta|\nabla m| \); curves overlay across preparations if
   \[
   \partial_t \phi \;=\; D\,\nabla^2 \phi \;+\; r\,\phi \;-\; u\,\phi^2 \;\;[\;-\;\lambda\,\phi^3\;\text{optional}\;],\qquad \phi_\star = r/u\ \text{(or stabilized solution if }\lambda>0\text{)}.
   \]
-  Note: EFT/KG formulations and \(m_{\rm eff}\) belong to [derivation/effective_field_theory_approach.md](effective_field_theory_approach.md:1) and should be used only in EFT contexts.
+  Note: EFT/KG formulations and \(m_{\rm eff}\) belong to [write_ups/effective_field_theory_approach.md](effective_field_theory_approach.md:1) and should be used only in EFT contexts.
 
 - M-sector (slow routing bias): steering law and memory PDE as above.
 
-These sectors are orthogonal: M biases routing geometry; φ determines propagation and excitations. Embedding in FRW bookkeeping with covariant conservation and retarded kernels remains consistent (see [derivation/VDM_voxtrium_mapping.md](derivation/VDM_voxtrium_mapping.md:106-121)).
+These sectors are orthogonal: M biases routing geometry; φ determines propagation and excitations. Embedding in FRW bookkeeping with covariant conservation and retarded kernels remains consistent (see [write_ups/VDM_voxtrium_mapping.md](write_ups/VDM_voxtrium_mapping.md:106-121)).
 
 ---
 
@@ -155,7 +157,7 @@ Regress \( \kappa_{\rm path} \) vs. \( \Theta\,|\nabla m| \), estimating \( |\na
 
 ## 8. Units and Mapping to the Existing GeV Scaffold
 
-Adopt the same \( (L,T)=(a,\tau) \) rulers as the φ-map in [derivation/VDM_voxtrium_mapping.md](derivation/VDM_voxtrium_mapping.md:44-80). Choose \( M_0 \) as a characteristic memory change (e.g., an STDP weight shift) and \( R_0 \) as a characteristic co-activation rate so that:
+Adopt the same \( (L,T)=(a,\tau) \) rulers as the φ-map in [write_ups/VDM_voxtrium_mapping.md](write_ups/VDM_voxtrium_mapping.md:44-80). Choose \( M_0 \) as a characteristic memory change (e.g., an STDP weight shift) and \( R_0 \) as a characteristic co-activation rate so that:
 \[
 \Theta=\eta M_0,\quad D_a=\frac{\gamma R_0 \tau}{M_0},\quad \Lambda=\delta \tau,\quad \Gamma=\frac{\kappa \tau}{a^2}.
 \]
@@ -191,9 +193,9 @@ To test the theory properly:
 ## 11. Integration With Existing Derivations
 
 - φ-sector (canonical RD): \(\partial_t \phi = D\nabla^2\phi + r\phi - u\phi^2\) [optional \(-\lambda\phi^3\) stabilization]. Homogeneous fixed point: \(\phi_\star = r/u\) (or stabilized root if \(\lambda>0\)).
-- EFT context (future work only): if using second-order dynamics, \(\Box\phi + \alpha\phi^2 - (\alpha-\beta)\phi=0\) with \(v=1-\beta/\alpha\), \(m_{\rm eff}^2=\alpha-\beta\). Use these only within [derivation/effective_field_theory/effective_field_theory_approach.md](Prometheus_FUVDM/derivation/effective_field_theory/effective_field_theory_approach.md:1).
+- EFT context (future work only): if using second-order dynamics, \(\Box\phi + \alpha\phi^2 - (\alpha-\beta)\phi=0\) with \(v=1-\beta/\alpha\), \(m_{\rm eff}^2=\alpha-\beta\). Use these only within [write_ups/effective_field_theory/effective_field_theory_approach.md](Prometheus_FUVDM/write_ups/effective_field_theory/effective_field_theory_approach.md:1).
 - Do not back-solve \((\alpha,\beta)\) from \((v,m_{\rm eff})\) in the RD narrative. For EFT use, the relation \(\alpha={m_{\rm eff}^2}/{v}\), \(\beta={(1-v)}{m_{\rm eff}^2}/{v}\) may be referenced in that file.
-- Memory \( M \) augments routing only; it does not modify the on-site ODE used to derive \( Q_{\rm VDM} \), the on-site invariant in [derivation/foundations/symmetry_analysis.md](Prometheus_FUVDM/derivation/foundations/symmetry_analysis.md:141-148).
+- Memory \( M \) augments routing only; it does not modify the on-site ODE used to derive \( Q_{\rm VDM} \), the on-site invariant in [write_ups/foundations/symmetry_analysis.md](Prometheus_FUVDM/write_ups/foundations/symmetry_analysis.md:141-148).
 
 ---
 
@@ -219,10 +221,10 @@ This appendix adds a **routing** layer governed by stored structure. It does not
 
 ## 14. Provenance and Citations
 
-- Steering & memory PDE (source): [supporting_work/voxtrium/20250809_voxtrium_message_2.md](Prometheus_FUVDM/derivation/supporting_work/voxtrium/20250809_voxtrium_message_2.md:1)
+- Steering & memory PDE (source): [supporting_work/voxtrium/20250809_voxtrium_message_2.md](Prometheus_FUVDM/write_ups/supporting_work/voxtrium/20250809_voxtrium_message_2.md:1)
 - φ-EFT continuum, vacuum, mass invariants:
-  [derivation/foundations/discrete_to_continuum.md](Prometheus_FUVDM/derivation/foundations/discrete_to_continuum.md:121-128)
+  [write_ups/foundations/discrete_to_continuum.md](Prometheus_FUVDM/write_ups/foundations/discrete_to_continuum.md:121-128)
 - Kinetic/action derivation ( \( c^2=2Ja^2 \) ):
-  [derivation/effective_field_theory/kinetic_term_derivation.md](Prometheus_FUVDM/derivation/effective_field_theory/kinetic_term_derivation.md:121-128)
+  [write_ups/effective_field_theory/kinetic_term_derivation.md](Prometheus_FUVDM/write_ups/effective_field_theory/kinetic_term_derivation.md:121-128)
 - Units/FRW/retarded kernels:
-  [derivation/effective_field_theory/VDM_voxtrium_mapping.md](Prometheus_FUVDM/derivation/effective_field_theory/VDM_voxtrium_mapping.md:106-121)
+  [write_ups/effective_field_theory/VDM_voxtrium_mapping.md](Prometheus_FUVDM/write_ups/effective_field_theory/VDM_voxtrium_mapping.md:106-121)

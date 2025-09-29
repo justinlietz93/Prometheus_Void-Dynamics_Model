@@ -1,2 +1,33 @@
+# Core numerical stack used by:
+# - code/conservation_law/qfum_validate.py
+# - code/fluid_dynamics/fluids/lbm2d.py
+# - code/fluid_dynamics/lid_cavity_benchmark.py
+# - code/fluid_dynamics/taylor_green_benchmark.py
+# - code/fluid_dynamics/telemetry/walkers.py
+# - code/memory_steering/memory_steering.py
+# - code/memory_steering/memory_steering_acceptance.py
+# - code/memory_steering/memory_steering_experiments.py
+# - code/memory_steering/plot_memory_steering.py
+# - code/reaction_diffusion/rd_dispersion_experiment.py
+# - code/reaction_diffusion/rd_front_speed_experiment.py
 numpy
+
+# Plotting support used by:
+# - code/conservation_law/qfum_validate.py
+# - code/fluid_dynamics/lid_cavity_benchmark.py
+# - code/fluid_dynamics/taylor_green_benchmark.py
+# - code/memory_steering/memory_steering_acceptance.py
+# - code/memory_steering/memory_steering_experiments.py
+# - code/memory_steering/plot_memory_steering.py
+# - code/reaction_diffusion/rd_dispersion_experiment.py
+# - code/reaction_diffusion/rd_front_speed_experiment.py
 matplotlib
+
+# Optional void-dynamics integration (private modules) referenced by:
+# - code/fluid_dynamics/fluids/lbm2d.py
+# - code/memory_steering/memory_steering_experiments.py
+# Install separately or add to PYTHONPATH if available.
+# VDM_rt
+# VDM_Void_Equations
+# VDM_Void_Debt_Modulation
+# VDM_Demo_original

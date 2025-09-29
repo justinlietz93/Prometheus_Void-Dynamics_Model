@@ -69,7 +69,7 @@ This repository is available under two distinct licensing tracks:
 
 ### Commercial Use Requirements
 
-**WRITTEN PERMISSION REQUIRED**: Any commercial, for-profit, or monetized use requires explicit written permission and separate licensing agreement from Justin K. Lietz.
+**WRITTEN PERMISSION REQUIRED**: Any commercial, for-profit, or monetized use requires explicit written permission and separate licensing agreement from the author..
 
 ### Commercial Applications Include:
 - Product development and commercialization
