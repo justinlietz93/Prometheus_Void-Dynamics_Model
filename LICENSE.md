@@ -109,11 +109,11 @@ This work contains multiple distinct, patentable inventions and processes:
 
 ### For Academic Research License
 - **Automatic**: Academic use is automatically granted under the terms above
-- **Questions**: Contact justin@neuroca.dev for clarification on academic use boundaries
+- **Questions**: Contact justin@neuroca.ai for clarification on academic use boundaries
 
 ### For Commercial License  
 - **Required**: All commercial use requires written permission and licensing agreement
-- **Contact**: Justin K. Lietz, Neuroca, Inc - justin@neuroca.dev
+- **Contact**: Justin K. Lietz, Neuroca, Inc - justin@neuroca.ai
 - **Process**: Submit detailed use case description and proposed commercial application
 
 ## ENFORCEMENT AND LEGAL
