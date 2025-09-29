@@ -13,8 +13,8 @@ Theory:
     Minimal pulled-front speed c_th = 2 * sqrt(D * r)
 
 Outputs (defaults):
-    - write_ups/code/outputs/figures/{script name}_{timestamp}.png
-    - write_ups/code/outputs/logs/{script name}_{timestamp}.json
+    - figures/reaction_diffusion/<timestamp>_rd_front_speed_experiment.png
+    - logs/reaction_diffusion/<timestamp>_rd_front_speed_experiment.json
 
 CLI example:
   python Prometheus_VDM/write_ups/code/physics/rd_front_speed_experiment.py \
@@ -24,11 +24,19 @@ import argparse
 import json
 import math
 import os
+import sys
 import time
+from pathlib import Path
 from typing import Tuple, Optional
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+CODE_ROOT = Path(__file__).resolve().parents[1]
+if str(CODE_ROOT) not in sys.path:
+    sys.path.append(str(CODE_ROOT))
+
+import common.io_paths as io_paths
 
 
 def laplacian_neumann(u: np.ndarray, dx: float) -> np.ndarray:
@@ -301,7 +309,7 @@ def run_sim(
     }
 
 
-def plot_and_save(data: dict, figure_path: str):
+def plot_and_save(data: dict, figure_path):
     x = data["x"]
     snapshots = data["snapshots"]
     snapshot_times = data["snapshot_times"]
@@ -339,8 +347,9 @@ def plot_and_save(data: dict, figure_path: str):
     ax2.set_ylabel("x_front")
     ax2.legend()
     plt.tight_layout()
-    os.makedirs(os.path.dirname(figure_path), exist_ok=True)
-    plt.savefig(figure_path, dpi=150)
+    path = Path(figure_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(path, dpi=150)
     plt.close()
 
 
@@ -364,17 +373,19 @@ def main():
     args = parser.parse_args()
 
     # Compute output paths based on script name and UTC timestamp
-    script_name = os.path.splitext(os.path.basename(__file__))[0]
-    tstamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
-    # Follow repo convention: write to write_ups/code/outputs/{figures,logs}/reaction_diffusion
-    default_base = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "outputs"))
-    base_outdir = os.path.abspath(args.outdir) if args.outdir else default_base
-    fig_dir = os.path.join(base_outdir, "figures", "reaction_diffusion")
-    log_dir = os.path.join(base_outdir, "logs", "reaction_diffusion")
-    figure_path = args.figure if args.figure else os.path.join(fig_dir, f"{script_name}_{tstamp}.png")
-    log_path = args.log if args.log else os.path.join(log_dir, f"{script_name}_{tstamp}.json")
-    os.makedirs(os.path.dirname(figure_path), exist_ok=True)
-    os.makedirs(os.path.dirname(log_path), exist_ok=True)
+    script_name = Path(__file__).stem
+    domain = "reaction_diffusion"
+    slug = script_name
+
+    original_fig_root = io_paths.FIGURES_ROOT
+    original_log_root = io_paths.LOGS_ROOT
+    if args.outdir:
+        base_outdir = Path(os.path.expandvars(args.outdir)).expanduser()
+        io_paths.FIGURES_ROOT = base_outdir / "figures"
+        io_paths.LOGS_ROOT = base_outdir / "logs"
+
+    figure_override = Path(os.path.expandvars(args.figure)).expanduser() if args.figure else None
+    log_override = Path(os.path.expandvars(args.log)).expanduser() if args.log else None
 
     t0 = time.time()
     data = run_sim(
@@ -389,15 +400,19 @@ def main():
     acceptance_rel_err = 0.05
     acceptance_r2 = 0.98
     passed = (data["rel_err"] <= acceptance_rel_err) and (np.isfinite(data["r2"]) and data["r2"] >= acceptance_r2)
-    if not passed:
-        if args.figure is None:
-            figure_path = os.path.join(fig_dir, "failed_runs", f"{script_name}_{tstamp}.png")
-        if args.log is None:
-            log_path = os.path.join(log_dir, "failed_runs", f"{script_name}_{tstamp}.json")
-    os.makedirs(os.path.dirname(figure_path), exist_ok=True)
-    os.makedirs(os.path.dirname(log_path), exist_ok=True)
+    if figure_override is not None:
+        fig_path = figure_override
+        fig_path.parent.mkdir(parents=True, exist_ok=True)
+    else:
+        fig_path = io_paths.figure_path(domain, slug, failed=not passed)
 
-    plot_and_save(data, figure_path)
+    if log_override is not None:
+        log_path_obj = log_override
+        log_path_obj.parent.mkdir(parents=True, exist_ok=True)
+    else:
+        log_path_obj = io_paths.log_path(domain, slug, failed=not passed)
+
+    plot_and_save(data, fig_path)
 
     payload = {
         "theory": "Fisher-KPP front speed c=2*sqrt(D*r)",
@@ -419,23 +434,23 @@ def main():
             "steps": data["steps"],
             "elapsed_sec": elapsed,
             "acceptance_rel_err": 0.05,
-            "passed": (data["rel_err"] <= 0.05) and (np.isfinite(data["r2"]) and data["r2"] >= 0.98),
+            "passed": passed,
             "c_meas_grad": data.get("c_meas_grad", float("nan")),
             "c_abs_grad": data.get("c_abs_grad", float("nan")),
             "rel_err_grad": data.get("rel_err_grad", float("nan")),
             "r2_grad": data.get("r2_grad", float("nan"))
         },
         "outputs": {
-            "figure": figure_path
+            "figure": str(fig_path),
+            "log": str(log_path_obj),
         },
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
-    with open(log_path, "w", encoding="utf-8") as f:
-        json.dump(payload, f, indent=2)
+    io_paths.write_log(log_path_obj, payload)
 
     print(json.dumps({
-        "figure": figure_path,
-        "log": log_path,
+        "figure": str(fig_path),
+        "log": str(log_path_obj),
         "c_meas": data["c_meas"],
         "c_abs": data["c_abs"],
         "c_th": data["c_th"],
@@ -446,6 +461,9 @@ def main():
         "rel_err_grad": data.get("rel_err_grad"),
         "r2_grad": data.get("r2_grad")
     }, indent=2))
+
+    io_paths.FIGURES_ROOT = original_fig_root
+    io_paths.LOGS_ROOT = original_log_root
 
 
 if __name__ == "__main__":

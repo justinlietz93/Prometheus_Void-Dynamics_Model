@@ -20,8 +20,8 @@ Method:
   - Compare measured growth rates to σ_d(m) (primary) and σ_c(k) (reference).
 
 Outputs (defaults):
-  - write_ups/code/outputs/figures/{script name}_{timestamp}.png
-  - write_ups/code/outputs/logs/{script name}_{timestamp}.json
+  - figures/reaction_diffusion/<timestamp>_rd_dispersion_experiment.png
+  - logs/reaction_diffusion/<timestamp>_rd_dispersion_experiment.json
 
 CLI example:
   python Prometheus_VDM/write_ups/code/physics/rd_dispersion_experiment.py --N 1024 --L 200 --D 1.0 --r 0.25 --T 10 --cfl 0.2 --seed 42
@@ -30,11 +30,19 @@ import argparse
 import json
 import math
 import os
+import sys
 import time
+from pathlib import Path
 from typing import Tuple, List, Dict
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+CODE_ROOT = Path(__file__).resolve().parents[1]
+if str(CODE_ROOT) not in sys.path:
+    sys.path.append(str(CODE_ROOT))
+
+import common.io_paths as io_paths
 
 
 def laplacian_periodic(u: np.ndarray, dx: float) -> np.ndarray:
@@ -212,7 +220,7 @@ def analyze_dispersion(data: Dict, D: float, r: float, L: float, m_max: int, fit
     }
 
 
-def plot_and_save_dispersion(analysis: Dict, figure_path: str, title: str = "RD dispersion (linear regime)"):
+def plot_and_save_dispersion(analysis: Dict, figure_path, title: str = "RD dispersion (linear regime)"):
     m_vals = np.array(analysis["m_vals"], dtype=int)
     k_vals = np.array(analysis["k_vals"], dtype=float)
     sig_meas = np.array(analysis["sigma_meas"], dtype=float)
@@ -232,8 +240,9 @@ def plot_and_save_dispersion(analysis: Dict, figure_path: str, title: str = "RD 
     ax.set_title(title)
     ax.legend()
     plt.tight_layout()
-    os.makedirs(os.path.dirname(figure_path), exist_ok=True)
-    plt.savefig(figure_path, dpi=150)
+    path = Path(figure_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(path, dpi=150)
     plt.close()
 
 
@@ -256,24 +265,25 @@ def main():
     parser.add_argument("--log", type=str, default=None, help="override log path; otherwise script_name_timestamp.json in outdir/logs")
     args = parser.parse_args()
 
-    script_name = os.path.splitext(os.path.basename(__file__))[0]
-    tstamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
-    # Follow repo convention: write to write_ups/code/outputs/{figures,logs}/reaction_diffusion
-    default_base = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "outputs"))
-    base_outdir = os.path.abspath(args.outdir) if args.outdir else default_base
-    fig_dir = os.path.join(base_outdir, "figures", "reaction_diffusion")
-    log_dir = os.path.join(base_outdir, "logs", "reaction_diffusion")
-    figure_path = args.figure if args.figure else os.path.join(fig_dir, f"{script_name}_{tstamp}.png")
-    log_path = args.log if args.log else os.path.join(log_dir, f"{script_name}_{tstamp}.json")
-    os.makedirs(os.path.dirname(figure_path), exist_ok=True)
-    os.makedirs(os.path.dirname(log_path), exist_ok=True)
+    script_name = Path(__file__).stem
+    domain = "reaction_diffusion"
+    slug = script_name
+
+    original_fig_root = io_paths.FIGURES_ROOT
+    original_log_root = io_paths.LOGS_ROOT
+    if args.outdir:
+        base_outdir = Path(os.path.expandvars(args.outdir)).expanduser()
+        io_paths.FIGURES_ROOT = base_outdir / "figures"
+        io_paths.LOGS_ROOT = base_outdir / "logs"
+
+    figure_override = Path(os.path.expandvars(args.figure)).expanduser() if args.figure else None
+    log_override = Path(os.path.expandvars(args.log)).expanduser() if args.log else None
 
     t0 = time.time()
     sim = run_linear_sim(args.N, args.L, args.D, args.r, args.T, args.cfl, args.seed, amp0=args.amp0, record_slices=args.record)
     analysis = analyze_dispersion(sim, args.D, args.r, args.L, args.m_max, (args.fit_start, args.fit_end))
     elapsed = time.time() - t0
 
-    # Acceptance criteria (conservative for multi-mode fit)
     acceptance = {
         "med_rel_err_max": 0.10,
         "r2_array_min": 0.98,
@@ -282,24 +292,20 @@ def main():
         (math.isfinite(analysis["med_rel_err"]) and analysis["med_rel_err"] <= acceptance["med_rel_err_max"]) and
         (math.isfinite(analysis["r2_array"]) and analysis["r2_array"] >= acceptance["r2_array_min"])
     )
-    if not passed:
-        if args.figure is None:
-            figure_path = os.path.join(fig_dir, "failed_runs", f"{script_name}_{tstamp}.png")
-        if args.log is None:
-            log_path = os.path.join(log_dir, "failed_runs", f"{script_name}_{tstamp}.json")
-    os.makedirs(os.path.dirname(figure_path), exist_ok=True)
-    os.makedirs(os.path.dirname(log_path), exist_ok=True)
-    plot_and_save_dispersion(analysis, figure_path, title=f"RD dispersion (linear): D={args.D}, r={args.r}")
 
-    # Acceptance criteria (conservative for multi-mode fit)
-    acceptance = {
-        "med_rel_err_max": 0.10,
-        "r2_array_min": 0.98,
-    }
-    passed = (
-        (math.isfinite(analysis["med_rel_err"]) and analysis["med_rel_err"] <= acceptance["med_rel_err_max"]) and
-        (math.isfinite(analysis["r2_array"]) and analysis["r2_array"] >= acceptance["r2_array_min"])
-    )
+    if figure_override is not None:
+        figure_path_obj = figure_override
+        figure_path_obj.parent.mkdir(parents=True, exist_ok=True)
+    else:
+        figure_path_obj = io_paths.figure_path(domain, slug, failed=not passed)
+
+    if log_override is not None:
+        log_path_obj = log_override
+        log_path_obj.parent.mkdir(parents=True, exist_ok=True)
+    else:
+        log_path_obj = io_paths.log_path(domain, slug, failed=not passed)
+
+    plot_and_save_dispersion(analysis, figure_path_obj, title=f"RD dispersion (linear): D={args.D}, r={args.r}")
 
     payload = {
         "theory": {
@@ -329,22 +335,25 @@ def main():
             "good_mask": analysis["good_mask"],
         },
         "outputs": {
-            "figure": figure_path
+            "figure": str(figure_path_obj),
+            "log": str(log_path_obj),
         },
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "elapsed_sec": elapsed,
     }
 
-    with open(log_path, "w", encoding="utf-8") as f:
-        json.dump(payload, f, indent=2)
+    io_paths.write_log(log_path_obj, payload)
 
     print(json.dumps({
-        "figure": figure_path,
-        "log": log_path,
+        "figure": str(figure_path_obj),
+        "log": str(log_path_obj),
         "med_rel_err": payload["metrics"]["med_rel_err"],
         "r2_array": payload["metrics"]["r2_array"],
         "passed": payload["metrics"]["passed"],
     }, indent=2))
+
+    io_paths.FIGURES_ROOT = original_fig_root
+    io_paths.LOGS_ROOT = original_log_root
 
 
 if __name__ == "__main__":

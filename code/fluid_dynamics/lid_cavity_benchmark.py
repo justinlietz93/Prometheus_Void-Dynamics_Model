@@ -14,8 +14,8 @@ CHANGE REASON:
 - Ensures JSON uses native Python types to avoid numpy serialization issues.
 
 Outputs (defaults):
-- Figures → write_ups/code/outputs/figures/{script name}_{timestamp}.png
-- Logs    → write_ups/code/outputs/logs/{script name}_{timestamp}.json
+- Figures → figures/fluid_dynamics/<timestamp>_lid_cavity_benchmark.png
+- Logs    → logs/fluid_dynamics/<timestamp>_lid_cavity_benchmark.json
 """
 
 import argparse
@@ -30,6 +30,8 @@ import sys
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+import common.io_paths as io_paths
 
 
 def _add_repo_root() -> Path:
@@ -452,17 +454,15 @@ def main():
     if Ma >= 0.1:
         print("[bench][warn] Ma >= 0.1; BGK low-Mach polynomial may be inaccurate/unstable.")
 
-    # Output routing (match RD harness)
+    # Output routing via shared helpers
     script_name = os.path.splitext(os.path.basename(__file__))[0]
-    tstamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
-    default_base = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "outputs"))
-    base_outdir = os.path.abspath(args.outdir) if args.outdir else default_base
-    fig_dir = os.path.join(base_outdir, "figures", "fluid_dynamics")
-    log_dir = os.path.join(base_outdir, "logs", "fluid_dynamics")
-    os.makedirs(fig_dir, exist_ok=True)
-    os.makedirs(log_dir, exist_ok=True)
-    figure_path = os.path.join(fig_dir, f"{script_name}_{tstamp}.png")
-    log_path = os.path.join(log_dir, f"{script_name}_{tstamp}.json")
+    domain = "fluid_dynamics"
+    original_fig_root = io_paths.FIGURES_ROOT
+    original_log_root = io_paths.LOGS_ROOT
+    if args.outdir:
+        base_override = Path(os.path.expandvars(args.outdir)).expanduser()
+        io_paths.FIGURES_ROOT = base_override / "figures"
+        io_paths.LOGS_ROOT = base_override / "logs"
 
     # Run simulation loop and record interior divergence after warmup
     t0 = time.time()
@@ -577,13 +577,12 @@ def main():
     # Final applied lid speed (controller may have adjusted)
     U_final = float(tuner.U) if ('tuner' in locals() and tuner is not None) else float(args.U_lid)
 
+    slug = script_name
+    fig_path = io_paths.figure_path(domain, slug, failed=not passed)
+    log_path = io_paths.log_path(domain, slug, failed=not passed)
+
     # Route outputs: failed runs go to .../failed_runs/, passes to base dirs
-    out_fig_dir = fig_dir if passed else os.path.join(fig_dir, "failed_runs")
-    out_log_dir = log_dir if passed else os.path.join(log_dir, "failed_runs")
-    os.makedirs(out_fig_dir, exist_ok=True)
-    os.makedirs(out_log_dir, exist_ok=True)
-    figure_path = os.path.join(out_fig_dir, f"{script_name}_{tstamp}.png")
-    log_path = os.path.join(out_log_dir, f"{script_name}_{tstamp}.json")
+    # Directory creation handled by io_paths
 
     # Refresh macroscopic fields for plotting
     sim.moments()
@@ -735,7 +734,7 @@ def main():
     ax1.set_ylim(0, ny - 1)
 
     fig.suptitle(f"Lid-driven cavity (origin={origin})", fontsize=12)
-    fig.savefig(figure_path, dpi=180)
+    fig.savefig(fig_path, dpi=180)
     plt.close('all')
 
     # Measured (end-of-run) dimensionless numbers based on fields
@@ -802,13 +801,15 @@ def main():
                 "W_mean_last": float(getattr(sim, "last_W_mean", 0.0))
             }
         },
-        "outputs": {"figure": figure_path},
+        "outputs": {"figure": str(fig_path), "log": str(log_path)},
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
-    with open(log_path, "w", encoding="utf-8") as f:
-        json.dump(payload, f, indent=2)
+    io_paths.write_log(log_path, payload)
 
     print(json.dumps(payload["metrics"], indent=2))
+
+    io_paths.FIGURES_ROOT = original_fig_root
+    io_paths.LOGS_ROOT = original_log_root
 
 
 if __name__ == "__main__":
