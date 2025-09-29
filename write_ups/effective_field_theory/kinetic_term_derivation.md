@@ -19,7 +19,7 @@
 
 As outlined in our Effective Field Theory (EFT) roadmap, we must rigorously derive the coefficients of the general Lagrangian from the underlying discrete VDM simulation. Earlier work separated temporal and spatial (interaction) contributions.
 
-The objective of this document is to derive the kinetic prefactor (wave-function normalization) $Z(\phi)$ and show it is a constant, $Z(\phi)=\tfrac{1}{2}$, consistent with a canonical Klein–Gordon–type scalar field. We start from the discrete temporal “kinetic energy” and nearest-neighbor interaction, take the continuum limit, and match to the continuum Lagrangian density.
+The objective of this document is to derive the kinetic prefactor (wave-function normalization) $Z(\phi)$ and show it is a constant, $Z(\phi)=\tfrac{1}{2}$, consistent with a canonical Klein-Gordon-type scalar field. We start from the discrete temporal “kinetic energy” and nearest-neighbor interaction, take the continuum limit, and match to the continuum Lagrangian density.
 
 ---
 
@@ -108,7 +108,7 @@ $$
 L^n = a^d \sum_i \Bigg[ \frac{1}{2}\Big(\frac{W_i^{n+1}-W_i^{n}}{\Delta t}\Big)^2 - \frac{\kappa}{2} \sum_{\mu=1}^d \big(W_{i+\mu}^{n} - W_i^{n}\big)^2 - V(W_i^{n}) \Bigg]
 $$
 
-Discrete Euler–Lagrange:
+Discrete Euler-Lagrange:
 
 $$
 \frac{W_i^{n+1} - 2 W_i^{n} + W_i^{n-1}}{(\Delta t)^2} - \kappa \sum_{\mu=1}^d \big(W_{i+\mu}^{n} + W_{i-\mu}^{n} - 2 W_i^{n}\big) + V'(W_i^{n}) = 0
@@ -159,7 +159,7 @@ $$
 \mathcal{L}_{K} = \frac{1}{2}(\partial_t \phi)^2 - \frac{c^2}{2}(\nabla \phi)^2,
 $$
 
-and the Euler–Lagrange equation (with potential) is
+and the Euler-Lagrange equation (with potential) is
 
 $$
 \partial_t^2 \phi - c^2 \nabla^2 \phi + V'(\phi) = 0.

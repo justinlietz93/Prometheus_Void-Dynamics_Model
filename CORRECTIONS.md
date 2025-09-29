@@ -16,7 +16,7 @@
 
 Date (UTC): 2025-08-20
 
-Scope: Tier-0 correctness fixes (numerics, stability narrative) and unification to a single canonical model class (reaction–diffusion, RD). EFT/KG material retained but quarantined as “Future Work.”
+Scope: Tier-0 correctness fixes (numerics, stability narrative) and unification to a single canonical model class (reaction-diffusion, RD). EFT/KG material retained but quarantined as “Future Work.”
 
 ## Summary (before → after)
 
@@ -77,13 +77,13 @@ All fixed-number statements were replaced with parameter-dependent forms and exa
 - [write_ups/support/references/Suggestions.md](support/references/Suggestions.md): Insert header note; prevent hard constraints on Ja².  
 - [write_ups/effective_field_theory/vdm_voxtrium_mapping.md](/write_ups/effective_field_theory/vdm_voxtrium_mapping.md): Make RD canonical; EFT references scoped.  
 - [write_ups/reaction_diffusion/rd_front_speed_validation.md](/write_ups/reaction_diffusion/rd_front_speed_validation.md): Add reproducible CLI, output routing, acceptance criteria, representative PASS metrics.
-- [code/reaction_diffusion/rd_front_speed_experiment.py](/code/reaction_diffusion/rd_front_speed_experiment.py): Set defaults (N=1024, cfl=0.2, level=0.1, x0=-60, fit 0.6–0.9); route outputs to write_ups/code/outputs/{figures,logs}; robust tracking and fit.
-- New: [code/reaction_diffusion/rd_front_speed_sweep.py](/code/reaction_diffusion/rd_front_speed_sweep.py): Sweep runner producing CSV summary under write_ups/code/outputs/logs/.
-- New: [code/reaction_diffusion/rd_dispersion_experiment.py](/code/reaction_diffusion/rd_dispersion_experiment.py): Linear dispersion validation script with periodic BC; logs/figure auto-routing; acceptance criteria.
+- [src/reaction_diffusion/rd_front_speed_experiment.py](/src/reaction_diffusion/rd_front_speed_experiment.py): Set defaults (N=1024, cfl=0.2, level=0.1, x0=-60, fit 0.6-0.9); route outputs to figures/logs; robust tracking and fit.
+- New: [src/reaction_diffusion/rd_front_speed_sweep.py](/src/reaction_diffusion/rd_front_speed_sweep.py): Sweep runner producing CSV summary under logs/.
+- New: [src/reaction_diffusion/rd_dispersion_experiment.py](/src/reaction_diffusion/rd_dispersion_experiment.py): Linear dispersion validation script with periodic BC; logs/figure auto-routing; acceptance criteria.
 
 ## Status Tags
 
 - [ERROR FIXED]: Incorrect fixed mass number claims replaced with parameter-dependent expression.
 - [PROVEN]: Lattice → continuum kinetic normalization via discrete action (already present) is internally consistent.
-- [PROVEN]: RD front speed c_front = 2√(Dr) validated. Defaults: N=1024, cfl=0.2, level=0.1, x0=-60, fit window 0.6–0.9. Representative run: c_meas≈0.953, c_th=1.0, rel_err≈0.047, R²≈0.999996.
+- [PROVEN]: RD front speed c_front = 2√(Dr) validated. Defaults: N=1024, cfl=0.2, level=0.1, x0=-60, fit window 0.6-0.9. Representative run: c_meas≈0.953, c_th=1.0, rel_err≈0.047, R²≈0.999996.
 - [PROVEN]: RD dispersion σ(k) = r − D k² validated via linearized periodic evolution. Defaults (N=1024, L=200, D=1.0, r=0.25, T=10, cfl=0.2, seed=42, m_max=64) → med_rel_err≈0.00145, R²_array≈0.99995 [PASS]; grid refinement (N=2048, m_max=128) → med_rel_err≈0.00130, R²_array≈0.9928 [PASS].

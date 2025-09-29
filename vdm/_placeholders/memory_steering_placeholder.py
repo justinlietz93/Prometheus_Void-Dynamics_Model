@@ -6,7 +6,7 @@ from pathlib import Path
 
 def _load_public_reference():
     root = Path(__file__).resolve().parents[2]
-    target = root / "code" / "memory_steering" / "memory_steering.py"
+    target = root / "src" / "memory_steering" / "memory_steering.py"
     spec = importlib.util.spec_from_file_location("vdm_public_memory_steering", target)
     if spec is None or spec.loader is None:
         raise ImportError(f"Unable to load public memory steering placeholder from {target}")
@@ -32,7 +32,7 @@ CLASSIFIED_MESSAGE = (
     "documented reference implementation—request private access for the augmented kernel."
 )
 HAS_CLASSIFIED_IMPL = False
-MEMORY_SOURCE = "placeholder:code.memory_steering.memory_steering"
+MEMORY_SOURCE = "placeholder:src.memory_steering.memory_steering"
 
 __all__ = [
     "CLASSIFIED_MESSAGE",

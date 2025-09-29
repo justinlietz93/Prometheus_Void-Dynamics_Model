@@ -49,7 +49,7 @@ def _add_repo_root() -> None:
 
 _add_repo_root()
 
-from code.fluid_dynamics.fluids.lbm2d import LBM2D, LBMConfig, CS2  # noqa: E402
+from src.fluid_dynamics.fluids.lbm2d import LBM2D, LBMConfig, CS2  # noqa: E402
 
 
 def init_taylor_green(sim: LBM2D, U0=0.05, k=2*math.pi):
@@ -67,7 +67,7 @@ def energy(ux, uy):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Taylor–Green vortex viscosity recovery (LBM→NS).")
+    ap = argparse.ArgumentParser(description="Taylor-Green vortex viscosity recovery (LBM→NS).")
     ap.add_argument("--nx", type=int, default=256)
     ap.add_argument("--ny", type=int, default=256)
     ap.add_argument("--tau", type=float, default=0.8, help="Relaxation time (nu = cs^2*(tau-0.5))")
@@ -146,7 +146,7 @@ def main():
     plt.close()
 
     payload = {
-        "theory": "LBM→NS; Taylor–Green viscous decay E=E0 exp(-2 nu k^2 t)",
+        "theory": "LBM→NS; Taylor-Green viscous decay E=E0 exp(-2 nu k^2 t)",
         "params": {
             "nx": int(args.nx), "ny": int(args.ny), "tau": float(args.tau), "nu_th": nu_th,
             "U0": float(args.U0), "k": float(args.k),
