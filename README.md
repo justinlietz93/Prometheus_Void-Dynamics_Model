@@ -85,6 +85,8 @@ source code is not included yet.
 
 * Program overview and banner:
   * [VDM_Overview.md](VDM_Overview.md)
+* Papers and pre-prints:
+  * [papers/](/papers/)
 * Foundations:
   * [discrete_to_continuum.md](write_ups/foundations/discrete_to_continuum.md)
   * [continuum_stack.md](write_ups/foundations/continuum_stack.md)
