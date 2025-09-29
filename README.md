@@ -1,5 +1,11 @@
 # Void Dynamics Models (FUVDM - Fully Unified Void Dynamics Model) - Declassified Public Overview
 
+***Current Status:*** 
+
+> Setting up reproducible code for the work I'm comfortable with sharing publicly. Code that directly runs my private Void Equations will call a private workflow and return the results so you can still see proof.
+
+***Status Last Updated:*** Sep 29, 2025
+
 > Author: Justin K. Lietz<br>
 <a href="https://orcid.org/0009-0008-9028-1366"><img src="https://img.shields.io/badge/ORCID-0009--0008--9028--1366-blue?style=flat-square" alt="ORCID"></a> <br>
 > Contact: <justin@neuroca.ai>
