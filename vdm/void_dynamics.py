@@ -6,7 +6,7 @@ import logging
 import os
 from pathlib import Path
 from types import ModuleType
-from typing import Any, Tuple
+from typing import Tuple
 
 CLASSIFIED_MESSAGE = (
     "Attempted to import classified void-dynamics code, ask the author for access "

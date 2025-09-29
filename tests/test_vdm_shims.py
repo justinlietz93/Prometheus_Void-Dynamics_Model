@@ -15,7 +15,8 @@ def _public_memory():
     path = Path(__file__).resolve().parents[1] / "code" / "memory_steering" / "memory_steering.py"
     spec = importlib.util.spec_from_file_location("vdm_public_memory", path)
     module = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
+    if spec.loader is None:
+        raise RuntimeError(f"Unable to load {path}")
     spec.loader.exec_module(module)
     return module
 
