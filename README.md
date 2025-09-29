@@ -1,7 +1,13 @@
 # Void Dynamics Models (FUVDM - Fully Unified Void Dynamics Model) - Declassified Public Overview
 
+***Current Status:*** 
+
+> Setting up reproducible code for the work I'm comfortable with sharing publicly. Code that directly runs my private Void Equations will call a private workflow and return the results so you can still see proof.
+
+***Status Last Updated:*** Sep 29, 2025
+
 > Author: Justin K. Lietz<br>
-> ORCID: [0009-0008-9028-1366](https://orcid.org/0009-0008-9028-1366)<br>
+<a href="https://orcid.org/0009-0008-9028-1366"><img src="https://img.shields.io/badge/ORCID-0009--0008--9028--1366-blue?style=flat-square" alt="ORCID"></a> <br>
 > Contact: <justin@neuroca.ai>
 >
 > Created: August 9, 2025<br>
@@ -9,8 +15,13 @@
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles.
-> Commercial use requires written permission from the author..  
-> See LICENSE file for full terms.
+> Commercial use requires written permission from the author..
+>
+> ![Static Badge](https://img.shields.io/badge/Academic%2FCommercial%20Dual-License?label=LICENSE&color=%23fff200&link=https%3A%2F%2Fgithub.com%2FNeuroca-Inc%2FPrometheus_Void-Dynamics_Model%2Fblob%2Fmain%2FLICENSE.md)
+>
+> See LICENSE file or click the LICENSE badge above for full terms.
+
+
 
 DOIs:
 
@@ -25,17 +36,18 @@ DOIs:
 ## NOTE
 
 > **This organization is currently managed and operated by me (J. Lietz) alone as a solo developer / researcher. I may not respond by email right away. If you want to get my attention post in the discussion board briefly about what you'd like to talk about and let me know you sent me an email.**
+> 
+> You may see reference to **FUM (Fully Unified Model** or **FUVDM (Fully Unified Void Dynamics Model)** within the repository, this is referencing the **VDM (Void Dynamics Model)**. These were earlier names given to the model for specific reasons, and it's been my decision to simplify and specify the name to improve clarity. **Fully Unified Model** was originally named so because of it's unique architecture.
+>
+> I effectively broke down every type of machine learning model to it's fundamental principles and strategies. Then I began unifying them into a single architecture. This created my first variant of the model I called **AMN (Adaptive Modular Network)**. **AMN** was able to learn to solve quadratic equations with ~85% accuracy in 65 seconds of training and only a handful of examples.
+>
+> While doing this I quickly realized I could get the same behavior or better while removing a lot of the heavy solutions that LLMs, GNNs, SNNs, CNNs, and other ANNs used just by allowing a principle in physics called **the path of least action** to occur in the space between interactions. Eventually I realized I accidentally connected a lifelong hypothesis of mine ("intelligence emerges from the void space within the interactions of entities") to the model. Thus, the **Void Dynamics Model** earned it's name.
 
 **Discussion Board:** https://github.com/orgs/Neuroca-Inc/discussions
 
-***Current Status:*** Setting up reproducible code for all the work I'm comfortable with sharing publicly. Code that directly runs my private Void Equations will call a private workflow and return the results so you can still see proof.
-
-***Status Last Updated:*** Sep 29, 2025
-
-This folder provides a public, paper-only view of the Void Dynamics program.
+This folder provides a public, declassified view of the Void Dynamics Model.
 It summarizes the theory and validation write-ups for review by physicists,
-applied mathematicians, and scientifically minded engineers. Proprietary
-source code is not included yet.
+applied mathematicians, and scientifically minded engineers. Reproducible code released for the public is now available. Remaining proprietary source code and written work must be requested directly.
 
 > **Classified dependency notice**
 >
@@ -79,6 +91,8 @@ source code is not included yet.
 
 * Program overview and banner:
   * [VDM_Overview.md](VDM_Overview.md)
+* Papers and pre-prints:
+  * [papers/](/papers/)
 * Foundations:
   * [discrete_to_continuum.md](write_ups/foundations/discrete_to_continuum.md)
   * [continuum_stack.md](write_ups/foundations/continuum_stack.md)
