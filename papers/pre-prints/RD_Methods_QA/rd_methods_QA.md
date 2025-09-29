@@ -1,6 +1,6 @@
 # VDM RD baseline: validated methods and QA invariants
 Author: Justin K. Lietz
-Date: 2025-08-26
+Created: 2025-08-26
 
 Classification: RD
 
