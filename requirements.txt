@@ -31,3 +31,5 @@ matplotlib
 # VDM_Void_Equations
 # VDM_Void_Debt_Modulation
 # VDM_Demo_original
+
+ipykernel

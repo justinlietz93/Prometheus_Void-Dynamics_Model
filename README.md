@@ -46,6 +46,11 @@ DOIs:
 **Discussion Board:** https://github.com/orgs/Neuroca-Inc/discussions
 
 This folder provides a public, declassified view of the Void Dynamics Model.
+***Current Status:*** Setting up reproducible code for all the work I'm comfortable with sharing publicly. Code that directly runs my private Void Equations will call a private workflow and return the results so you can still see proof.
+
+***Status Last Updated:*** Sep 29, 2025
+
+This repository provides a public, paper-only view of the Void Dynamics program.
 It summarizes the theory and validation write-ups for review by physicists,
 applied mathematicians, and scientifically minded engineers. Reproducible code released for the public is now available. Remaining proprietary source code and written work must be requested directly.
 

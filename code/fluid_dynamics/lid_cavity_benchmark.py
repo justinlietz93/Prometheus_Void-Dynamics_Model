@@ -347,7 +347,7 @@ def main():
     ap.add_argument("--sample_every", type=int, default=200)
     ap.add_argument("--warmup", type=int, default=2000, help="steps to run before sampling (allow flow to settle)")
     ap.add_argument("--progress_every", type=int, default=None, help="print progress every N samples (default: sample_every)")
-    ap.add_argument("--outdir", type=str, default=None, help="base output dir; defaults to write_ups/code/outputs")
+    ap.add_argument("--outdir", type=str, default=None, help="base output dir; defaults to the repository root (figures/, logs/)")
     # Void dynamics exposure
     ap.add_argument("--void_domain", type=str, default="standard_model", help="VDM domain modulation preset")
     ap.add_argument("--void_gain", type=float, default=0.5, help="gain for ω_eff = ω0/(1+g|ΔW|)")

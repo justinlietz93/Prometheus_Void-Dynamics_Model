@@ -8,6 +8,7 @@ summarising numpy arrays.
 
 from __future__ import annotations
 
+import importlib.util
 import json
 import sys
 from pathlib import Path
@@ -29,7 +30,32 @@ def ensure_repo_path() -> Path:
 		path_str = str(path)
 		if path_str not in sys.path:
 			sys.path.insert(0, path_str)
+	_bootstrap_local_packages()
 	return REPO_ROOT
+
+
+def _bootstrap_local_packages() -> None:
+	"""Load repository packages that shadow stdlib names (e.g. ``code``)."""
+
+	def _load_package(name: str, package_path: Path) -> None:
+		init_file = package_path / "__init__.py"
+		if not init_file.exists():
+			return
+		existing = sys.modules.get(name)
+		if existing is not None and getattr(existing, "__file__", None) == str(init_file):
+			return
+		spec = importlib.util.spec_from_file_location(
+			name,
+			init_file,
+			submodule_search_locations=[str(package_path)],
+		)
+		if spec is None or spec.loader is None:
+			return
+		module = importlib.util.module_from_spec(spec)
+		sys.modules[name] = module
+		spec.loader.exec_module(module)
+
+	_load_package("code", CODE_ROOT)
 
 
 def repo_path(*parts: str) -> Path:

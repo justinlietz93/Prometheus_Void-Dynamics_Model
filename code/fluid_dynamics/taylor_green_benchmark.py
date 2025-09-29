@@ -75,7 +75,7 @@ def main():
     ap.add_argument("--k", type=float, default=2*math.pi)
     ap.add_argument("--steps", type=int, default=5000)
     ap.add_argument("--sample_every", type=int, default=50)
-    ap.add_argument("--outdir", type=str, default=None, help="base output dir; defaults to write_ups/code/outputs")
+    ap.add_argument("--outdir", type=str, default=None, help="base output dir; defaults to the repository root (figures/, logs/)")
     args = ap.parse_args()
 
     cfg = LBMConfig(nx=args.nx, ny=args.ny, tau=args.tau, periodic_x=True, periodic_y=True)
