@@ -26,9 +26,9 @@ Adapt the finite-radius flux-tube machinery in Bordag (Universe 2024) to the VDM
 
 We work from the bounded baseline EFT and kinetic normalization already established in:
 
-- Baseline quartic EFT and cubic tilt: see [write_ups/discrete_to_continuum.md](write_ups/discrete_to_continuum.md:125-228)
-- Kinetic normalization and action-based derivation: see [write_ups/kinetic_term_derivation.md](write_ups/kinetic_term_derivation.md:78-134)
-- Units map and FRW bookkeeping (used later for background energy): see [write_ups/VDM_voxtrium_mapping.md](write_ups/VDM_voxtrium_mapping.md:44-121)
+- Baseline quartic EFT and cubic tilt: see [write_ups/foundations/discrete_to_continuum.md](/write_ups/foundations/discrete_to_continuum.md)
+- Kinetic normalization and action-based derivation: see [write_ups/effective_field_theory/kinetic_term_derivation.md](/write_ups/effective_field_theory/kinetic_term_derivation.md)
+- Units map and FRW bookkeeping (used later for background energy): see [write_ups/effective_field_theory/vdm_voxtrium_mapping.md](/write_ups/effective_field_theory/vdm_voxtrium_mapping.md)
 
 We will mirror the analytical spine of Bordag’s finite-radius analysis but for a real (optionally complex) scalar coupled only through its potential.
 
@@ -61,7 +61,7 @@ $$
 $$
 
 or equivalently $\mathcal L_K=\frac{1}{2}(\partial_t\phi)^2-\frac{c^2}{2}(\nabla\phi)^2$.
-No microscopic relation ties $J$ to $a$; one may set $c=1$ by a units choice. See [write_ups/kinetic_term_derivation.md](write_ups/kinetic_term_derivation.md:117-134).
+No microscopic relation ties $J$ to $a$; one may set $c=1$ by a units choice. See [write_ups/effective_field_theory/kinetic_term_derivation.md](/write_ups/effective_field_theory/kinetic_term_derivation.md).
 
 Geometry: a straight cylinder (“tube”) of radius $R$ aligned with the $z$-axis; we analyze the transverse $(x,y)$ plane in polar coordinates $(r,\theta)$. Inside the tube we can sustain an approximately “false-vacuum”/uncondensed configuration that drives tachyonic behavior in the fluctuation spectrum; outside, we take the condensed vacuum.
 
@@ -225,7 +225,7 @@ E(R) \;=\; E_{\rm bg}(R) \;+\; V_{\rm eff}^{\rm tube}\big(\{v_{\ell n}(R)\},R\bi
 - In Bordag’s SU(2) case, $E_{\rm bg}\propto B^2 R^2$ from the chromomagnetic background.
 - In our scalar-only EFT, one can adopt a phenomenological background proxy if coupling to external sectors is present (e.g., Voxtrium sourcing); in a pure scalar test, set $E_{\rm bg}=0$ and examine whether $V_{\rm eff}^{\rm tube}$ develops a nontrivial $R$-dependence with a minimum due to mode structure and normalization.
 
-For FRW-consistent background bookkeeping use the transfer-current formalism in [write_ups/VDM_voxtrium_mapping.md](write_ups/VDM_voxtrium_mapping.md:106-121) when embedding in cosmology; here we remain in a static Minkowski test.
+For FRW-consistent background bookkeeping use the transfer-current formalism in [write_ups/effective_field_theory/vdm_voxtrium_mapping.md](/write_ups/effective_field_theory/vdm_voxtrium_mapping.md) when embedding in cosmology; here we remain in a static Minkowski test.
 
 Acceptance criterion: an $R_\ast$ at which $E(R)$ has a true minimum (Bordag’s Fig. 5 analogue).
 
@@ -306,12 +306,12 @@ Promote $\phi$ to a complex field $\Phi$ to demonstrate explicit Goldstone modes
 ## 12. References and Pointers
 
 - Bordag, M. (2024). Universe 10, 38. Finite-radius chromomagnetic flux tube, tachyonic gluon modes, quartic stabilization, and energy minima. Local copy: [universe-10-00038-v2.pdf](write_ups/support/references/universe-10-00038-v2.pdf)
-- VDM kinetic/action derivation and normalization: [write_ups/kinetic_term_derivation.md](write_ups/kinetic_term_derivation.md:78-134)
-- Discrete-to-continuum and bounded baseline potential (adopted here): [write_ups/discrete_to_continuum.md](write_ups/discrete_to_continuum.md:125-228)
-- Units/FRW/current bookkeeping (for background energy coupling in cosmology): [write_ups/VDM_voxtrium_mapping.md](write_ups/VDM_voxtrium_mapping.md:106-121)
+- VDM kinetic/action derivation and normalization: [write_ups/effective_field_theory/kinetic_term_derivation.md](/write_ups/effective_field_theory/kinetic_term_derivation.md)
+- Discrete-to-continuum and bounded baseline potential (adopted here): [write_ups/foundations/discrete_to_continuum.md](/write_ups/foundations/discrete_to_continuum.md)
+- Units/FRW/current bookkeeping (for background energy coupling in cosmology): [write_ups/effective_field_theory/vdm_voxtrium_mapping.md](write_ups/effective_field_theory/vdm_voxtrium_mapping.md)
 
 ---
 
 ## 13. Summary
 
-This appendix defines a concrete, testable finite-domain mode problem for the VDM scalar EFT. It specifies the radial eigenvalue condition, mode counting, quartic projections, condensation, mass-matrix positivity, and an energy-vs-size scan with clear acceptance criteria aligned to Bordag’s analysis. The companion code modules [cylinder_modes.py](VDM_sim/cylinder_modes.py:1) and [condense_tube.py](VDM_sim/condense_tube.py:1) will implement the solver and diagnostics, producing the three replication plots and an $R_\ast$ selection where applicable.
+This appendix defines a concrete, testable finite-domain mode problem for the VDM scalar EFT. It specifies the radial eigenvalue condition, mode counting, quartic projections, condensation, mass-matrix positivity, and an energy-vs-size scan with clear acceptance criteria aligned to Bordag’s analysis. The companion code modules [code/tachyonic_condensation/cylinder_modes.py](/code/tachyonic_condensation/cylinder_modes.py) and [code/tachyonic_condensation/condense_tube.py](/code/tachyonic_condensation/condense_tube.py) will implement the solver and diagnostics, producing the three replication plots and an $R_\ast$ selection where applicable.
