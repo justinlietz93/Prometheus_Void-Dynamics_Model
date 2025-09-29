@@ -19,7 +19,7 @@ Scope: Tier-0 correctness fixes (numerics, stability narrative) and unification 
 
 ## Summary (before → after)
 
-- [FUVDM_Overview.md](FUVDM_Overview.md)
+- [VDM_Overview.md](VDM_Overview.md)
   - Before: Mixed RD/EFT claims; no explicit canonical model.
   - After: Canonical RD banner + mapping (D = J a² or (J/z) a²; r = α − β; u = α), stability note, EFT scoped to future work.
 
@@ -55,7 +55,7 @@ Scope: Tier-0 correctness fixes (numerics, stability narrative) and unification 
   - Before: Referred to EFT EOM as dimensionless default.
   - After: RD mapping made canonical; EFT equation kept for EFT context only.
 
-- New: [METRICS.md](Prometheus_FUVDM/METRICS.md)
+- New: [METRICS.md](Prometheus_VDM/METRICS.md)
   - Metrics skeleton for RD dynamics, SIE/TDA system metrics, reproducibility pointers.
 
 ## Numeric Corrections
@@ -78,7 +78,7 @@ All fixed-number statements were replaced with parameter-dependent forms and exa
 
 ## Edit Log (file, change)
 
-- [write_ups/FUVDM_Overview.md](FUVDM_Overview.md): Replace overview with RD canonical banner; corrected mapping (r = α − β, u = α); EFT scoped.
+- [write_ups/VDM_Overview.md](VDM_Overview.md): Replace overview with RD canonical banner; corrected mapping (r = α − β, u = α); EFT scoped.
 - [write_ups/code/computational_proofs/VDM_theory_and_results.md](code/computational_proofs/VDM_theory_and_results.md): Insert RD note; replace fixed m_eff numeric with param-dependent form.  
 - [write_ups/discrete_to_continuum.md](discrete_to_continuum.md): Update objective to RD; add D mapping text; keep EFT derivation as future work.  
 - [write_ups/memory_steering.md](memory_steering.md): Align with RD canonical; restrict EFT formulas to EFT doc; remove back-solve in RD section.  
@@ -87,7 +87,7 @@ All fixed-number statements were replaced with parameter-dependent forms and exa
 - [write_ups/code/computational_proofs/void_dynamics_theory.md](code/computational_proofs/void_dynamics_theory.md): Add scope note at top.  
 - [write_ups/support/references/Suggestions.md](support/references/Suggestions.md): Insert header note; prevent hard constraints on Ja².  
 - [write_ups/VDM_voxtrium_mapping.md](VDM_voxtrium_mapping.md): Make RD canonical; EFT references scoped.  
-- [METRICS.md](Prometheus_FUVDM/METRICS.md): New file with metrics skeleton.
+- [METRICS.md](Prometheus_VDM/METRICS.md): New file with metrics skeleton.
 - [write_ups/rd_front_speed_validation.md](rd_front_speed_validation.md:1): Add reproducible CLI, output routing, acceptance criteria, representative PASS metrics.
 - [write_ups/code/physics/rd_front_speed_experiment.py](code/physics/rd_front_speed_experiment.py:1): Set defaults (N=1024, cfl=0.2, level=0.1, x0=-60, fit 0.6–0.9); route outputs to write_ups/code/outputs/{figures,logs}; robust tracking and fit.
 - New: [write_ups/code/physics/rd_front_speed_sweep.py](code/physics/rd_front_speed_sweep.py:1): Sweep runner producing CSV summary under write_ups/code/outputs/logs/.

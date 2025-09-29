@@ -9,7 +9,7 @@ See LICENSE file for full terms.
 Taylor-Green vortex (2-D) viscosity recovery benchmark for the fluids sector.
 
 CHANGE REASON:
-- Relocated into write_ups/code/physics/fluid_dynamics per repo rules (no Prometheus_FUVDM/bench/).
+- Relocated into write_ups/code/physics/fluid_dynamics per repo rules (no Prometheus_VDM/bench/).
 - Outputs follow RD harness: write_ups/code/outputs/{figures,logs}.
 - Ensures JSON uses native Python types (bool/float) to avoid numpy serialization issues.
 

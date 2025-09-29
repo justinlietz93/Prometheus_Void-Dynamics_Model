@@ -71,7 +71,7 @@ source code is not included yet.
 ## What’s inside (papers)
 
 * Program overview and banner:
-  * [FUVDM_Overview.md](FUVDM_Overview.md)
+  * [VDM_Overview.md](VDM_Overview.md)
 * Foundations:
   * [discrete_to_continuum.md](write_ups/foundations/discrete_to_continuum.md)
   * [continuum_stack.md](write_ups/foundations/continuum_stack.md)
@@ -120,7 +120,7 @@ source code is not included yet.
 
 * When referencing specific results, cite the overview and the relevant
   validation paper, for example:
-  * [FUVDM_Overview.md](FUVDM_Overview.md)
+  * [VDM_Overview.md](VDM_Overview.md)
   * [rd_front_speed_validation.md](write_ups/reaction_diffusion/rd_front_speed_validation.md)
   * [rd_dispersion_validation.md](write_ups/reaction_diffusion/rd_dispersion_validation.md)
 

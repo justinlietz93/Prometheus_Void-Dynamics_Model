@@ -24,7 +24,7 @@ Outputs (defaults):
   - write_ups/code/outputs/logs/{script name}_{timestamp}.json
 
 CLI example:
-  python Prometheus_FUVDM/write_ups/code/physics/rd_dispersion_experiment.py --N 1024 --L 200 --D 1.0 --r 0.25 --T 10 --cfl 0.2 --seed 42
+  python Prometheus_VDM/write_ups/code/physics/rd_dispersion_experiment.py --N 1024 --L 200 --D 1.0 --r 0.25 --T 10 --cfl 0.2 --seed 42
 """
 import argparse
 import json

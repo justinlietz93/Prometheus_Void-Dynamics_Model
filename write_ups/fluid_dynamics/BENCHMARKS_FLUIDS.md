@@ -56,9 +56,9 @@
 - Always activate venv:
   & .\venv\Scripts\Activate.ps1
 - Taylor–Green:
-  python Prometheus_FUVDM/write_ups/code/physics/fluid_dynamics/taylor_green_benchmark.py --nx 256 --ny 256 --tau 0.8 --steps 5000 --sample_every 50
+  python Prometheus_VDM/write_ups/code/physics/fluid_dynamics/taylor_green_benchmark.py --nx 256 --ny 256 --tau 0.8 --steps 5000 --sample_every 50
 - Lid cavity:
-  python Prometheus_FUVDM/write_ups/code/physics/fluid_dynamics/lid_cavity_benchmark.py --nx 128 --ny 128 --tau 0.7 --U_lid 0.1 --steps 15000 --sample_every 200
+  python Prometheus_VDM/write_ups/code/physics/fluid_dynamics/lid_cavity_benchmark.py --nx 128 --ny 128 --tau 0.7 --U_lid 0.1 --steps 15000 --sample_every 200
 
 ## Notes
 
