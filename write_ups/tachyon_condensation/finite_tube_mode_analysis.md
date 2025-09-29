@@ -1,8 +1,8 @@
 # Finite-Tube Mode Analysis for the VDM Scalar (Bordag-inspired)
 
 >
-> Author: Justin K. Lietz  
-> ORCID: 0009-0008-9028-1366
+> Author: Justin K. Lietz<br>
+> ORCID: [0009-0008-9028-1366](https://orcid.org/0009-0008-9028-1366)<br>
 > Contact: <justin@neuroca.ai>
 >
 > Date: August 9, 2025
@@ -246,7 +246,7 @@ We propose two modules to implement and test this analysis:
   - compute_kappas(R, params) -> list of roots $\{(\ell, n, \kappa_{\ell n})\}$
     - params: $\mu, \lambda, \gamma, c$ and numerical tolerances; optionally max $|\ell|$ and radial overtone cutoff
   - mode_functions(R, root) -> callable $u_{\ell n}(r)$ with normalization info
-- Core tasks:
+- Tasks:
   - Solve the secular equation
 
 ```math

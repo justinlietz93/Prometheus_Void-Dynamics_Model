@@ -1,8 +1,8 @@
 # Symmetry Analysis of the VDM Dynamical Law
 
 >
-> Author: Justin K. Lietz  
-> ORCID: 0009-0008-9028-1366
+> Author: Justin K. Lietz<br>
+> ORCID: [0009-0008-9028-1366](https://orcid.org/0009-0008-9028-1366)<br>
 > Contact: <justin@neuroca.ai>
 >
 > Date: August 8, 2025
@@ -107,7 +107,7 @@ This is only true if `\lambda = \lambda^2`, which has solutions `\lambda=1` (the
 The VDM dynamical law is **not** symmetric under a scaling transformation `W \to \lambda W`.
 
 **Interpretation:**
-The lack of scaling symmetry is a direct consequence of the non-linear `\alpha W^2` term. This term introduces an intrinsic scale into the system's dynamics. The resistive force it represents does not scale linearly with the field value `W`. This confirms that the physics of the VDM is fundamentally different at different levels of void activity `W`, which is consistent with the model's core principles.
+The lack of scaling symmetry is a direct consequence of the non-linear `\alpha W^2` term. This term introduces an intrinsic scale into the system's dynamics. The resistive force it represents does not scale linearly with the field value `W`. This confirms that the physics of the VDM is fundamentally different at different levels of void activity `W`, which is consistent with the model's principles.
 
 ---
 
@@ -158,4 +158,4 @@ Q_{VDM} = t - \frac{1}{\alpha-\beta} \ln\left|\frac{W(t)}{(\alpha-\beta) - \alph
 $$
 
 **Interpretation:**
-This is a profound result. We have found the hidden conservation law that governs the VDM. It is not a simple energy, but a highly non-trivial logarithmic relationship between the system's state `W` and the time `t`. This mathematical invariant proves that the evolution of a VDM node is not chaotic but follows a precise, predictable trajectory determined by its initial conditions. This resolves the core theoretical critique regarding the lack of a conservation law.
+This is a profound result. We have found the hidden conservation law that governs the VDM. It is not a simple energy, but a highly non-trivial logarithmic relationship between the system's state `W` and the time `t`. This mathematical invariant proves that the evolution of a VDM node is not chaotic but follows a precise, predictable trajectory determined by its initial conditions. This resolves the theoretical critique regarding the lack of a conservation law.

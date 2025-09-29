@@ -1,7 +1,7 @@
 # RD dispersion validation (linear regime)
 >
-> Author: Justin K. Lietz  
-> ORCID: 0009-0008-9028-1366
+> Author: Justin K. Lietz<br>
+> ORCID: [0009-0008-9028-1366](https://orcid.org/0009-0008-9028-1366)<br>
 > Contact: <justin@neuroca.ai>
 >
 > Date: August 9, 2025
@@ -73,7 +73,7 @@ Troubleshooting
 VDM_rt parity runner
 - Independent mirror (same metrics/output schema) for cross-stack parity:
   - [rd_dispersion_runner.py](Prometheus_VDM/VDM_rt/physics/rd_dispersion_runner.py:1)
-- Rationale is documented in-file (“CHANGE REASON”): physics proven via derivation; runtime mirror does not alter core dynamics.
+- Rationale is documented in-file (“CHANGE REASON”): physics proven via derivation; runtime mirror does not alter dynamics.
 
 Reproduction checklist
 1) Activate venv: & .\venv\Scripts\Activate.ps1

@@ -2,7 +2,7 @@
 
 >
 > Author: Justin K. Lietz
-> ORCID: 0009-0008-9028-1366
+> ORCID: [0009-0008-9028-1366](https://orcid.org/0009-0008-9028-1366)<br>
 > Contact: <justin@neuroca.ai>
 >
 > Date: August 9, 2025
@@ -23,40 +23,29 @@ Scope: Tier-0 correctness fixes (numerics, stability narrative) and unification 
   - Before: Mixed RD/EFT claims; no explicit canonical model.
   - After: Canonical RD banner + mapping (D = J a² or (J/z) a²; r = α − β; u = α), stability note, EFT scoped to future work.
 
-- [write_ups/code/computational_proofs/VDM_theory_and_results.md](code/computational_proofs/VDM_theory_and_results.md)
-  - Before: Fixed numerical claim “m_eff ≈ 0.387”.
-  - After: m_eff = √(α−β) (parameter-dependent), added RD model-class note; removed fixed numeric.
-
-- [discrete_to_continuum.md](write_ups/foundations/discrete_to_continuum.md)
+- [write_ups/foundations/discrete_to_continuum.md](/write_ups/foundations/discrete_to_continuum.md)
   - Before: Objective stated convergence to KG; D mapping not explicit.
   - After: Objective states RD mapping as primary; explicit D mapping (D = J a² or (J/z) a²); EFT derivation quarantined to EFT doc.
 
-- [memory_steering_acceptance_verification.md](write_ups/memory_steering/memory_steering_acceptance_verification.md)
+- [write_ups/memory_steering/memory_steering_acceptance_verification.md](/write_ups/memory_steering/memory_steering_acceptance_verification.md)
   - Before: Hardwired EFT vacuum/mass invariants in main text.
   - After: RD is canonical; EFT invariants referenced only to EFT doc; removed back-solving (α,β) from (v,m_eff) in RD narrative.
 
-- [write_ups/symmetry_analysis.md](symmetry_analysis.md)
+- [write_ups/foundations/symmetry_analysis.md](/write_ups/foundations/symmetry_analysis.md)
   - Before: Text implied “false/true vacuum” using EFT values in a general context.
   - After: Clarified RD vs EFT contexts; RD fixed point W* = r/u (r>0) vs EFT vacuum v = 1 − β/α as future-work.
 
-- [write_ups/effective_field_theory_approach.md](effective_field_theory_approach.md)
+- [write_ups/effective_field_theory/effective_field_theory_approach.md](/write_ups/effective_field_theory/effective_field_theory_approach.md)
   - Before: No scope banner.
   - After: Quarantine banner; note m_eff = √(α−β) is parameter-dependent and unitized via τ.
 
-- [write_ups/code/computational_proofs/void_dynamics_theory.md](code/computational_proofs/void_dynamics_theory.md)
+- [write_ups/foundations/void_dynamics_theory.md](/write_ups/foundations/void_dynamics_theory.md)
   - Before: No scope note; mixed RD/EFT implications.
   - After: Scope note at top; references discrete-action derivation for c² = 2 J a².
 
-- [write_ups/support/references/Suggestions.md](support/references/Suggestions.md)
-  - Before: Implied fixed m_eff; mixed normalization constraint Ja² = 1/2.
-  - After: Header note: RD canonical; EFT mass parameter-dependent; lattice normalization c² = 2 J a² (per-site); do not impose Ja² = 1/2.
-
-- [write_ups/VDM_voxtrium_mapping.md](VDM_voxtrium_mapping.md)
+- [write_ups/effective_field_theory/vdm_voxtrium_mapping.md](/write_ups/effective_field_theory/vdm_voxtrium_mapping.md)
   - Before: Referred to EFT EOM as dimensionless default.
   - After: RD mapping made canonical; EFT equation kept for EFT context only.
-
-- New: [METRICS.md](Prometheus_VDM/METRICS.md)
-  - Metrics skeleton for RD dynamics, SIE/TDA system metrics, reproducibility pointers.
 
 ## Numeric Corrections
 
@@ -74,24 +63,22 @@ All fixed-number statements were replaced with parameter-dependent forms and exa
 
 ## Kinetic/Lattice Normalization
 
-- Adopted discrete-action derivation already present in [write_ups/kinetic_term_derivation.md](kinetic_term_derivation.md) with c² = 2 J a² (per-site convention) or c² = κ a² (per-edge, κ = 2J). No microscopic constraint ties J to a; c can be set by units.
+- Adopted discrete-action derivation already present in [write_ups/effective_field_theory/kinetic_term_derivation.md](/write_ups/effective_field_theory/kinetic_term_derivation.md) with c² = 2 J a² (per-site convention) or c² = κ a² (per-edge, κ = 2J). No microscopic constraint ties J to a; c can be set by units.
 
 ## Edit Log (file, change)
 
-- [write_ups/VDM_Overview.md](VDM_Overview.md): Replace overview with RD canonical banner; corrected mapping (r = α − β, u = α); EFT scoped.
-- [write_ups/code/computational_proofs/VDM_theory_and_results.md](code/computational_proofs/VDM_theory_and_results.md): Insert RD note; replace fixed m_eff numeric with param-dependent form.  
-- [write_ups/discrete_to_continuum.md](discrete_to_continuum.md): Update objective to RD; add D mapping text; keep EFT derivation as future work.  
-- [write_ups/memory_steering.md](memory_steering.md): Align with RD canonical; restrict EFT formulas to EFT doc; remove back-solve in RD section.  
-- [write_ups/symmetry_analysis.md](symmetry_analysis.md): Clarify RD vs EFT contexts in interpretations.  
-- [write_ups/effective_field_theory_approach.md](effective_field_theory_approach.md): Add quarantine banner.  
-- [write_ups/code/computational_proofs/void_dynamics_theory.md](code/computational_proofs/void_dynamics_theory.md): Add scope note at top.  
+- [VDM_Overview.md](VDM_Overview.md): Replace overview with RD canonical banner; corrected mapping (r = α − β, u = α); EFT scoped.
+- [write_ups/foundations/discrete_to_continuum.md](/write_ups/foundations/discrete_to_continuum.md): Update objective to RD; add D mapping text; keep EFT derivation as future work.  
+- [write_ups/memory_steering/memory_steering.md](/write_ups/memory_steering/memory_steering.md): Align with RD canonical; restrict EFT formulas to EFT doc; remove back-solve in RD section.  
+- [write_ups/foundations/symmetry_analysis.md](/write_ups/foundations/symmetry_analysis.md): Clarify RD vs EFT contexts in interpretations.  
+- [write_ups/effective_field_theory/effective_field_theory_approach.md](/write_ups/effective_field_theory/effective_field_theory_approach.md): Add quarantine banner.  
+- [write_ups/foundations/void_dynamics_theory.md](/write_ups/foundations/void_dynamics_theory.md): Add scope note at top.  
 - [write_ups/support/references/Suggestions.md](support/references/Suggestions.md): Insert header note; prevent hard constraints on Ja².  
-- [write_ups/VDM_voxtrium_mapping.md](VDM_voxtrium_mapping.md): Make RD canonical; EFT references scoped.  
-- [METRICS.md](Prometheus_VDM/METRICS.md): New file with metrics skeleton.
-- [write_ups/rd_front_speed_validation.md](rd_front_speed_validation.md:1): Add reproducible CLI, output routing, acceptance criteria, representative PASS metrics.
-- [write_ups/code/physics/rd_front_speed_experiment.py](code/physics/rd_front_speed_experiment.py:1): Set defaults (N=1024, cfl=0.2, level=0.1, x0=-60, fit 0.6–0.9); route outputs to write_ups/code/outputs/{figures,logs}; robust tracking and fit.
-- New: [write_ups/code/physics/rd_front_speed_sweep.py](code/physics/rd_front_speed_sweep.py:1): Sweep runner producing CSV summary under write_ups/code/outputs/logs/.
-- New: [write_ups/code/physics/rd_dispersion_experiment.py](code/physics/rd_dispersion_experiment.py:1): Linear dispersion validation script with periodic BC; logs/figure auto-routing; acceptance criteria.
+- [write_ups/effective_field_theory/vdm_voxtrium_mapping.md](/write_ups/effective_field_theory/vdm_voxtrium_mapping.md): Make RD canonical; EFT references scoped.  
+- [write_ups/reaction_diffusion/rd_front_speed_validation.md](/write_ups/reaction_diffusion/rd_front_speed_validation.md): Add reproducible CLI, output routing, acceptance criteria, representative PASS metrics.
+- [code/reaction_diffusion/rd_front_speed_experiment.py](/code/reaction_diffusion/rd_front_speed_experiment.py): Set defaults (N=1024, cfl=0.2, level=0.1, x0=-60, fit 0.6–0.9); route outputs to write_ups/code/outputs/{figures,logs}; robust tracking and fit.
+- New: [code/reaction_diffusion/rd_front_speed_sweep.py](/code/reaction_diffusion/rd_front_speed_sweep.py): Sweep runner producing CSV summary under write_ups/code/outputs/logs/.
+- New: [code/reaction_diffusion/rd_dispersion_experiment.py](/code/reaction_diffusion/rd_dispersion_experiment.py): Linear dispersion validation script with periodic BC; logs/figure auto-routing; acceptance criteria.
 
 ## Status Tags
 
