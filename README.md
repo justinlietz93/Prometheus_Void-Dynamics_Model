@@ -1,4 +1,9 @@
 # Void Dynamics (FUVDM) — Derivation Papers (Public Overview)
+
+DOIs:<br>
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17220869.svg)](https://doi.org/10.5281/zenodo.17220869)
+
+
 ***Current Status:*** Working on applying discovered RD concepts to neural plasticity in the Void Dynamics Intelligence Model (coming to public soon) <br>
 ***Status Last Updated:*** Aug 25, 2025
 
