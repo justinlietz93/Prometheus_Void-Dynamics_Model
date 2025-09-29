@@ -1,5 +1,4 @@
 name: Proofs
-
 on:
   workflow_dispatch:
 
@@ -10,29 +9,50 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
+      # If your public repo has a requirements.txt, install it first
+      - name: Install repo dependencies (optional but recommended)
+        if: hashFiles('requirements.txt') != ''
+        run: python -m pip install -r requirements.txt
+
       - name: Configure GitHub PAT for private dependency
         env:
-          GH_PAT: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          GH_PAT: ${{ secrets.PRIVATE_REPO_TOKEN }}   # fine-grained PAT, contents:read on Neuroca-Inc/Private_VDM_Package
         run: |
           printf "machine github.com\n  login justinlietz93\n  password %s\n" "$GH_PAT" > ~/.netrc
           chmod 600 ~/.netrc
 
       - name: Install private kernel
-        run: pip install "vdm-kernel-private @ git+https://github.com/Neuroca-Inc/Private_VDM_Package.git@v0.1.2"
+        run: python -m pip install --no-cache-dir "vdm-kernel-private @ git+https://github.com/Neuroca-Inc/Private_VDM_Package.git@v0.1.2"
+
+      - name: Smoke test private kernel import
+        run: |
+          python - <<'PY'
+          import importlib, importlib.metadata as m, inspect, os
+          import vdm_kernel_private as vkp
+          print("vdm-kernel-private version:", m.version("vdm-kernel-private"))
+          print("module path:", inspect.getsourcefile(vkp))
+          os.environ["VDM_CLASSIFIED_PLUGIN"] = "vdm_kernel_private"
+          mod = importlib.import_module(os.environ["VDM_CLASSIFIED_PLUGIN"])
+          print("shim target OK:", mod.__name__, "->", inspect.getsourcefile(mod))
+          PY
 
       - name: Set plugin environment variable
         run: echo "VDM_CLASSIFIED_PLUGIN=vdm_kernel_private" >> "$GITHUB_ENV"
 
       - name: Run proofs
         run: python scripts/run_proofs.py --seed 42 --out out/
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: proofs-${{ github.sha }}-seed42
+          path: out/
 
       - name: Clean PAT credentials
         if: always()
