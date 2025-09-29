@@ -15,8 +15,13 @@
 >
 > This research is protected under a dual-license to foster open academic
 > research while ensuring commercial applications are aligned with the project's ethical principles.
-> Commercial use requires written permission from the author..  
-> See LICENSE file for full terms.
+> Commercial use requires written permission from the author..
+>
+> ![Static Badge](https://img.shields.io/badge/Academic%2FCommercial%20Dual-License?label=LICENSE&color=%23fff200&link=https%3A%2F%2Fgithub.com%2FNeuroca-Inc%2FPrometheus_Void-Dynamics_Model%2Fblob%2Fmain%2FLICENSE.md)
+>
+> See LICENSE file or click the LICENSE badge above for full terms.
+
+
 
 DOIs:
 
