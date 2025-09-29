@@ -20,144 +20,22 @@ References:
 
 from __future__ import annotations
 
-import importlib.util
-import os
-from pathlib import Path
-import sys
-from types import ModuleType
-from typing import Any
 import logging
-
-import numpy as np
 from dataclasses import dataclass
 
-universal_void_dynamics: Any | None = None
-VoidDebtModulation: Any | None = None
-VOID_SOURCE: str | None = None
+import numpy as np
 
-LOGGER = logging.getLogger(__name__)
-CLASSIFIED_MESSAGE = (
-    "Attempted to import classified code, ask the author for access to run this "
-    "simulation. Otherwise you can still view figures and logs."
+from vdm.void_dynamics import (
+    CLASSIFIED_MESSAGE as _VOID_CLASSIFIED_MESSAGE,
+    HAS_CLASSIFIED_IMPL as _HAS_CLASSIFIED_VOID_KERNEL,
+    VOID_SOURCE,
+    VoidDebtModulation,
+    universal_void_dynamics,
 )
 
-def _load_module_by_path(path: str, modname: str) -> ModuleType | None:
-    if not os.path.exists(path):
-        return None
-    spec = importlib.util.spec_from_file_location(modname, path)
-    if spec is None or spec.loader is None:
-        return None
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
-
-
-def _repo_root() -> Path:
-    here = Path(__file__).resolve()
-    for ancestor in [here] + list(here.parents):
-        if (ancestor / ".git").exists():
-            return ancestor
-    return here.parents[3]
-
-
-def _load_local_void_modules(root: Path) -> None:
-    global universal_void_dynamics, VoidDebtModulation, VOID_SOURCE
-    eq_candidates = [
-        root / "secrets" / "FUM_Void_Equations.py",
-        root / "secrets" / "VDM_Void_Equations.py",
-        root / "secrets" / "Void_Equations.py",
-        root / "derivation" / "code" / "VDM_Void_Equations.py",
-        root / "derivation" / "memory_steering" / "VDM_Void_Equations.py",
-        root / "VDM_Void_Equations.py",
-    ]
-    mod_candidates = [
-        root / "secrets" / "FUM_Void_Debt_Modulation.py",
-        root / "secrets" / "VDM_Void_Debt_Modulation.py",
-        root / "secrets" / "Void_Debt_Modulation.py",
-        root / "derivation" / "code" / "VDM_Void_Debt_Modulation.py",
-        root / "derivation" / "memory_steering" / "VDM_Void_Debt_Modulation.py",
-        root / "VDM_Void_Debt_Modulation.py",
-    ]
-    for path in eq_candidates:
-        module = _load_module_by_path(str(path), f"{path.stem}_local")
-        if module and hasattr(module, "universal_void_dynamics"):
-            universal_void_dynamics = getattr(module, "universal_void_dynamics")
-            VOID_SOURCE = f"file:{path.relative_to(root)}"
-            break
-    for path in mod_candidates:
-        module = _load_module_by_path(str(path), f"{path.stem}_local")
-        if module and hasattr(module, "VoidDebtModulation"):
-            VoidDebtModulation = getattr(module, "VoidDebtModulation")
-            if VOID_SOURCE is None:
-                VOID_SOURCE = f"file:{path.relative_to(root)}"
-            break
-
-
-_ROOT = _repo_root()
-_load_local_void_modules(_ROOT)
-
-# Fallback: try via sys.path using repo root if modules are importable by name
-if universal_void_dynamics is None:
-    if str(_ROOT) not in sys.path:  # Check if the repo root is in sys.path
-        sys.path.insert(0, str(_ROOT))
-    try:
-        import VDM_Void_Equations as _eq_pkg
-
-        if hasattr(_eq_pkg, "universal_void_dynamics"):
-            universal_void_dynamics = getattr(_eq_pkg, "universal_void_dynamics")  # Get the universal_void_dynamics attribute
-            VOID_SOURCE = "import:VDM_Void_Equations"
-    except Exception as exc:  # pragma: no cover
-        LOGGER.debug("VDM_Void_Equations import failed: %s", exc)
-    try:
-        import VDM_Void_Debt_Modulation as _vdm_pkg
-
-        if hasattr(_vdm_pkg, "VoidDebtModulation"):
-            VoidDebtModulation = getattr(_vdm_pkg, "VoidDebtModulation")  # Get the VoidDebtModulation attribute
-            if VOID_SOURCE is None:
-                VOID_SOURCE = "import:VDM_Void_Debt_Modulation"
-    except Exception as exc:  # pragma: no cover
-        LOGGER.debug("VDM_Void_Debt_Modulation import failed: %s", exc)
-
-# Fallbacks to external packages if local sources absent
-if universal_void_dynamics is None:
-    try:
-        from VDM_rt.core.void_dynamics_adapter import universal_void_dynamics as _u
-        from VDM_rt.VDM_advanced_math.void_dynamics.VDM_Void_Debt_Modulation import VoidDebtModulation as _V
-
-        universal_void_dynamics, VoidDebtModulation = _u, _V
-        VOID_SOURCE = "VDM_rt"
-    except Exception as exc:  # pragma: no cover
-        LOGGER.debug("VDM_rt modules not available: %s", exc)
-        try:
-            from VDM_Demo_original.VDM_Void_Equations import universal_void_dynamics as _u
-            from VDM_Demo_original.VDM_Void_Debt_Modulation import VoidDebtModulation as _V
-
-            universal_void_dynamics, VoidDebtModulation = _u, _V
-            VOID_SOURCE = "VDM_Demo_original"
-        except Exception as demo_exc:  # pragma: no cover
-            LOGGER.debug("VDM_Demo_original import failed: %s", demo_exc)
-        _ROOT2 = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-        if _ROOT2 not in sys.path:
-            sys.path.insert(0, _ROOT2)
-        import VDM_Void_Equations as _eq2
-        universal_void_dynamics = getattr(_eq2, "universal_void_dynamics", None)
-        if universal_void_dynamics is not None:
-            VOID_SOURCE = "sys.path:write_ups/code"
-        try:
-            import VDM_Void_Debt_Modulation as _vdm2
-            VoidDebtModulation = getattr(_vdm2, "VoidDebtModulation", None)
-        except Exception as vdm_exc:  # pragma: no cover
-            LOGGER.debug("VDM_Void_Debt_Modulation import via sys.path failed: %s", vdm_exc)
-        except Exception as final_exc:  # pragma: no cover
-            LOGGER.debug("Fallback import chain failed: %s", final_exc)
-
-    if universal_void_dynamics is None:
-        raise ImportError(CLASSIFIED_MESSAGE)
-
-    print(
-        f"[LBM2D] Loaded. void_module={universal_void_dynamics is not None} "
-        f"source={VOID_SOURCE} file={__file__}"
-    )
+LOGGER = logging.getLogger(__name__)
+CLASSIFIED_MESSAGE = _VOID_CLASSIFIED_MESSAGE
+HAS_CLASSIFIED_VOID_KERNEL = _HAS_CLASSIFIED_VOID_KERNEL
 
 
 # Lattice constants for D2Q9
@@ -223,9 +101,13 @@ class LBM2D:
             except Exception:
                 self._void_modulator = None
 
-        # Fail-fast if user requested void but module not available
-        if getattr(self.cfg, "void_enabled", False) and universal_void_dynamics is None:
-            raise RuntimeError(CLASSIFIED_MESSAGE)
+        self._void_placeholder = not HAS_CLASSIFIED_VOID_KERNEL
+        if getattr(self.cfg, "void_enabled", False) and self._void_placeholder:
+            LOGGER.warning(
+                "VDM void dynamics placeholder active (source=%s); request classified "
+                "access for production-grade stabilization.",
+                VOID_SOURCE,
+            )
 
         self._set_equilibrium()
 
@@ -299,14 +181,14 @@ class LBM2D:
             except Exception:
                 s = 1.0
         # universal delta (vectorized); fallback to zero if import missing
-        if universal_void_dynamics is None:
+        if self._void_placeholder:
             dW = np.zeros_like(self.W)
             if self.t == 0:
-                print("[void] unavailable; dW=0")
+                print("[void] placeholder active; request classified kernel for dynamic updates")
         else:
             dW = universal_void_dynamics(self.W, self.t, domain_modulation=s, use_time_dynamics=True)
             if self.t == 0:
-                print(f"[void] available from {VOID_SOURCE}; applying update")
+                print(f"[void] classified kernel active from {VOID_SOURCE}; applying update")
         # update and clamp W∈[0,1]
         self.W += dW
         np.clip(self.W, 0.0, 1.0, out=self.W)

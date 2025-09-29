@@ -41,54 +41,32 @@ Usage
 """
 
 # Classified dependency notice:
-#   This module relies on the classified memory-steering implementation under
-#   `secrets/`. Without access, importing the primitives will raise an error
-#   instructing users to request permission.
+#   Memory primitives are resolved via `vdm.memory_steering`, which loads the
+#   classified implementation when available and otherwise falls back to the
+#   documented public reference. Request access to the private kernel for the
+#   production-grade behavior.
 
 from __future__ import annotations
 
-import math
-import sys
-import os
 import contextlib
-import importlib.util
-from dataclasses import dataclass
-from typing import Iterable, List, Optional, Sequence, Tuple
-from pathlib import Path
+import math
+import os
+import sys
+from typing import List, Optional, Sequence, Tuple
 
 import numpy as np
 
-CLASSIFIED_MESSAGE = (
-    "Attempted to import classified code, ask the author for access to run this "
-    "simulation. Otherwise you can still view figures and logs."
+from vdm.memory_steering import (
+    CLASSIFIED_MESSAGE,
+    HAS_CLASSIFIED_IMPL as HAS_CLASSIFIED_MEMORY_IMPL,
+    MEMORY_SOURCE,
+    build_graph_laplacian,
+    collect_junction_choices,
+    compute_dimensionless_groups,
+    transition_probs,
+    update_memory,
+    y_junction_adjacency,
 )
-
-
-def _load_classified_memory_primitives():
-    secrets_root = Path(__file__).resolve().parents[2] / "secrets"
-    candidates = [
-        secrets_root / "VDM_rt" / "core" / "memory_steering.py",
-        secrets_root / "memory_steering" / "memory_steering.py",
-    ]
-    for path in candidates:
-        if path.exists():
-            spec = importlib.util.spec_from_file_location("classified_memory_steering", path)
-            if spec and spec.loader:
-                module = importlib.util.module_from_spec(spec)
-                spec.loader.exec_module(module)
-                return module
-    raise ImportError(CLASSIFIED_MESSAGE)
-
-
-_memory_module = _load_classified_memory_primitives()
-
-build_graph_laplacian = _memory_module.build_graph_laplacian
-update_memory = _memory_module.update_memory
-transition_probs = _memory_module.transition_probs
-sample_next_neighbor = _memory_module.sample_next_neighbor
-compute_dimensionless_groups = _memory_module.compute_dimensionless_groups
-y_junction_adjacency = _memory_module.y_junction_adjacency
-collect_junction_choices = _memory_module.collect_junction_choices
 
 
 # ---------------------------
@@ -420,9 +398,14 @@ def calibrate_curvature_on_arcs(R_values=(20.0, 40.0, 80.0), n_points=200, noise
     Returns:
         results: list of (R, kappa_mean, kappa_std, frac_error)
     """
-    import os
     os.makedirs(os.path.dirname(out_png), exist_ok=True)
-    import matplotlib.pyplot as plt
+    try:  # pragma: no cover - matplotlib optional for headless runs
+        import matplotlib.pyplot as plt
+    except ModuleNotFoundError:
+        raise ImportError(
+            "matplotlib is required for curvature calibration plots; install it or "
+            "skip this helper."
+        ) from None
     res = []
     fig, ax = plt.subplots(figsize=(6,4))
     for R in R_values:
@@ -780,7 +763,7 @@ def run_stability_band(
                     bper = float(np.linalg.norm(L_norm @ m_end) / max(1e-12, np.linalg.norm(m_end)))
 
                     # Dimensionless groups from gamma, delta, kappa
-                    Theta, Da, Lam_w, Gam = compute_dimensionless_groups(
+                    _, Da, _, Gam = compute_dimensionless_groups(
                         eta=1.0, M0=M0, gamma=float(gamma), R0=R0, T=T_write, delta=delta, kappa=kappa_eff, L_scale=L_scale
                     )
                     Lam = float(delta * T_decay)

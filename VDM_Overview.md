@@ -1,7 +1,7 @@
 # VDM Overview
 
-> Author: Justin K. Lietz  
-> ORCID: 0009-0008-9028-1366
+> Author: Justin K. Lietz<br>
+> ORCID: [0009-0008-9028-1366](https://orcid.org/0009-0008-9028-1366)<br>
 > Contact: <justin@neuroca.ai>
 >
 > Date: August 9, 2025  
@@ -15,7 +15,7 @@ Note on scope and merge resolution
 
 - This file was reconciled to include a comprehensive macro banner and overview while enforcing the repository’s policy: RD is the canonical baseline; EFT/KG content is quarantined as future work and explicitly labeled.
 
-## Macro Banner: Core Equations and Mappings
+## Macro Banner: Equations and Mappings
 
 Two-layer model (separated clearly)
 
@@ -94,7 +94,7 @@ References:
 | VDM | $\kappa L$ | curvature × scale | path bending | linear vs. $\Theta\,\|\nabla m\|$ |
 | VDM | $g$ | void gain | stabilization strength | e.g., 0.5 |
 
-## Core dimensionless groups (why they matter)
+## Dimensionless groups (why they matter)
 
 1. Void Debt Number 𝔇 — unresolved debt vs. resolved flux at walker level (stability vs. runaway)  
 2. Emergent Coupling Ratio Ξ — void interaction gain vs. local relaxation; controls synchronization/stiffness  

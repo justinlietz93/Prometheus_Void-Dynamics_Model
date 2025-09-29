@@ -1,8 +1,8 @@
 ﻿# Steering by Memory: A Dimensionless Law and Its Graph Discretization
 
 >
-> Author: Justin K. Lietz  
-> ORCID: 0009-0008-9028-1366
+> Author: Justin K. Lietz<br>
+> ORCID: [0009-0008-9028-1366](https://orcid.org/0009-0008-9028-1366)<br>
 > Contact: <justin@neuroca.ai>
 >
 > Date: August 9, 2025
