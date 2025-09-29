@@ -85,12 +85,12 @@ References:
 | --- | --- | --- | --- | --- |
 | LBM | $\nu$ | $\frac{1}{3}(\tau - \frac{1}{2})$ | kinematic viscosity | 0.1333 ($\tau=0.9$) |
 | LBM | $\mathrm{Re}$ | $\dfrac{U L}{\nu}$ | inertia vs. viscosity | 9.6 (64²), 19.2 (128²) |
-| LBM | $\mathrm{Ma}$ | $\dfrac{U}{\sqrt{1/3}}$ | compressibility | 0.035–0.017 (low) |
+| LBM | $\mathrm{Ma}$ | $\dfrac{U}{\sqrt{1/3}}$ | compressibility | 0.035-0.017 (low) |
 | RD | $\Pi_{Dr}$ | $\dfrac{D}{r L^{2}}$ | diffusion at scale $L$ | choose $L$ → report |
-| RD | $c^{\ast}$ | $\dfrac{c}{2\sqrt{D r}}$ | normalized KPP speed | ~0.95–1.0 |
+| RD | $c^{\ast}$ | $\dfrac{c}{2\sqrt{D r}}$ | normalized KPP speed | ~0.95-1.0 |
 | VDM | $\Theta$ | fit scale in $\Theta\,\Delta m$ or $\Theta\,\|\nabla m\|$ | junction gating strength | $k \approx 1$, $b \approx 0$ |
 | VDM | $\Lambda$ | exploration/retention ratio | turnover vs. memory | as swept in heatmaps |
-| VDM | $\Gamma$ | retention fraction | memory persistence | ~0.3–0.75 (representative) |
+| VDM | $\Gamma$ | retention fraction | memory persistence | ~0.3-0.75 (representative) |
 | VDM | $D_{a}$ | anisotropic diffusion index | transport anisotropy | {1, 3, 5, 7} |
 | VDM | $\kappa L$ | curvature × scale | path bending | linear vs. $\Theta\,\|\nabla m\|$ |
 | VDM | $g$ | void gain | stabilization strength | e.g., 0.5 |
@@ -109,7 +109,7 @@ References:
 
 ## What is Proven (numeric validation; RD branch)
 
-Front-speed (Fisher–KPP pulled front) [PROVEN]
+Front-speed (Fisher-KPP pulled front) [PROVEN]
 
 $$
 c_{\text{front}} = 2\sqrt{D r}
@@ -119,8 +119,8 @@ $$
 
 Representative defaults: $c_{\mathrm{meas}} \approx 0.953$ vs $c_{\mathrm{th}} = 1.0$, $\mathrm{rel\_err} \approx 0.047$, $R^{2} \approx 0.999996$ (meets gates)  
 Documentation: [rd_front_speed_validation.md](write_ups/reaction_diffusion/rd_front_speed_validation.md)  
-Script: [rd_front_speed_experiment.py](write_ups/code/physics/reaction_diffusion/rd_front_speed_experiment.py)  
-Sweep: [rd_front_speed_sweep.py](write_ups/code/physics/reaction_diffusion/rd_front_speed_sweep.py)
+Script: [rd_front_speed_experiment.py](src/reaction_diffusion/rd_front_speed_experiment.py)  
+Sweep: [rd_front_speed_sweep.py](src/reaction_diffusion/rd_front_speed_sweep.py)
 
 Linear dispersion about $\phi \approx 0$ (periodic, linearized RD) [PROVEN]
 
@@ -138,7 +138,7 @@ $$
 
 Representative defaults: median rel. error $\approx 1.45\times 10^{-3}$, $R^{2}_{\text{array}} \approx 0.99995$ (meets gates)  
 Documentation: [rd_dispersion_validation.md](write_ups/reaction_diffusion/rd_dispersion_validation.md)  
-Script: [rd_dispersion_experiment.py](write_ups/code/physics/reaction_diffusion/rd_dispersion_experiment.py)
+Script: [rd_dispersion_experiment.py](src/reaction_diffusion/rd_dispersion_experiment.py)
 
 Consolidated plan and acceptance gates:  
 [rd_validation_plan.md](write_ups/reaction_diffusion/rd_validation_plan.md)
@@ -201,8 +201,8 @@ EFT references:
 
 ## Reproducibility and outputs
 
-- Figures → write_ups/code/outputs/figures/  
-- Logs → write_ups/code/outputs/logs/  
+- Figures → figures/{domain}/  
+- Logs → logs/{domain}/  
 - Filenames: {script name}_{timestamp}.png/json
 
 VDM_rt parity (independent runners; same metrics schema)  
@@ -218,8 +218,8 @@ VDM_rt parity (independent runners; same metrics schema)
 
 ## At-a-glance defaults (validated runs)
 
-- Front-speed: N=1024, L=200, D=1.0, r=0.25, T=80, cfl=0.2, seed=42, x0=−60, level=0.1, fit 0.6–0.9  
-- Dispersion: N=1024, L=200, D=1.0, r=0.25, T=10, cfl=0.2, seed=42, amp0=1e−6, record=80, m_max=64, fit 0.1–0.4
+- Front-speed: N=1024, L=200, D=1.0, r=0.25, T=80, cfl=0.2, seed=42, x0=−60, level=0.1, fit 0.6-0.9  
+- Dispersion: N=1024, L=200, D=1.0, r=0.25, T=10, cfl=0.2, seed=42, amp0=1e−6, record=80, m_max=64, fit 0.1-0.4
 
 ## Memory steering and system notes
 
@@ -244,8 +244,8 @@ VDM_rt parity (independent runners; same metrics schema)
 ## Appendix: Quick Links
 
 - Front speed: [rd_front_speed_validation.md](write_ups/reaction_diffusion/rd_front_speed_validation.md),  
-  [rd_front_speed_experiment.py](write_ups/code/physics/reaction_diffusion/rd_front_speed_experiment.py)  
+  [rd_front_speed_experiment.py](src/reaction_diffusion/rd_front_speed_experiment.py)  
 - Dispersion: [rd_dispersion_validation.md](write_ups/reaction_diffusion/rd_dispersion_validation.md),  
-  [rd_dispersion_experiment.py](write_ups/code/physics/reaction_diffusion/rd_dispersion_experiment.py)  
+  [rd_dispersion_experiment.py](src/reaction_diffusion/rd_dispersion_experiment.py)  
 - Plan: [rd_validation_plan.md](write_ups/reaction_diffusion/rd_validation_plan.md)  
 - Status: [CORRECTIONS.md](CORRECTIONS.md)

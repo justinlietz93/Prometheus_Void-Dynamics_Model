@@ -1,4 +1,4 @@
-# RD validation plan (Fisher–KPP, 1D)
+# RD validation plan (Fisher-KPP, 1D)
 >
 > Author: Justin K. Lietz<br>
 > ORCID: [0009-0008-9028-1366](https://orcid.org/0009-0008-9028-1366)<br>
@@ -21,7 +21,7 @@ Purpose
 Scope
 
 - Tests covered:
-  1) Front-speed validation (pulled front, Fisher–KPP)
+  1) Front-speed validation (pulled front, Fisher-KPP)
   2) Linear dispersion validation (periodic, linearized evolution)
 
 Canonical scripts
@@ -45,7 +45,7 @@ Front-speed test
 - Method:
   - Neumann BCs; smooth step IC with far-field gating (u=0 ahead of the interface), optional left-gated noise.
   - Track x_f only while a true crossing exists; robust fit of x_f(t) on a late-time fraction window.
-- Defaults: N=1024, L=200, D=1.0, r=0.25, T=80, cfl=0.2, seed=42, x0=−60, level=0.1, fit 0.6–0.9.
+- Defaults: N=1024, L=200, D=1.0, r=0.25, T=80, cfl=0.2, seed=42, x0=−60, level=0.1, fit 0.6-0.9.
 - Theory: c_th = 2√(D r).
 - Acceptance:
   - rel_err = |c_meas − c_th| / |c_th| ≤ 0.05
@@ -67,7 +67,7 @@ Dispersion test
 - Method:
   - Start from small random noise (amp0 ≪ 1), explicit Euler with diffusion CFL.
   - Record snapshots; fit on a fraction window away from startup transients.
-- Defaults: N=1024, L=200, D=1.0, r=0.25, T=10, cfl=0.2, seed=42, amp0=1e-6, record=80, m_max=64, fit 0.1–0.4.
+- Defaults: N=1024, L=200, D=1.0, r=0.25, T=10, cfl=0.2, seed=42, amp0=1e-6, record=80, m_max=64, fit 0.1-0.4.
 - Acceptance (array-level):
   - median relative error over good modes (R²_mode ≥ 0.95): med_rel_err ≤ 0.10
   - R²_array(measured vs σ_d) ≥ 0.98
@@ -109,7 +109,7 @@ Expected artifacts
 
 Open questions / next refinements
 
-- Evaluate sensitivity of c_meas to level choice (0.05–0.2) and fit window; document invariance bands.
+- Evaluate sensitivity of c_meas to level choice (0.05-0.2) and fit window; document invariance bands.
 - Compare dispersion fit using windowed DFT vs rFFT magnitude; assess bias for near-zero/negative σ.
 - Add unit tests for σ_d formula and Laplacian implementations.
 - Mirror runners under VDM_rt/physics for cross-stack parity.

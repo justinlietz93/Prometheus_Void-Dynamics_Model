@@ -5,24 +5,24 @@ Created: 2025-08-26
 Classification: RD
 
 Overview
-- Package the on-site logarithmic invariant as a QA diagnostic within a validated reaction–diffusion (RD) methods slice.
+- Package the on-site logarithmic invariant as a QA diagnostic within a validated reaction-diffusion (RD) methods slice.
 - Lead with proven RD validations (front speed, dispersion) with acceptance gates and PASS metrics.
 - Provide a minimal, per-node runtime guard based on the invariant drift for use in CI/runtime.
 
 Context (VDM): Void Dynamics (VDM) is an event-driven, sparse framework; the RD sector provides the canonical physics slice with reproducible gates. The QA invariant serves as a per-node drift diagnostic. Second-order/EFT branches are explicitly out of scope here and quarantined to separate notes.
 
 References (code)
-- Front speed experiment: [write_ups/code/physics/reaction_diffusion/rd_front_speed_experiment.py](../../code/physics/reaction_diffusion/rd_front_speed_experiment.py)
-- Dispersion experiment: [write_ups/code/physics/reaction_diffusion/rd_dispersion_experiment.py](../../code/physics/reaction_diffusion/rd_dispersion_experiment.py)
-- Front speed sweep: [write_ups/code/physics/reaction_diffusion/rd_front_speed_sweep.py](../../code/physics/reaction_diffusion/rd_front_speed_sweep.py)
-- Logistic invariant validation: [write_ups/code/physics/conservation_law/qVDM_validate.py](../../code/physics/conservation_law/qVDM_validate.py)
-- IO helpers: [figure_path()](../../code/common/io_paths.py:49), [log_path()](../../code/common/io_paths.py:53), [write_log()](../../code/common/io_paths.py:57)
+- Front speed experiment: [src/physics/reaction_diffusion/rd_front_speed_experiment.py](../../src/physics/reaction_diffusion/rd_front_speed_experiment.py)
+- Dispersion experiment: [src/physics/reaction_diffusion/rd_dispersion_experiment.py](../../src/physics/reaction_diffusion/rd_dispersion_experiment.py)
+- Front speed sweep: [src/physics/reaction_diffusion/rd_front_speed_sweep.py](../../src/physics/reaction_diffusion/rd_front_speed_sweep.py)
+- Logistic invariant validation: [src/physics/conservation_law/qVDM_validate.py](../../src/physics/conservation_law/qVDM_validate.py)
+- IO helpers: [figure_path()](../../src/common/io_paths.py:49), [log_path()](../../src/common/io_paths.py:53), [write_log()](../../src/common/io_paths.py:57)
 
 
 1. Model and acceptance gates
 
-1.1 Fisher–KPP baseline
-The scalar RD model is the Fisher–KPP equation
+1.1 Fisher-KPP baseline
+The scalar RD model is the Fisher-KPP equation
 
 $$\partial_t u = D\,\partial_{xx} u + r\,u\,(1-u),$$
 
@@ -56,31 +56,31 @@ Drift test and gates (double precision):
 - Time integrator RK4: $\,\max_t|Q(t)-Q(0)| \le 10^{-8}.$
 - Convergence study over $dt$: observed order $p \approx 4 \pm 0.4$, with fit $R^2 \ge 0.98$. For Euler, $p\approx 1\pm 0.2$.
 
-Implementations: [Q_invariant()](../../code/physics/conservation_law/qVDM_validate.py:118), [fit_loglog()](../../code/physics/conservation_law/qVDM_validate.py:153), [plot_Q_drift()](../../code/physics/conservation_law/qVDM_validate.py:179).
+Implementations: [Q_invariant()](../../src/physics/conservation_law/qVDM_validate.py:118), [fit_loglog()](../../src/physics/conservation_law/qVDM_validate.py:153), [plot_Q_drift()](../../src/physics/conservation_law/qVDM_validate.py:179).
 
 
 2. Proven RD validations (PASS)
 
 2.1 Front speed
-- Figure: [write_ups/code/outputs/figures/reaction_diffusion/rd_front_speed_experiment_20250824T053748Z.png](../../code/outputs/figures/reaction_diffusion/rd_front_speed_experiment_20250824T053748Z.png)
-- Log: [write_ups/code/outputs/logs/reaction_diffusion/rd_front_speed_experiment_20250824T053748Z.json](../../code/outputs/logs/reaction_diffusion/rd_front_speed_experiment_20250824T053748Z.json)
+- Figure: [src/outputs/figures/reaction_diffusion/rd_front_speed_experiment_20250824T053748Z.png](../../src/outputs/figures/reaction_diffusion/rd_front_speed_experiment_20250824T053748Z.png)
+- Log: [src/outputs/logs/reaction_diffusion/rd_front_speed_experiment_20250824T053748Z.json](../../src/outputs/logs/reaction_diffusion/rd_front_speed_experiment_20250824T053748Z.json)
 - Key metrics: $c_{\mathrm{meas}}=0.9529$, $c_{\mathrm{th}}=1.0000$, $\mathrm{rel\_err}=4.71\times 10^{-2}$, $R^2=0.999996$ → PASS (within 5%, $R^2\ge 0.9999$).
 
 Reproduce:
 ```
-python write_ups/code/physics/reaction_diffusion/rd_front_speed_experiment.py \
+python src/physics/reaction_diffusion/rd_front_speed_experiment.py \
   --N 1024 --L 200 --D 1.0 --r 0.25 --T 80 --cfl 0.2 --seed 42 \
   --x0 -60 --level 0.1 --fit_start 0.6 --fit_end 0.9
 ```
 
 2.2 Linear dispersion
-- Figure: [write_ups/code/outputs/figures/reaction_diffusion/rd_dispersion_experiment_20250824T053842Z.png](../../code/outputs/figures/reaction_diffusion/rd_dispersion_experiment_20250824T053842Z.png)
-- Log: [write_ups/code/outputs/logs/reaction_diffusion/rd_dispersion_experiment_20250824T053842Z.json](../../code/outputs/logs/reaction_diffusion/rd_dispersion_experiment_20250824T053842Z.json)
+- Figure: [src/outputs/figures/reaction_diffusion/rd_dispersion_experiment_20250824T053842Z.png](../../src/outputs/figures/reaction_diffusion/rd_dispersion_experiment_20250824T053842Z.png)
+- Log: [src/outputs/logs/reaction_diffusion/rd_dispersion_experiment_20250824T053842Z.json](../../src/outputs/logs/reaction_diffusion/rd_dispersion_experiment_20250824T053842Z.json)
 - Key metrics: median rel-err $1.45\times 10^{-3}$, $R^2_{\text{array}}=0.999946$ → PASS (tight vs gates).
 
 Reproduce:
 ```
-python write_ups/code/physics/reaction_diffusion/rd_dispersion_experiment.py \
+python src/physics/reaction_diffusion/rd_dispersion_experiment.py \
   --N 1024 --L 200 --D 1.0 --r 0.25 --T 10 --cfl 0.2 --seed 42 \
   --record 80 --m_max 64 --fit_start 0.1 --fit_end 0.4
 ```
@@ -89,9 +89,9 @@ python write_ups/code/physics/reaction_diffusion/rd_dispersion_experiment.py \
 3. QA invariant (no figures in RD packaging)
 - The on-site invariant is used solely as a per-node QA drift gate in RD pipelines. Figures are intentionally omitted here.
 - Acceptance (double precision RK4): $\max_t|Q(t)-Q(0)| \le 10^{-8}$ at $dt\approx 10^{-3}$; convergence slope $p\approx 4\pm 0.4$ with fit $R^2\ge 0.98$ on a $dt$ sweep.
-- Use the validator to produce audit logs when needed. Numerical caveat: at extremely small step sizes, ΔQ approaches machine precision and the observed slope p from a log–log fit can degrade; evaluate gates in the truncation-dominated regime (moderate dt). Proof and figures: see [logarithmic_constant_of_motion.md](./logarithmic_constant_of_motion.md).
+- Use the validator to produce audit logs when needed. Numerical caveat: at extremely small step sizes, ΔQ approaches machine precision and the observed slope p from a log-log fit can degrade; evaluate gates in the truncation-dominated regime (moderate dt). Proof and figures: see [logarithmic_constant_of_motion.md](./logarithmic_constant_of_motion.md).
 ```
-python write_ups/code/physics/conservation_law/qVDM_validate.py \
+python src/physics/conservation_law/qVDM_validate.py \
   --r 0.15 --u 0.25 --W0 0.12 0.62 --T 40 \
   --dt 0.002 0.001 0.0005 --solver rk4
 ```
@@ -136,9 +136,9 @@ for n in range(steps):
 
 
 5. Notes on numerical details
-- Robust linear fits use a simple moving-average smoothing and MAD-based outlier rejection; see [robust_linear_fit()](../../code/physics/reaction_diffusion/rd_front_speed_experiment.py:77) and [robust_linear_fit()](../../code/physics/reaction_diffusion/rd_dispersion_experiment.py:40).
+- Robust linear fits use a simple moving-average smoothing and MAD-based outlier rejection; see [robust_linear_fit()](../../src/physics/reaction_diffusion/rd_front_speed_experiment.py:77) and [robust_linear_fit()](../../src/physics/reaction_diffusion/rd_dispersion_experiment.py:40).
 - RD experiments route outputs to repo-standard locations; failed runs go to a failed_runs subfolder; see code above.
-- Invariant figures and metrics are produced via repository helpers; see [figure_path()](../../code/common/io_paths.py:49) and [log_path()](../../code/common/io_paths.py:53).
+- Invariant figures and metrics are produced via repository helpers; see [figure_path()](../../src/common/io_paths.py:49) and [log_path()](../../src/common/io_paths.py:53).
 
 
 6. Acceptance checklist
@@ -151,15 +151,15 @@ for n in range(steps):
 7. Reproducibility summary
 - Front speed: PASS with $R^2=0.999996$, rel-err $4.7\%$.
 - Dispersion: PASS with median rel-err $1.45\times 10^{-3}$, $R^2_{\text{array}}=0.999946$.
-- Invariant drift: PASS thresholds as specified above (see figures and JSON metrics produced by [qVDM_validate.py](../../code/physics/conservation_law/qVDM_validate.py)).
+- Invariant drift: PASS thresholds as specified above (see figures and JSON metrics produced by [qVDM_validate.py](../../src/physics/conservation_law/qVDM_validate.py)).
 
 
 Appendix: direct links
-- Figures (RD): [write_ups/code/outputs/figures/reaction_diffusion](../../code/outputs/figures/reaction_diffusion)
-- Logs (RD): [write_ups/code/outputs/logs/reaction_diffusion](../../code/outputs/logs/reaction_diffusion)
-- Invariant validator logs: write_ups/code/outputs/logs/conservation_law (figures omitted in RD packaging)
-- Scripts: [write_ups/code/physics/reaction_diffusion](../../code/physics/reaction_diffusion), [write_ups/code/physics/conservation_law](../../code/physics/conservation_law)
+- Figures (RD): [src/outputs/figures/reaction_diffusion](../../src/outputs/figures/reaction_diffusion)
+- Logs (RD): [src/outputs/logs/reaction_diffusion](../../src/outputs/logs/reaction_diffusion)
+- Invariant validator logs: src/outputs/logs/conservation_law (figures omitted in RD packaging)
+- Scripts: [src/physics/reaction_diffusion](../../src/physics/reaction_diffusion), [src/physics/conservation_law](../../src/physics/conservation_law)
 
 Citations
-- Fisher, R.A. (1937). “The wave of advance of advantageous genes.” Ann. Eugenics 7: 355–369.
-- Kolmogorov, A.N.; Petrovsky, I.; Piskunov, N. (1937). “Study of the diffusion equation with growth of the quantity of matter.” Bull. Univ. Moscow, Ser. A 1: 1–25.
+- Fisher, R.A. (1937). “The wave of advance of advantageous genes.” Ann. Eugenics 7: 355-369.
+- Kolmogorov, A.N.; Petrovsky, I.; Piskunov, N. (1937). “Study of the diffusion equation with growth of the quantity of matter.” Bull. Univ. Moscow, Ser. A 1: 1-25.

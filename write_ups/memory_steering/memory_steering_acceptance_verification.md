@@ -113,7 +113,7 @@ Open Questions / Next Refinements
 Run Instructions
 - Activate venv and run:
   .\venv\scripts\activate
-  python -m Prometheus_VDM.derivation.code.physics.memory_steering.memory_steering_acceptance --seed 0 --steps 512 --g 0.12 --lam 0.08
+  python -m Prometheus_VDM.derivation.src.physics.memory_steering.memory_steering_acceptance --seed 0 --steps 512 --g 0.12 --lam 0.08
 - Inspect JSON in code/outputs/logs/memory_steering/ and PNGs in code/outputs/figures/memory_steering/.
 
 Reproducibility Gates

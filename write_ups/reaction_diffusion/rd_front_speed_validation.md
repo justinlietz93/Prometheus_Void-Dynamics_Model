@@ -1,4 +1,4 @@
-# RD front-speed validation (Fisher–KPP)
+# RD front-speed validation (Fisher-KPP)
 >
 > Author: Justin K. Lietz<br>
 > ORCID: [0009-0008-9028-1366](https://orcid.org/0009-0008-9028-1366)<br>
@@ -15,7 +15,7 @@
 
 Purpose
 
-- Empirically validate the Fisher–KPP pulled-front speed in 1D reaction–diffusion:
+- Empirically validate the Fisher-KPP pulled-front speed in 1D reaction-diffusion:
   u_t = D u_xx + r u (1 − u), with theoretical c_th = 2√(D r).
 
   Note: With the canonical mapping r = α − β and u = α, the homogeneous fixed point is φ*= r/u = 1 − β/α (e.g., α=0.25, β=0.10 ⇒ φ* = 0.6).
@@ -74,7 +74,7 @@ How to run (PowerShell)
 Recommended defaults
 
 - Threshold level: 0.1 (stable early/late across grids). Level=0.5 works if far field remains near zero.
-- Fit window: later fraction of the tracked interval (e.g., 0.6–0.9) to avoid initial transients and boundary interactions.
+- Fit window: later fraction of the tracked interval (e.g., 0.6-0.9) to avoid initial transients and boundary interactions.
 - Grid/time step: increase N or T as needed for clean linear regime; CFL-stable explicit Euler is used.
 
 Acceptance criteria
@@ -85,7 +85,7 @@ Acceptance criteria
 
 Representative results (logged)
 
-- Parameters: D=1.0, r=0.25, N=1024, T=80, level=0.1, fit 0.6–0.9
+- Parameters: D=1.0, r=0.25, N=1024, T=80, level=0.1, fit 0.6-0.9
 - Metrics: c_meas ≈ 0.953, c_th = 1.0, rel_err ≈ 0.047, R² ≈ 0.999996 (pass)
 - Gradient cross-check: c_meas_grad ≈ 0.945, rel_err_grad ≈ 0.055, R²_grad ≈ 0.99995
 - Outputs auto-saved under write_ups/code/outputs/{figures,logs}/

@@ -1,13 +1,14 @@
 """Utility helpers shared by domain notebooks.
 
 These functions keep the repository root on ``sys.path`` so that the
-``code/<domain>/`` packages can be imported directly from notebooks, and they
+``src/<domain>/`` packages can be imported directly from notebooks, and they
 provide small quality-of-life helpers for allocating artifact paths and
 summarising numpy arrays.
 """
 
 from __future__ import annotations
 
+import importlib.util
 import json
 import sys
 from pathlib import Path
@@ -15,21 +16,47 @@ from typing import Any, Dict, Mapping
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-CODE_ROOT = REPO_ROOT / "code"
+SRC_ROOT = REPO_ROOT / "src"
 
 
 def ensure_repo_path() -> Path:
-	"""Ensure the repo (and ``code/``) directories are importable.
+	"""Ensure the repo (and ``src/``) directories are importable.
 
 	Returns the repository root so callers can build absolute Paths when they
 	want to reference files on disk.
 	"""
 
-	for path in (REPO_ROOT, CODE_ROOT):
+	for path in (REPO_ROOT, SRC_ROOT):
 		path_str = str(path)
 		if path_str not in sys.path:
 			sys.path.insert(0, path_str)
+	_bootstrap_local_packages()
 	return REPO_ROOT
+
+
+def _bootstrap_local_packages() -> None:
+	"""Load repository packages that shadow stdlib names (e.g. ``src``)."""
+
+	def _load_package(name: str, package_path: Path) -> None:
+		init_file = package_path / "__init__.py"
+		if not init_file.exists():
+			return
+		existing = sys.modules.get(name)
+		if existing is not None and getattr(existing, "__file__", None) == str(init_file):
+			return
+		spec = importlib.util.spec_from_file_location(
+			name,
+			init_file,
+			submodule_search_locations=[str(package_path)],
+		)
+		if spec is None or spec.loader is None:
+			return
+		module = importlib.util.module_from_spec(spec)
+		sys.modules[name] = module
+		spec.loader.exec_module(module)
+
+	_load_package("src", SRC_ROOT)
+	sys.modules.setdefault("code", sys.modules.get("src"))
 
 
 def repo_path(*parts: str) -> Path:
@@ -46,7 +73,7 @@ def allocate_artifacts(domain: str, slug: str, failed: bool = False) -> Dict[str
 	"""
 
 	ensure_repo_path()
-	from code.common import io_paths  # imported lazily to avoid notebook startup cost
+	from src.common import io_paths  # imported lazily to avoid notebook startup cost
 
 	figure_path = io_paths.figure_path(domain, slug, failed=failed)
 	log_path = io_paths.log_path(domain, slug, failed=failed)

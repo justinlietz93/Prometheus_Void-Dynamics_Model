@@ -7,7 +7,7 @@ if TYPE_CHECKING:  # pragma: no cover - for type checkers only
     import numpy as np
 
 CLASSIFIED_MESSAGE = (
-    "Attempted to import classified void-dynamics code. Public builds ship a deterministic "
+    "Attempted to import classified void-dynamics src module. Public builds ship a deterministic "
     "placeholder—request private access for production-grade behavior."
 )
 HAS_CLASSIFIED_IMPL = False

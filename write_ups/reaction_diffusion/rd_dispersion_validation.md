@@ -14,7 +14,7 @@
 > See LICENSE file for full terms.
 
 Purpose
-- Empirically validate the linear growth/decay rates of reaction–diffusion (Fisher–KPP linearized about u≈0):
+- Empirically validate the linear growth/decay rates of reaction-diffusion (Fisher-KPP linearized about u≈0):
   u_t = D u_xx + r u, with σ(k) = r − D k² (continuum) and σ_d(m) = r − (4D/dx²) sin²(π m/N) (discrete).
 
 Status
@@ -51,7 +51,7 @@ How to run (PowerShell)
   python code/physics/rd_dispersion_experiment.py --N 1024 --L 200 --D 1.0 --r 0.25 --T 10 --cfl 0.2 --seed 42 --amp0 1e-6 --record 80 --m_max 64 --fit_start 0.1 --fit_end 0.4
 
 Recommended defaults
-- N=1024, L=200, D=1.0, r=0.25, T=10, cfl=0.2, seed=42, amp0=1e-6, record=80, m_max=64, fit 0.1–0.4
+- N=1024, L=200, D=1.0, r=0.25, T=10, cfl=0.2, seed=42, amp0=1e-6, record=80, m_max=64, fit 0.1-0.4
 - Use early-mid window to avoid startup transients while staying in linear regime.
 
 Acceptance criteria

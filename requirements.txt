@@ -31,3 +31,8 @@ matplotlib
 # VDM_Void_Equations
 # VDM_Void_Debt_Modulation
 # VDM_Demo_original
+
+ipykernel
+
+# Public repo requirements.txt
+vdm-kernel-private @ git+https://github.com/Neuroca-Inc/Private_VDM_Package.git@v0.1.2
