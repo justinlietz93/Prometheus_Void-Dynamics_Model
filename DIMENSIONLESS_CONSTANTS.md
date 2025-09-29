@@ -17,12 +17,12 @@
 | --------- | ------------- | ----------------------------------------------------------- | -------------------------- | -------------------------------- |
 | LBM       | $\nu$         | $\nu = \frac{1}{3}(\tau - \frac{1}{2})$         | kinematic viscosity        | 0.1333 ($\tau=0.9$)             |
 | LBM       | $\mathrm{Re}$ | $\mathrm{Re} = \dfrac{U L}{\nu}$                            | inertia vs. viscosity      | 9.6 ($64^2$), 19.2 ($128^2$)    |
-| LBM       | $\mathrm{Ma}$ | $\mathrm{Ma} = \dfrac{U}{\sqrt{1/3}}$                       | compressibility            | 0.035–0.017 (low)               |
+| LBM       | $\mathrm{Ma}$ | $\mathrm{Ma} = \dfrac{U}{\sqrt{1/3}}$                       | compressibility            | 0.035-0.017 (low)               |
 | RD        | $\Pi_{Dr}$    | $\Pi_{Dr} = \dfrac{D}{r L^{2}}$                             | diffusion at scale $L$     | choose $L$ → report             |
-| RD        | $c^{*}$       | $c^{*} = \dfrac{c}{2\sqrt{D r}}$                            | normalized KPP speed       | $\approx 0.95$–$1.0$            |
+| RD        | $c^{*}$       | $c^{*} = \dfrac{c}{2\sqrt{D r}}$                            | normalized KPP speed       | $\approx 0.95$-$1.0$            |
 | VDM     | $\Theta$      | scale factor in $\Theta\,\Delta m$ or $\Theta \|\nabla m\|$ | junction gating strength   | $k \approx 1,\ b \approx 0$     |
 | VDM     | $\Lambda$     | exploration / retention ratio                               | turnover vs. memory        | as swept in heatmaps            |
-| VDM     | $\Gamma$      | retention fraction                                          | memory persistence         | $\approx 0.3$–$0.75$ avg (plots) |
+| VDM     | $\Gamma$      | retention fraction                                          | memory persistence         | $\approx 0.3$-$0.75$ avg (plots) |
 | VDM     | $D_a$         | anisotropic diffusion index                                 | transport anisotropy       | $\{1,3,5,7\}$                   |
 | VDM     | $\kappa L$    | curvature × scale                                           | path bending               | linear vs. $\Theta\|\nabla m\|$ |
 | VDM     | $g$           | void gain                                                   | stabilization strength     | e.g., 0.5                       |

@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-CODE_ROOT = PROJECT_ROOT / "code"
+SRC_ROOT = PROJECT_ROOT / "src"
 
 # Modules that must never be imported directly from the public tree.
 BANNED_IMPORT_PREFIXES = {
@@ -42,7 +42,7 @@ def _find_forbidden_imports(path: Path) -> list[tuple[int, str]]:
 
 
 def test_forbidden_imports_absent():
-    py_files = _iter_python_files(CODE_ROOT)
+    py_files = _iter_python_files(SRC_ROOT)
     bad: dict[str, list[tuple[int, str]]] = {}
     for path in py_files:
         rel = path.relative_to(PROJECT_ROOT)

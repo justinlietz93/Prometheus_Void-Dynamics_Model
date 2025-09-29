@@ -260,7 +260,7 @@ def main():
     parser.add_argument("--m_max", type=int, default=64, help="Max mode index m to fit (clamped by N//2).")
     parser.add_argument("--fit_start", type=float, default=0.1, help="fractional start of fit window")
     parser.add_argument("--fit_end", type=float, default=0.4, help="fractional end of fit window")
-    parser.add_argument("--outdir", type=str, default=None, help="base output dir; defaults to write_ups/code/outputs next to this script")
+    parser.add_argument("--outdir", type=str, default=None, help="base output dir; defaults to the repository root (figures/, logs/)")
     parser.add_argument("--figure", type=str, default=None, help="override figure path; otherwise script_name_timestamp.png in outdir/figures")
     parser.add_argument("--log", type=str, default=None, help="override log path; otherwise script_name_timestamp.json in outdir/logs")
     args = parser.parse_args()

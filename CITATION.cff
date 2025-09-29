@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this repository or the associated Zenodo archive, please cite it as below."
+title: "A Logarithmic First Integral for the Logistic On Site Law in Void Dynamics"
+abstract: |
+  Void Dynamics Model (VDM) provides reproducible reaction-diffusion,
+  fluid-dynamics, and memory-steering validations. This archival release freezes
+  convergence studies, Q-drift diagnostics, front-speed and dispersion benchmarks,
+  and the supporting notebooks/figures that define the logarithmic first
+  integral used for QA in the VDM reaction-diffusion sector.
+authors:
+  - family-names: Lietz
+    given-names: Justin Kyle
+    affiliation: Neuroca, Inc.
+    email: justin@neuroca.ai
+    orcid: https://orcid.org/0009-0008-9028-1366
+doi: 10.5281/zenodo.17220869
+repository-code: https://github.com/Neuroca-Inc/Prometheus_Void-Dynamics_Model
+url: https://doi.org/10.5281/zenodo.17220869
+version: "0.1.0"
+date-released: "2025-09-29"
+type: software
+keywords:
+  - Void Dynamics Model
+  - reaction-diffusion
+  - front speed
+  - dispersion
+  - convergence
+  - Q-drift
+  - first integral
+  - constant of motion
+  - QA invariants
+  - reproducibility

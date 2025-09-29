@@ -46,6 +46,11 @@ DOIs:
 **Discussion Board:** https://github.com/orgs/Neuroca-Inc/discussions
 
 This folder provides a public, declassified view of the Void Dynamics Model.
+***Current Status:*** Setting up reproducible code for all the work I'm comfortable with sharing publicly. Code that directly runs my private Void Equations will call a private workflow and return the results so you can still see proof.
+
+***Status Last Updated:*** Sep 29, 2025
+
+This repository provides a public, paper-only view of the Void Dynamics program.
 It summarizes the theory and validation write-ups for review by physicists,
 applied mathematicians, and scientifically minded engineers. Reproducible code released for the public is now available. Remaining proprietary source code and written work must be requested directly.
 
@@ -69,7 +74,7 @@ applied mathematicians, and scientifically minded engineers. Reproducible code r
 ## What this is
 
 * A set of derivation papers that establish a clean baseline physics slice
-  using reaction–diffusion (RD).
+  using reaction-diffusion (RD).
 * Additional documents that explore a future, quarantined effective field
   theory (EFT) branch, clearly labeled as future work.
 * Each paper separates what is proven from what is plausible or speculative
@@ -96,7 +101,7 @@ applied mathematicians, and scientifically minded engineers. Reproducible code r
 * Foundations:
   * [discrete_to_continuum.md](write_ups/foundations/discrete_to_continuum.md)
   * [continuum_stack.md](write_ups/foundations/continuum_stack.md)
-* Reaction–Diffusion (canonical baseline):
+* Reaction-Diffusion (canonical baseline):
   * [rd_front_speed_validation.md](write_ups/reaction_diffusion/rd_front_speed_validation.md)
   * [rd_dispersion_validation.md](write_ups/reaction_diffusion/rd_dispersion_validation.md)
   * [rd_validation_plan.md](write_ups/reaction_diffusion/rd_validation_plan.md)

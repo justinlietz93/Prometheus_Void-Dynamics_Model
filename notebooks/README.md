@@ -7,13 +7,14 @@ capturing figures and logs in the standard locations (`figures/` and `logs/`).
 
 ## Layout
 
-- `conservation_law/` – logistic invariant validation (`qfum_validate`).
-- `fluid_dynamics/` – lid cavity and related fluid benchmarks.
-- `reaction_diffusion/` – Fisher–KPP front-speed diagnostics.
-- `memory_steering/` – memory steering acceptance and exploratory runs.
+- `conservation_law/` - logistic invariant validation (`qfum_validate`).
+- `reaction_diffusion/` - Fisher-KPP front-speed diagnostics (`rd_front_speed_walkthrough`, `rd_dispersion_walkthrough`, `rd_front_speed_sweep_walkthrough`).
+- `fluid_dynamics/` - LBM-based benchmarks (`lid_cavity_walkthrough`, `taylor_green_walkthrough`).
+- `memory_steering/` - steering experiments, acceptance, core helpers, and plotting harness (`memory_steering_*_walkthrough.ipynb`).
+- `tachyonic_condensation/` - finite-tube mode solver and condensation baseline (`cylinder_modes_walkthrough`, `condense_tube_walkthrough`).
 
 Shared helpers live in `utils.py`; they add the repository root to
-`sys.path`, surface convenience wrappers around `code.common.io_paths`, and
+`sys.path`, surface convenience wrappers around `src.common.io_paths`, and
 generate timestamped slugs for artifacts.
 
 ## Usage
@@ -22,6 +23,8 @@ generate timestamped slugs for artifacts.
    root:
 
    ```bash
+   python -m venv .venv
+   source .venv/bin/activate
    pip install -r requirements.txt  # if needed
    jupyter lab
    ```

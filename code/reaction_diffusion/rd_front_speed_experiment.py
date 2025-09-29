@@ -366,7 +366,7 @@ def main():
     parser.add_argument("--x0", type=float, default=-60.0)
     parser.add_argument("--fit_start", type=float, default=0.6, help="fractional start of fit window")
     parser.add_argument("--fit_end", type=float, default=0.9, help="fractional end of fit window")
-    parser.add_argument("--outdir", type=str, default=None, help="base output dir; defaults to write_ups/code/outputs next to this script")
+    parser.add_argument("--outdir", type=str, default=None, help="base output dir; defaults to the repository root (figures/, logs/)")
     parser.add_argument("--figure", type=str, default=None, help="override figure path; otherwise script_name_timestamp.png in outdir/figures")
     parser.add_argument("--log", type=str, default=None, help="override log path; otherwise script_name_timestamp.json in outdir/logs")
     parser.add_argument("--noise_amp", type=float, default=0.0, help="optional gated noise amplitude (applied only left of the front)")
