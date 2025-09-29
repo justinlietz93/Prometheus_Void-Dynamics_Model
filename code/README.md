@@ -1,4 +1,4 @@
-# Physics scripts (code/<domain>/)
+# Physics scripts (code/{domain}/)
 
 Purpose
 
