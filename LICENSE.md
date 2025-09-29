@@ -73,7 +73,7 @@ This repository is available under two distinct licensing tracks:
 
 ### Commercial Applications Include:
 - Product development and commercialization
-- Research with intent to 
+- Research with intent to commercialize
 - Paid consulting or services
 - Integration into commercial software/hardware
 - Technology licensing to other commercial entities
