@@ -2,6 +2,7 @@
 
 > Author: Justin K. Lietz  
 > ORCID: 0009-0008-9028-1366
+> 
 > Date: August 9, 2025  
 >
 > This research is protected under a dual-license to foster open academic
@@ -12,6 +13,12 @@
 DOIs:
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17220869.svg)](https://doi.org/10.5281/zenodo.17220869)
+
+<div style="text-align: center;">
+<img width="800" height="800" alt="logo" src="https://github.com/user-attachments/assets/b22adc5d-f126-4865-9e47-71af5fa4f7f7" />
+</div>
+
+---
 
 ***Current Status:*** Working on applying discovered RD concepts to neural plasticity in the Void Dynamics Intelligence Model (coming to public soon)
 
