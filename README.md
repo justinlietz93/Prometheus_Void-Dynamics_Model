@@ -1,7 +1,7 @@
 # Void Dynamics Models (FUVDM - Fully Unified Void Dynamics Model) - Declassified Public Overview
 
 > Author: Justin K. Lietz<br>
-> ORCID: [0009-0008-9028-1366](https://orcid.org/0009-0008-9028-1366)<br>
+<a href="https://orcid.org/0009-0008-9028-1366"><img src="https://img.shields.io/badge/ORCID-0009--0008--9028--1366-blue?style=flat-square" alt="ORCID"></a> <br>
 > Contact: <justin@neuroca.ai>
 >
 > Created: August 9, 2025<br>
