@@ -1,4 +1,4 @@
-# Void Dynamics Models (FUVDM - Fully Unified Void Dynamics Model) - Declassified Public Overview
+# Void Dynamics Model - Declassified Public Overview
 
 ***Current Status:*** 
 
