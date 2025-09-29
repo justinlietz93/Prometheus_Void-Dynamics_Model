@@ -60,7 +60,7 @@ Use with the experiments runner:
   datasets/plots for the predictions above (junction logistic, curvature scaling, stability band).
 
 Author: Justin K. Lietz
-Date: 2025-08-09
+Created: 2025-08-09
 """
 
 from __future__ import annotations
