@@ -19,7 +19,7 @@
 
 The primary goal of this derivation is to derive the reaction–diffusion PDE mapping
 ∂t φ = D ∇² φ + r φ − u φ²
-from the discrete update. A second-order Lorentzian EFT derivation (Klein–Gordon–like) is maintained as future work in [write_ups/effective_field_theory_approach.md](effective_field_theory_approach.md:1). This removes internal contradictions while preserving historical EFT references below as scoped.
+from the discrete update. A second-order Lorentzian EFT derivation (Klein–Gordon–like) is maintained as future work in [write_ups/effective_field_theory/effective_field_theory_approach.md](/write_ups/effective_field_theory/effective_field_theory_approach.md). This removes internal contradictions while preserving historical EFT references below as scoped.
 
 ---
 
@@ -29,7 +29,7 @@ We must clearly state our starting point (the discrete equation) and our target 
 
 ### 2.1 The Discrete System (LHS)
 
-From the `VDM_Void_Equations.py` source code, the state of a single node $i$, denoted by $W_i(t)$, evolves according to the rule:
+From the source code, the state of a single node $i$, denoted by $W_i(t)$, evolves according to the rule:
 
 $$
 \frac{W_i(t+\Delta t) - W_i(t)}{\Delta t} = \alpha W_i(t)(1 - W_i(t)) - \beta W_i(t) + \text{noise/phase terms}
@@ -93,14 +93,18 @@ $$
 \lim_{\Delta t \to 0} \frac{W_i(t+\Delta t) - W_i(t)}{\Delta t} = \frac{\partial W_i}{\partial t}.
 $$
 
-Crucially, the second-order time derivative in the continuum equation is not imposed ad hoc; it follows from varying the continuum Lagrangian density fixed by the lattice derivation of the kinetic and gradient terms (see [write_ups/kinetic_term_derivation.md](write_ups/kinetic_term_derivation.md:78-116)):
+Crucially, the second-order time derivative in the continuum equation is not imposed ad hoc; it follows from varying the continuum Lagrangian density fixed by the lattice derivation of the kinetic and gradient terms (see [write_ups/effective_field_theory/kinetic_term_derivation.md](/write_ups/effective_field_theory/kinetic_term_derivation.md)):
+
 $$
 \mathcal{L} \;=\; \frac{1}{2}(\partial_t \phi)^2 \;-\; J a^2\,(\nabla \phi)^2 \;-\; V(\phi).
 $$
+
 The Euler–Lagrange equation gives
+
 $$
 \partial_t^2 \phi \;-\; c^2 \nabla^2 \phi \;+\; V'(\phi) \;=\; 0,\qquad c^2 \equiv 2 J a^2,
 $$
+
 so the second-order dynamics arise from the action principle with a wave speed set by the lattice coupling. One may set $c=1$ by a units choice (e.g., choose $\tau=\sqrt{2J}\,a$) without tying $J$ to $a$ microscopically.
 
 #### 4.2 Spatial Derivatives and the Laplacian
@@ -207,7 +211,7 @@ In this bounded EFT the symmetric-limit VEV is $v = \mu/\sqrt{\lambda}$; a small
 
 #### 6.3 Units and calibration
 
-Using the physical map in [write_ups/VDM_voxtrium_mapping.md](write_ups/VDM_voxtrium_mapping.md:44-80), one has $\mu$ in GeV, $\lambda$ dimensionless, and
+Using the physical map in [write_ups/effective_field_theory/vdm_voxtrium_mapping.md](/write_ups/effective_field_theory/vdm_voxtrium_mapping.md), one has $\mu$ in GeV, $\lambda$ dimensionless, and
 $$
 m_{\text{eff}} = \sqrt{2}\,\mu
 $$

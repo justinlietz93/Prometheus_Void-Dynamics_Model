@@ -9,7 +9,7 @@ See LICENSE file for full terms.
 RD Fisher-KPP front-speed sweep runner.
 
 Runs multiple configurations of the experiment script and writes a CSV summary
-under: write_ups/code/outputs/logs/rd_front_speed_sweep_YYYYMMDDThhmmssZ.csv
+under: logs/reaction_diffusion/<timestamp>_rd_front_speed_sweep.csv
 
 Usage (PowerShell, always in venv):
   & .\venv\Scripts\Activate.ps1
@@ -35,22 +35,18 @@ import os
 import subprocess
 import sys
 import time
-from pathlib import Path
 from itertools import product
+from pathlib import Path
+
+CODE_ROOT = Path(__file__).resolve().parents[1]
+if str(CODE_ROOT) not in sys.path:
+    sys.path.append(str(CODE_ROOT))
+
+import common.io_paths as io_paths
 
 
 def utc_stamp():
     return time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
-
-
-def default_out_dirs():
-    here = Path(__file__).resolve()
-    base = (here.parent.parent / "outputs").resolve()
-    fig_dir = base / "figures"
-    log_dir = base / "logs"
-    fig_dir.mkdir(parents=True, exist_ok=True)
-    log_dir.mkdir(parents=True, exist_ok=True)
-    return base, fig_dir, log_dir
 
 
 def run_one(python_exe, exp_path, params):
@@ -106,9 +102,10 @@ def main():
     exp_path = (here.parent / "rd_front_speed_experiment.py").resolve()
     python_exe = sys.executable
 
-    base, _, log_dir = default_out_dirs()
     stamp = utc_stamp()
-    csv_path = log_dir / f"rd_front_speed_sweep_{stamp}.csv"
+    domain = "reaction_diffusion"
+    slug = f"rd_front_speed_sweep_{stamp}"
+    csv_path = io_paths.log_path(domain, slug).with_suffix(".csv")
 
     header = [
         "timestamp", "N", "L", "D", "r", "T", "cfl", "seed", "x0", "level",
@@ -144,7 +141,7 @@ def main():
     print(json.dumps({
         "summary_csv": str(csv_path),
         "cases": len(rows),
-        "base_outdir": str(base),
+        "logs_root": str(io_paths.LOGS_ROOT),
     }, indent=2))
 
 

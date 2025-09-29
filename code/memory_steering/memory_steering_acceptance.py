@@ -20,8 +20,8 @@ CLI:
       --seed 0 --steps 512 --g 0.12 --lam 0.08 --noise_std 0.0
 
 Outputs:
-- JSON metrics: Prometheus_VDM/write_ups/code/outputs/logs/memory_steering/memory_steering_acceptance_{timestamp}.json
-- Figures (PNG): Prometheus_VDM/write_ups/code/outputs/figures/memory_steering/
+- JSON metrics: logs/memory_steering/<timestamp>_memory_steering_acceptance.json
+- Figures (PNG): figures/memory_steering/<timestamp>_memory_steering_acceptance_*.png
 """
 
 import argparse
@@ -30,20 +30,20 @@ import math
 import os
 import time
 from datetime import datetime, timezone
+from pathlib import Path
 
 import numpy as np
 import matplotlib
 matplotlib.use("Agg")  # headless/CI safe
 import matplotlib.pyplot as plt
 
-# Paths
-ROOT = os.path.join("Prometheus_VDM", "derivation")
-LOG_DIR = os.path.join(ROOT, "code", "outputs", "logs", "memory_steering")
-FIG_DIR = os.path.join(ROOT, "code", "outputs", "figures", "memory_steering")
+CODE_ROOT = Path(__file__).resolve().parents[1]
+if str(CODE_ROOT) not in sys.path:
+    sys.path.append(str(CODE_ROOT))
 
-def ensure_dirs():
-    os.makedirs(LOG_DIR, exist_ok=True)
-    os.makedirs(FIG_DIR, exist_ok=True)
+import common.io_paths as io_paths
+
+DOMAIN = "memory_steering"
 
 def iso_ts():
     return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -124,15 +124,16 @@ def step_response_experiment(seed, steps, g, lam):
     plt.hlines([M_star], 0, steps-1, colors='r', linestyles=':', label='M* (pred)')
     plt.title(f"Step Response (g={g:.3f}, λ={lam:.3f}) | p_fit={p_fit:.3f}, p_pred={p_pred:.3f}")
     plt.xlabel('t'); plt.ylabel('value'); plt.legend(loc='best')
-    fname = os.path.join(FIG_DIR, f"step_response_{iso_ts()}_g{g:.3f}_lam{lam:.3f}.png")
-    plt.tight_layout(); plt.savefig(fname, dpi=150); plt.close()
+    slug = f"step_response_g{g:.3f}_lam{lam:.3f}"
+    fig_path = io_paths.figure_path(DOMAIN, slug)
+    plt.tight_layout(); plt.savefig(fig_path, dpi=150); plt.close()
     return {
         "p_fit": p_fit,
         "p_pred": p_pred,
         "M_star_pred": M_star,
         "M_final": M_final,
         "overshoot": overshoot,
-        "figure": fname,
+        "figure": str(fig_path),
         "pass_pole": (not np.isnan(p_fit)) and (abs(p_fit - p_pred) <= 0.02),
         "pass_Mstar": abs(M_final - M_star) <= 1e-2,
         "pass_overshoot": overshoot <= 0.02
@@ -155,11 +156,12 @@ def canonical_void_experiment_multi(steps):
         plt.hlines([0.6], 0, steps-1, colors='r', linestyles=':', label='0.6 target')
         plt.title(f"Canonical Void Target | g=1.5λ, λ={lam:.3f}, g={g:.3f}, seed={seed}, M_final={M_final:.3f}")
         plt.xlabel('t'); plt.ylabel('M'); plt.legend(loc='best')
-        fname = os.path.join(FIG_DIR, f"canonical_void_{iso_ts()}_lam{lam:.3f}_seed{seed}.png")
-        plt.tight_layout(); plt.savefig(fname, dpi=150); plt.close()
+        slug = f"canonical_void_seed{seed}_lam{lam:.3f}"
+        fig_path = io_paths.figure_path(DOMAIN, slug)
+        plt.tight_layout(); plt.savefig(fig_path, dpi=150); plt.close()
         results.append({
             "seed": seed, "lam": lam, "g": g, "target": 0.6, "M_final": M_final,
-            "figure": fname,
+            "figure": str(fig_path),
             "pass_target": abs(M_final - 0.6) <= 0.02
         })
     overall_pass = all(r["pass_target"] for r in results)
@@ -185,13 +187,14 @@ def noise_suppression_experiment(seed, steps, g, lam, noise_std=0.05):
     plt.plot(t, M_signal, 'g--', label='M(signal)')
     plt.title(f"Noise Suppression (ΔSNR={snr_out - snr_in:.2f} dB)")
     plt.xlabel('t'); plt.ylabel('value'); plt.legend(loc='best')
-    fname = os.path.join(FIG_DIR, f"noise_suppression_{iso_ts()}_g{g:.3f}_lam{lam:.3f}.png")
-    plt.tight_layout(); plt.savefig(fname, dpi=150); plt.close()
+    slug = f"noise_suppression_g{g:.3f}_lam{lam:.3f}"
+    fig_path = io_paths.figure_path(DOMAIN, slug)
+    plt.tight_layout(); plt.savefig(fig_path, dpi=150); plt.close()
     return {
         "snr_in_db": snr_in,
         "snr_out_db": snr_out,
         "delta_snr_db": snr_out - snr_in,
-        "figure": fname,
+        "figure": str(fig_path),
         "pass_snr": (snr_out - snr_in) >= 3.0
     }
 
@@ -222,12 +225,13 @@ def lyapunov_experiment(seed, steps, g, lam):
     plt.axhline(0.0, color='k', linewidth=0.8)
     plt.title(f"Lyapunov ΔF (frac>0 = {frac_positive:.3f}, median={median_dF:.3e})")
     plt.xlabel('t'); plt.ylabel('ΔF')
-    fname = os.path.join(FIG_DIR, f"lyapunov_{iso_ts()}_g{g:.3f}_lam{lam:.3f}.png")
-    plt.tight_layout(); plt.savefig(fname, dpi=150); plt.close()
+    slug = f"lyapunov_g{g:.3f}_lam{lam:.3f}"
+    fig_path = io_paths.figure_path(DOMAIN, slug)
+    plt.tight_layout(); plt.savefig(fig_path, dpi=150); plt.close()
     return {
         "frac_positive": frac_positive,
         "median_dF": median_dF,
-        "figure": fname,
+        "figure": str(fig_path),
         "pass_lyapunov": frac_positive <= 0.01 and median_dF < 0.0
     }
 
@@ -253,7 +257,6 @@ def main():
     parser.add_argument("--noise_std", type=float, default=0.0)
     args = parser.parse_args()
 
-    ensure_dirs()
     t0 = time.time()
 
     # Run experiments
@@ -306,9 +309,10 @@ def main():
     }
 
     # Save JSON
-    out_json = os.path.join(LOG_DIR, f"memory_steering_acceptance_{metrics['timestamp']}.json")
-    with open(out_json, "w") as f:
-        json.dump(metrics, f, indent=2)
+    log_slug = f"memory_steering_acceptance_{metrics['timestamp']}"
+    out_json_path = io_paths.log_path(DOMAIN, log_slug, failed=not metrics["acceptance"]["overall_pass"])
+    io_paths.write_log(out_json_path, metrics)
+    out_json = str(out_json_path)
     print(f"[memory_steering] Acceptance {'PASS' if metrics['acceptance']['overall_pass'] else 'FAIL'}")
     print(f"Log saved: {out_json}")
 

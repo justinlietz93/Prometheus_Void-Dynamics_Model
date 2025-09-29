@@ -25,7 +25,7 @@ The objective of this document is to derive the kinetic prefactor (wave-function
 
 ### 2. Temporal Kinetic Term
 
-The temporal part of the kinetic term arises from the discrete “kinetic energy” (see `write_ups/discrete_conservation.md`):
+The temporal part of the kinetic term arises from the discrete “kinetic energy” (see `write_ups/conservation_law/discrete_conservation.md`):
 
 $$
 \mathcal{K}_i = \frac{1}{2}\left(\frac{dW_i}{dt}\right)^2

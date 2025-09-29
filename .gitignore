@@ -51,6 +51,9 @@ coverage.xml
 .pytest_cache/
 cover/
 
+# Tests
+
+
 # Translations
 *.mo
 *.pot
@@ -223,3 +226,4 @@ __marimo__/
 
 # Secrets
 secrets/*
+

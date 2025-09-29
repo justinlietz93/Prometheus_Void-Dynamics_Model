@@ -29,11 +29,11 @@ Usage
 
 Outputs
 - Figures:
-    write_ups/code/outputs/figures/conservation_law/qVDM_solution_overlay_UTC.png
-    write_ups/code/outputs/figures/conservation_law/qVDM_Q_drift_UTC.png
-    write_ups/code/outputs/figures/conservation_law/qVDM_convergence_UTC.png
+    figures/conservation_law/<timestamp>_qVDM_solution_overlay.png
+    figures/conservation_law/<timestamp>_qVDM_Q_drift.png
+    figures/conservation_law/<timestamp>_qVDM_convergence.png
 - JSON metrics:
-    write_ups/code/outputs/logs/conservation_law/qVDM_metrics_UTC.json
+    logs/conservation_law/<timestamp>_qVDM_metrics.json
 
 Dependencies
 - numpy, matplotlib, json, argparse, datetime
@@ -55,16 +55,19 @@ from datetime import datetime, timezone
 from typing import List, Tuple, Dict
 import shutil
 
-# add repo-common IO helpers (write_ups/code on sys.path)
-sys.path.append(str(Path(__file__).resolve().parents[2]))
+# ensure repo and code roots on sys.path for common helpers
+REPO_ROOT = Path(__file__).resolve().parents[2]
+CODE_ROOT = REPO_ROOT / "code"
+for _path in (CODE_ROOT, REPO_ROOT):
+    _path_str = str(_path)
+    if _path_str not in sys.path:
+        sys.path.append(_path_str)
 
 import numpy as np
 import matplotlib.pyplot as plt
+import common.io_paths as io_paths
 
 
-BASE_OUTDIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "outputs"))
-FIG_DIR = os.path.join(BASE_OUTDIR, "figures", "conservation_law")
-LOG_DIR = os.path.join(BASE_OUTDIR, "logs", "conservation_law")
 ARXIV_FIG_DIR = "write_ups/arxiv/RD_Methods_QA/figs"
 
 
@@ -80,34 +83,6 @@ def current_stamp() -> str:
     if RUN_STAMP is None:
         RUN_STAMP = utc_stamp()
     return RUN_STAMP
-
-
-def figure_path(domain: str, stem: str, failed: bool = False) -> Path:
-    base = Path(BASE_OUTDIR) / "figures" / domain
-    if failed:
-        base = base / "failed_runs"
-    base.mkdir(parents=True, exist_ok=True)
-    return base / f"{stem}_{current_stamp()}.png"
-
-
-def log_path(domain: str, stem: str, failed: bool = False) -> Path:
-    base = Path(BASE_OUTDIR) / "logs" / domain
-    if failed:
-        base = base / "failed_runs"
-    base.mkdir(parents=True, exist_ok=True)
-    return base / f"{stem}_{current_stamp()}.json"
-
-
-def write_log(path: Path | str, payload: Dict[str, object]) -> None:
-    target = Path(path)
-    target.parent.mkdir(parents=True, exist_ok=True)
-    with target.open("w", encoding="utf-8") as f:
-        json.dump(payload, f, indent=2)
-
-
-def ensure_dirs(*paths: str) -> None:
-    for p in paths:
-        os.makedirs(p, exist_ok=True)
 
 
 def logistic_ode_rhs(r: float, u: float):
@@ -210,7 +185,9 @@ def plot_solution_overlay(fig_path: str, t: np.ndarray, W_num: np.ndarray, W_an:
     plt.title(f"Logistic solution overlay (r={r:.3g}, u={u:.3g}, W0={W0:.3g})")
     plt.legend()
     plt.tight_layout()
-    plt.savefig(fig_path, bbox_inches="tight")
+    path = Path(fig_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(path, bbox_inches="tight")
     plt.close()
 
 
@@ -225,7 +202,9 @@ def plot_Q_drift(fig_path: str, t: np.ndarray, Q: np.ndarray, r: float, u: float
     plt.title(f"Invariant drift (max={delta_Q_max:.3e})  r={r:.3g}, u={u:.3g}, W0={W0:.3g}")
     plt.yscale("log")
     plt.tight_layout()
-    plt.savefig(fig_path, bbox_inches="tight")
+    path = Path(fig_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(path, bbox_inches="tight")
     plt.close()
     return delta_Q_max
 
@@ -239,7 +218,9 @@ def plot_convergence(fig_path: str, dts: List[float], deltas: List[float], slope
     plt.ylabel("max |Q(t) - Q(0)|")
     plt.title(f"Convergence: slope ~ {slope:.2f}, R^2={r2:.3f}")
     plt.tight_layout()
-    plt.savefig(fig_path, bbox_inches="tight")
+    path = Path(fig_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(path, bbox_inches="tight")
     plt.close()
 
 
@@ -261,13 +242,13 @@ def main():
     T = float(args.T)
     solver = str(args.solver).lower()
 
-    # Resolve base output directory (override if provided)
-    base_outdir_path = Path(args.outdir).resolve() if args.outdir else Path(BASE_OUTDIR).resolve()
-    fig_dir_base = str((base_outdir_path / "figures" / "conservation_law").resolve())
-    log_dir_base = str((base_outdir_path / "logs" / "conservation_law").resolve())
+    domain = "conservation_law"
+    if args.outdir:
+        base_override = Path(os.path.expandvars(args.outdir)).expanduser()
+        io_paths.FIGURES_ROOT = base_override / "figures"
+        io_paths.LOGS_ROOT = base_override / "logs"
 
-    # only ensure arXiv figs dir; figure/log dirs are ensured at file save
-    ensure_dirs(ARXIV_FIG_DIR)
+    Path(ARXIV_FIG_DIR).mkdir(parents=True, exist_ok=True)
     stamp = current_stamp()
 
     run_metrics: List[RunMetrics] = []
@@ -340,30 +321,24 @@ def main():
     failed_flag = not passed
 
     # Overlay/drift figures: prefer repo io_paths unless --outdir override provided
-    if args.outdir is None:
-        sol_fig_final = str(figure_path("conservation_law", "qVDM_solution_overlay", failed=failed_flag))
-        drift_fig_final = str(figure_path("conservation_law", "qVDM_Q_drift", failed=failed_flag))
-    else:
-        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-        base_dir = Path(fig_dir_base) / ("failed_runs" if failed_flag else "")
-        base_dir.mkdir(parents=True, exist_ok=True)
-        sol_fig_final = str(base_dir / f"{ts}_qVDM_solution_overlay.png")
-        drift_fig_final = str(base_dir / f"{ts}_qVDM_Q_drift.png")
+    sol_slug = f"{stamp}_qVDM_solution_overlay"
+    drift_slug = f"{stamp}_qVDM_Q_drift"
+    sol_fig_final = io_paths.figure_path(domain, sol_slug, failed=failed_flag)
+    drift_fig_final = io_paths.figure_path(domain, drift_slug, failed=failed_flag)
 
     plot_solution_overlay(sol_fig_final, t_p, W_num_p, W_an_p, r, u, W0_primary)
     plot_Q_drift(drift_fig_final, t_p, Q_p, r, u, W0_primary)
 
     # Convergence (only if we have data to show)
-    conv_fig_final = ""
+    conv_fig_final: Path | None = None
     if np.count_nonzero(mask) >= 2:
-        if args.outdir is None:
-            conv_fig_final = str(figure_path("conservation_law", "qVDM_convergence", failed=failed_flag))
-        else:
-            ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-            base_dir = Path(fig_dir_base) / ("failed_runs" if failed_flag else "")
-            base_dir.mkdir(parents=True, exist_ok=True)
-            conv_fig_final = str(base_dir / f"{ts}_qVDM_convergence.png")
+        conv_slug = f"{stamp}_qVDM_convergence"
+        conv_fig_final = io_paths.figure_path(domain, conv_slug, failed=failed_flag)
         plot_convergence(conv_fig_final, list(dts_arr[mask]), list(deltas_arr[mask]), slope, r2)
+
+    sol_fig_final_str = str(sol_fig_final)
+    drift_fig_final_str = str(drift_fig_final)
+    conv_fig_final_str = str(conv_fig_final) if conv_fig_final else ""
 
     # Produce arXiv copies ONLY on PASS
     sol_fig_stable = ""  # retained for JSON schema; not used when using io_paths
@@ -387,15 +362,8 @@ def main():
         drift_fig_arxiv = ""
         conv_fig_arxiv = ""
 
-    # Log JSON (prefer repo helper; respect --outdir override)
-    if args.outdir is None:
-        out_json_path = log_path("conservation_law", "qVDM_metrics", failed=(not passed))
-    else:
-        out_dir = Path(log_dir_base)
-        if not passed:
-            out_dir = out_dir / "failed_runs"
-        out_dir.mkdir(parents=True, exist_ok=True)
-        out_json_path = out_dir / f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_qVDM_metrics.json"
+    # Log JSON via shared helper
+    out_json_path = io_paths.log_path(domain, f"{stamp}_qVDM_metrics", failed=failed_flag)
     payload: Dict[str, object] = {
         "version": "1.0",
         "timestamp_utc": stamp,
@@ -403,13 +371,13 @@ def main():
         "runs": [asdict(m) for m in run_metrics],
         "convergence": asdict(conv_metrics),
         "figures": {
-            "solution_overlay": sol_fig_final,
+            "solution_overlay": sol_fig_final_str,
             "solution_overlay_stable": sol_fig_stable,
             "solution_overlay_arxiv": sol_fig_arxiv,
-            "Q_drift": drift_fig_final,
+            "Q_drift": drift_fig_final_str,
             "Q_drift_stable": drift_fig_stable,
             "Q_drift_arxiv": drift_fig_arxiv,
-            "convergence": conv_fig_final,
+            "convergence": conv_fig_final_str,
             "convergence_stable": conv_fig_stable,
             "convergence_arxiv": conv_fig_arxiv,
         },
@@ -423,11 +391,7 @@ def main():
             "passed": passed
         }
     }
-    if args.outdir is None:
-        write_log(out_json_path, payload)
-    else:
-        with open(out_json_path, "w", encoding="utf-8") as f:
-            json.dump(payload, f, indent=2)
+    io_paths.write_log(out_json_path, payload)
     out_json = str(out_json_path)
 
     # Console summary
@@ -439,10 +403,10 @@ def main():
         print(f"  Expected (RK4) ~ 4, Observed ~ {slope:.2f}")
 
     print("[QVDM] Figures:")
-    print(f"  {sol_fig_final}")
-    print(f"  {drift_fig_final}")
-    if conv_fig_final:
-        print(f"  {conv_fig_final}")
+    print(f"  {sol_fig_final_str}")
+    print(f"  {drift_fig_final_str}")
+    if conv_fig_final_str:
+        print(f"  {conv_fig_final_str}")
     print(f"[QVDM] {'PASSED' if passed else 'FAILED'}  (drift_ok={drift_ok}, conv_ok={conv_ok})")
     print("[QVDM] ArXiv figs:")
     print(f"  {sol_fig_arxiv}")

@@ -14,8 +14,8 @@ CHANGE REASON:
 - Ensures JSON uses native Python types (bool/float) to avoid numpy serialization issues.
 
 Outputs (defaults):
-- Figures → write_ups/code/outputs/figures/{script name}_{timestamp}.png
-- Logs    → write_ups/code/outputs/logs/{script name}_{timestamp}.json
+- Figures → figures/fluid_dynamics/<timestamp>_taylor_green_benchmark.png
+- Logs    → logs/fluid_dynamics/<timestamp>_taylor_green_benchmark.json
 """
 import argparse
 import json
@@ -27,6 +27,9 @@ import sys
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+
+import common.io_paths as io_paths
 
 
 def _add_repo_root() -> None:
@@ -115,17 +118,21 @@ def main():
     nu_th  = float(sim.nu)
     rel_err = float(abs(nu_fit - nu_th) / (abs(nu_th) + 1e-12))
 
-    # Output routing (match RD harness)
+    acceptance_rel_err = 0.05
+    passed = bool(rel_err <= acceptance_rel_err)
+
     script_name = os.path.splitext(os.path.basename(__file__))[0]
-    tstamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
-    default_base = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "outputs"))
-    base_outdir = os.path.abspath(args.outdir) if args.outdir else default_base
-    fig_dir = os.path.join(base_outdir, "figures", "fluid_dynamics")
-    log_dir = os.path.join(base_outdir, "logs", "fluid_dynamics")
-    os.makedirs(fig_dir, exist_ok=True)
-    os.makedirs(log_dir, exist_ok=True)
-    figure_path = os.path.join(fig_dir, f"{script_name}_{tstamp}.png")
-    log_path = os.path.join(log_dir, f"{script_name}_{tstamp}.json")
+    domain = "fluid_dynamics"
+    original_fig_root = io_paths.FIGURES_ROOT
+    original_log_root = io_paths.LOGS_ROOT
+    if args.outdir:
+        base_override = Path(os.path.expandvars(args.outdir)).expanduser()
+        io_paths.FIGURES_ROOT = base_override / "figures"
+        io_paths.LOGS_ROOT = base_override / "logs"
+
+    slug = script_name
+    fig_path = io_paths.figure_path(domain, slug, failed=not passed)
+    log_path = io_paths.log_path(domain, slug, failed=not passed)
 
     plt.figure(figsize=(7, 5))
     plt.semilogy(ts, Es, "o", ms=3, label="E(t) samples")
@@ -135,32 +142,9 @@ def main():
     plt.ylabel("E(t)")
     plt.legend()
     plt.tight_layout()
-    plt.savefig(figure_path, dpi=140)
+    plt.savefig(fig_path, dpi=140)
     plt.close()
 
-# Acceptance and failed_runs routing
-acceptance_rel_err = 0.05
-passed = bool(rel_err <= acceptance_rel_err)
-if not passed:
-    # Route failing artifacts under failed_runs/
-    fig_dir_failed = os.path.join(fig_dir, "failed_runs")
-    log_dir_failed = os.path.join(log_dir, "failed_runs")
-    os.makedirs(fig_dir_failed, exist_ok=True)
-    os.makedirs(log_dir_failed, exist_ok=True)
-    # Re-point output paths
-    figure_path = os.path.join(fig_dir_failed, f"{script_name}_{tstamp}.png")
-    log_path = os.path.join(log_dir_failed, f"{script_name}_{tstamp}.json")
-    # Re-save figure into failed_runs path (generate fresh figure to ensure presence)
-    plt.figure(figsize=(7, 5))
-    plt.semilogy(ts, Es, "o", ms=3, label="E(t) samples")
-    plt.semilogy(ts, np.exp(intercept + slope * ts), "r--",
-                 label=f"fit: nu_fit={nu_fit:.5f}, nu_th={nu_th:.5f}, rel_err={rel_err:.3%}")
-    plt.xlabel("t (lattice)")
-    plt.ylabel("E(t)")
-    plt.legend()
-    plt.tight_layout()
-    plt.savefig(figure_path, dpi=140)
-    plt.close()
     payload = {
         "theory": "LBM→NS; Taylor–Green viscous decay E=E0 exp(-2 nu k^2 t)",
         "params": {
@@ -170,16 +154,20 @@ if not passed:
         },
         "metrics": {
             "nu_fit": nu_fit, "nu_th": nu_th, "rel_err": rel_err,
-            "acceptance_rel_err": 0.05,
-            "elapsed_sec": float(elapsed), "passed": bool(rel_err <= 0.05)
+            "acceptance_rel_err": acceptance_rel_err,
+            "elapsed_sec": float(elapsed),
+            "passed": passed
         },
-        "outputs": {"figure": figure_path},
+        "outputs": {"figure": str(fig_path), "log": str(log_path)},
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
-    with open(log_path, "w", encoding="utf-8") as f:
-        json.dump(payload, f, indent=2)
+
+    io_paths.write_log(log_path, payload)
 
     print(json.dumps(payload["metrics"], indent=2))
+
+    io_paths.FIGURES_ROOT = original_fig_root
+    io_paths.LOGS_ROOT = original_log_root
 
 
 if __name__ == "__main__":
