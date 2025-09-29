@@ -246,7 +246,7 @@ We propose two modules to implement and test this analysis:
   - compute_kappas(R, params) -> list of roots $\{(\ell, n, \kappa_{\ell n})\}$
     - params: $\mu, \lambda, \gamma, c$ and numerical tolerances; optionally max $|\ell|$ and radial overtone cutoff
   - mode_functions(R, root) -> callable $u_{\ell n}(r)$ with normalization info
-- Core tasks:
+- Tasks:
   - Solve the secular equation
 
 ```math

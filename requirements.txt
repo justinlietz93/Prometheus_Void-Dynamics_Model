@@ -1,4 +1,4 @@
-# Core numerical stack used by:
+# Numerical stack used by:
 # - code/conservation_law/qfum_validate.py
 # - code/fluid_dynamics/fluids/lbm2d.py
 # - code/fluid_dynamics/lid_cavity_benchmark.py

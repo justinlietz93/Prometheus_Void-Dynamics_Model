@@ -73,7 +73,7 @@ Troubleshooting
 VDM_rt parity runner
 - Independent mirror (same metrics/output schema) for cross-stack parity:
   - [rd_dispersion_runner.py](Prometheus_VDM/VDM_rt/physics/rd_dispersion_runner.py:1)
-- Rationale is documented in-file (“CHANGE REASON”): physics proven via derivation; runtime mirror does not alter core dynamics.
+- Rationale is documented in-file (“CHANGE REASON”): physics proven via derivation; runtime mirror does not alter dynamics.
 
 Reproduction checklist
 1) Activate venv: & .\venv\Scripts\Activate.ps1

@@ -19,11 +19,11 @@
 
 To address the critique of mathematical rigor, we must formalize the link between the discrete VDM simulation (the "high-energy" or "UV" theory) and the continuous field theory (the "low-energy" or "IR" theory). The standard tool in physics for this is the **Effective Field Theory (EFT)** framework.
 
-This document outlines the core principles of EFT and how they provide a roadmap for a more rigorous derivation of the VDM's continuum limit.
+This document outlines the principles of EFT and how they provide a roadmap for a more rigorous derivation of the VDM's continuum limit.
 
 ---
 
-## 2. The Core Principles of Effective Field Theory
+## 2. The Principles of Effective Field Theory
 
 An EFT is a way to describe physics at a given energy scale without needing to know the details of the physics at much higher energies. It is built on a few key principles.
 

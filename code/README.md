@@ -1,4 +1,16 @@
 # Physics scripts (code/{domain}/)
+>
+> Author: Justin K. Lietz
+> ORCID: [0009-0008-9028-1366](https://orcid.org/0009-0008-9028-1366)<br>
+> Contact: <justin@neuroca.ai>
+>
+> Date: August 9, 2025
+>
+> This research is protected under a dual-license to foster open academic
+> research while ensuring commercial applications are aligned with the project's ethical principles.
+> Commercial use requires written permission from the author..
+>
+> See LICENSE file for full terms.
 
 Purpose
 
@@ -11,7 +23,7 @@ Directory layout
   - fluid_dynamics/ — LBM→NS (Taylor–Green, lid-driven cavity), plus solver under fluid_dynamics/fluids/
   - tachyonic_condensation/ — EFT tube modes, etc.
 - Example (fluid_dynamics):
-  - Core solver: [fluids/lbm2d.py](/code/fluid_dynamics/fluids/lbm2d.py)
+  - Solver: [fluids/lbm2d.py](/code/fluid_dynamics/fluids/lbm2d.py)
   - Benchmarks:
     - [taylor_green_benchmark.py](/code/fluid_dynamics/taylor_green_benchmark.py)
     - [lid_cavity_benchmark.py](/code/fluid_dynamics/lid_cavity_benchmark.py)
