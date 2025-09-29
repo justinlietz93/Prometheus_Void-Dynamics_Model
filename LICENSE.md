@@ -40,7 +40,7 @@ This repository is available under two distinct licensing tracks:
 
 2. **Academic Citation Format**:
    ```
-   @software{fum_mathematical_frameworks_2025,
+   @software{VDM_mathematical_frameworks_2025,
      title={Mathematical Frameworks for Fully Unified Model Validation},
      author={Lietz, Justin K.},
      year={2025},
