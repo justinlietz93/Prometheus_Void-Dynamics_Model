@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 """
+Copyright © 2025 Justin K. Lietz, Neuroca, Inc. All Rights Reserved.
+
+This research is protected under a dual-license to foster open academic
+research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from Justin K. Lietz.
+See LICENSE file for full terms.
+
 RD dispersion validation (linear regime) for Fisher-KPP:
     ∂t u = D ∂xx u + r u (1 - u)
 Linearized about u≈0: u_t ≈ D u_xx + r u
@@ -14,8 +20,8 @@ Method:
   - Compare measured growth rates to σ_d(m) (primary) and σ_c(k) (reference).
 
 Outputs (defaults):
-  - derivation/code/outputs/figures/<script>_<timestamp>.png
-  - derivation/code/outputs/logs/<script>_<timestamp>.json
+  - derivation/code/outputs/figures/{script name}_{timestamp}.png
+  - derivation/code/outputs/logs/{script name}_{timestamp}.json
 
 CLI example:
   python Prometheus_FUVDM/derivation/code/physics/rd_dispersion_experiment.py --N 1024 --L 200 --D 1.0 --r 0.25 --T 10 --cfl 0.2 --seed 42

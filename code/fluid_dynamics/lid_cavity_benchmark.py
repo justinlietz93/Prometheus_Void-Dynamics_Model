@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 """
+Copyright © 2025 Justin K. Lietz, Neuroca, Inc. All Rights Reserved.
+
+This research is protected under a dual-license to foster open academic
+research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from Justin K. Lietz.
+See LICENSE file for full terms.
+
 Lid-driven cavity (2-D) incompressibility benchmark for the fluids sector.
 
 CHANGE REASON:
@@ -8,49 +14,65 @@ CHANGE REASON:
 - Ensures JSON uses native Python types to avoid numpy serialization issues.
 
 Outputs (defaults):
-- Figures → derivation/code/outputs/figures/<script>_<timestamp>.png
-- Logs    → derivation/code/outputs/logs/<script>_<timestamp>.json
+- Figures → derivation/code/outputs/figures/{script name}_{timestamp}.png
+- Logs    → derivation/code/outputs/logs/{script name}_{timestamp}.json
 """
 
-import os, json, time, argparse, shutil
+import argparse
+import json
+import math
+import os
+import shutil
+import time
+from pathlib import Path
+import importlib.util
+import sys
+
 import numpy as np
 import matplotlib.pyplot as plt
-import math
 
-# Ensure repo root on sys.path for absolute import 'Prometheus_FUVDM.*'; else fall back to file import
-import sys, pathlib, importlib.util, os
-_P = pathlib.Path(__file__).resolve()
-for _anc in [_P] + list(_P.parents):
-    if _anc.name == "Prometheus_FUVDM":
-        _ROOT = str(_anc.parent)
-        if _ROOT not in sys.path:
-            sys.path.insert(0, _ROOT)
-        break
+
+def _add_repo_root() -> Path:
+    """Ensure the repository root is on sys.path and return it."""
+    here = Path(__file__).resolve()
+    root = None
+    for ancestor in [here] + list(here.parents):
+        if (ancestor / ".git").exists():
+            root = ancestor
+            break
+    if root is None:
+        root = here.parents[2]
+    root_str = str(root)
+    if root_str not in sys.path:
+        sys.path.insert(0, root_str)
+    return root
+
+
+_REPO_ROOT = _add_repo_root()
 
 try:
-    from Prometheus_FUVDM.derivation.code.physics.fluid_dynamics.fluids.lbm2d import LBM2D, LBMConfig, CS2  # noqa: E402
-except Exception:
-    # Fallback: load lbm2d.py directly by file path (no package/module requirement)
-    _lbm_path = os.path.join(os.path.dirname(__file__), "fluids", "lbm2d.py")
+    from code.fluid_dynamics.fluids.lbm2d import LBM2D, LBMConfig, CS2  # noqa: E402
+except ImportError:
+    _lbm_path = (_REPO_ROOT / "code" / "fluid_dynamics" / "fluids" / "lbm2d.py").resolve()
     spec = importlib.util.spec_from_file_location("lbm2d_local", _lbm_path)
-    _m = importlib.util.module_from_spec(spec)
+    module = importlib.util.module_from_spec(spec)
     assert spec is not None and spec.loader is not None
-    spec.loader.exec_module(_m)
-    LBM2D = _m.LBM2D
-    LBMConfig = _m.LBMConfig
-    CS2 = getattr(_m, "CS2", 1.0/3.0)
+    spec.loader.exec_module(module)
+    LBM2D = module.LBM2D
+    LBMConfig = module.LBMConfig
+    CS2 = getattr(module, "CS2", 1.0 / 3.0)
 
-# Dimensionless helpers (LBM units)
-try:
-    from Prometheus_FUVDM.derivation.code.common.dimensionless_fuvdm import (
-        lbm_viscosity_from_tau, reynolds_lbm, mach_lbm
-    )
-except Exception:
-    lbm_viscosity_from_tau = lambda tau: (float(tau) - 0.5) / 3.0
-    def reynolds_lbm(U, L, tau):
-        return float(U) * float(L) / (lbm_viscosity_from_tau(tau) + 1e-15)
-    def mach_lbm(U):
-        return float(U) / (1.0 / np.sqrt(3.0))
+
+def lbm_viscosity_from_tau(tau: float) -> float:
+    return (float(tau) - 0.5) / 3.0
+
+
+def reynolds_lbm(U, L, tau):
+    return float(U) * float(L) / (lbm_viscosity_from_tau(tau) + 1e-15)
+
+
+def mach_lbm(U):
+    return float(U) / math.sqrt(CS2)
 
 
 class AutoTuner:
@@ -381,8 +403,15 @@ def main():
 
     # Telemetry: Walker announcers (read-only)
     try:
-        from Prometheus_FUVDM.derivation.code.physics.fluid_dynamics.telemetry.walkers import (
-            Bus, Reducer, seed_walkers_lid, Walker, Petition, top_events, PolicyBounds, AdvisoryPolicy
+        from code.fluid_dynamics.telemetry.walkers import (
+            Bus,
+            Reducer,
+            seed_walkers_lid,
+            Walker,
+            Petition,
+            top_events,
+            PolicyBounds,
+            AdvisoryPolicy,
         )
     except Exception:
         Bus = Reducer = seed_walkers_lid = Walker = Petition = top_events = PolicyBounds = AdvisoryPolicy = None

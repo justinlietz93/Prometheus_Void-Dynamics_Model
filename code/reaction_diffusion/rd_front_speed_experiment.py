@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 """
+Copyright © 2025 Justin K. Lietz, Neuroca, Inc. All Rights Reserved.
+
+This research is protected under a dual-license to foster open academic
+research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from Justin K. Lietz.
+See LICENSE file for full terms.
+
 RD front-speed validation for Fisher-KPP:
     ∂t u = D ∂xx u + r u (1 - u)
 
@@ -7,8 +13,8 @@ Theory:
     Minimal pulled-front speed c_th = 2 * sqrt(D * r)
 
 Outputs (defaults):
-    - derivation/code/outputs/figures/<script>_<timestamp>.png
-    - derivation/code/outputs/logs/<script>_<timestamp>.json
+    - derivation/code/outputs/figures/{script name}_{timestamp}.png
+    - derivation/code/outputs/logs/{script name}_{timestamp}.json
 
 CLI example:
   python Prometheus_FUVDM/derivation/code/physics/rd_front_speed_experiment.py \

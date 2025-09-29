@@ -1,15 +1,22 @@
-# Derivation of the FUM Kinetic Term
+# Derivation of the VDM Kinetic Term
 
-**Author:** Justin K. Lietz  
-**Date:** August 8, 2025
-
+>
+> Author: Justin K. Lietz  
+> ORCID: 0009-0008-9028-1366
+> Date: August 9, 2025
+>
+> This research is protected under a dual-license to foster open academic
+> research while ensuring commercial applications are aligned with the project's ethical principles.
+> Commercial use requires written permission from Justin K. Lietz.
+>
+> See LICENSE file for full terms.
 ---
 
 ### 1. Objective
 
-As outlined in our Effective Field Theory (EFT) roadmap, we must rigorously derive the coefficients of the general Lagrangian from the underlying discrete FUM simulation. Earlier work separated temporal and spatial (interaction) contributions.
+As outlined in our Effective Field Theory (EFT) roadmap, we must rigorously derive the coefficients of the general Lagrangian from the underlying discrete VDM simulation. Earlier work separated temporal and spatial (interaction) contributions.
 
-The objective of this document is to derive the kinetic prefactor (wave‑function normalization) $Z(\phi)$ and show it is a constant, $Z(\phi)=\tfrac{1}{2}$, consistent with a canonical Klein–Gordon–type scalar field. We start from the discrete temporal “kinetic energy” and nearest‑neighbor interaction, take the continuum limit, and match to the continuum Lagrangian density.
+The objective of this document is to derive the kinetic prefactor (wave-function normalization) $Z(\phi)$ and show it is a constant, $Z(\phi)=\tfrac{1}{2}$, consistent with a canonical Klein–Gordon–type scalar field. We start from the discrete temporal “kinetic energy” and nearest-neighbor interaction, take the continuum limit, and match to the continuum Lagrangian density.
 
 ---
 
@@ -49,7 +56,7 @@ This penalizes sharp spatial variations.
 
 #### 3.1 Continuum Limit via Taylor Expansion
 
-Approximate the local k‑NN structure by a regular cubic lattice (spacing $a$, dimension $d=3$). Let site $i$ be at $\mathbf{x}$; neighbors lie at $\mathbf{x} \pm a \hat{e}_k$, $k\in\{x,y,z\}$.
+Approximate the local k-NN structure by a regular cubic lattice (spacing $a$, dimension $d=3$). Let site $i$ be at $\mathbf{x}$; neighbors lie at $\mathbf{x} \pm a \hat{e}_k$, $k\in\{x,y,z\}$.
 
 Taylor expand:
 
@@ -63,7 +70,7 @@ $$
 W(\mathbf{x}+a\hat{e}_k) - W(\mathbf{x}) = a\,\partial_k W + \frac{a^2}{2}\partial_k^2 W + O(a^3).
 $$
 
-Lowest non‑vanishing order when squared:
+Lowest non-vanishing order when squared:
 
 $$
 \big(W(\mathbf{x}+a\hat{e}_k) - W(\mathbf{x})\big)^2 = a^2 (\partial_k W)^2 + O(a^3).
@@ -121,7 +128,7 @@ $$
 \mathcal{L} = \frac{1}{2}(\partial_t \phi)^2 - \frac{\kappa a^2}{2} (\nabla \phi)^2 - V(\phi).
 $$
 
-Edge‑counting conventions:
+Edge-counting conventions:
 - Per undirected edge counted once: coefficient $\kappa$, wave speed $c^2 = \kappa a^2$.
 - Per site with both $\pm\mu$ neighbors in a sum $\tfrac{1}{2}\sum_{j\in N(i)} J (W_j-W_i)^2$: $\kappa = 2J$, so $c^2 = 2 J a^2$.
 
@@ -167,14 +174,14 @@ $$
 \qquad c^2 = 2 J a^2.
 $$
 
-Thus the kinetic normalization is constant: $Z(\phi)=\tfrac{1}{2}$. No field‑dependent prefactor emerges from the discrete nearest‑neighbor quadratic form.
+Thus the kinetic normalization is constant: $Z(\phi)=\tfrac{1}{2}$. No field-dependent prefactor emerges from the discrete nearest-neighbor quadratic form.
 
 ---
 
 ### 6. Conventions Summary
 
-- Per‑site coupling form (both directions): $c^2 = 2 J a^2$.
-- Per‑edge single count: $c^2 = \kappa a^2$ with $\kappa = 2J$.
+- Per-site coupling form (both directions): $c^2 = 2 J a^2$.
+- Per-edge single count: $c^2 = \kappa a^2$ with $\kappa = 2J$.
 - Canonical relativistic form follows by choosing $c=1$.
 
 ---
@@ -182,9 +189,9 @@ Thus the kinetic normalization is constant: $Z(\phi)=\tfrac{1}{2}$. No field‑d
 ### 7. Possible Extensions
 
 - Anisotropy: $c_k^2 = 2 J_k a_k^2$.
-- Higher‑order lattice corrections: keep $O(a^4)$ to estimate discretization error.
-- Longer‑range couplings: induce higher derivative operators (e.g. $(\nabla^2 \phi)^2$) in an EFT expansion.
-- Field‑dependent couplings $J(\phi)$: would generate non‑constant $Z(\phi)$.
+- Higher-order lattice corrections: keep $O(a^4)$ to estimate discretization error.
+- Longer-range couplings: induce higher derivative operators (e.g. $(\nabla^2 \phi)^2$) in an EFT expansion.
+- Field-dependent couplings $J(\phi)$: would generate non-constant $Z(\phi)$.
 
 ---
 

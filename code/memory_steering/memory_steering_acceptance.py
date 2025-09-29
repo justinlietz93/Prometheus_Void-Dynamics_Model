@@ -1,4 +1,10 @@
 """
+Copyright © 2025 Justin K. Lietz, Neuroca, Inc. All Rights Reserved.
+
+This research is protected under a dual-license to foster open academic
+research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from Justin K. Lietz.
+See LICENSE file for full terms.
+
 Memory Steering Acceptance Harness
 
 Implements a leaky first-order memory filter with saturation and runs:
@@ -14,7 +20,7 @@ CLI:
       --seed 0 --steps 512 --g 0.12 --lam 0.08 --noise_std 0.0
 
 Outputs:
-- JSON metrics: Prometheus_FUVDM/derivation/code/outputs/logs/memory_steering/memory_steering_acceptance_<timestamp>.json
+- JSON metrics: Prometheus_FUVDM/derivation/code/outputs/logs/memory_steering/memory_steering_acceptance_{timestamp}.json
 - Figures (PNG): Prometheus_FUVDM/derivation/code/outputs/figures/memory_steering/
 """
 

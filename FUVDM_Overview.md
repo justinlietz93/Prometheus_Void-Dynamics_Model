@@ -1,14 +1,16 @@
 # FUVDM Overview
 
 > Author: Justin K. Lietz  
+> ORCID: 0009-0008-9028-1366
 > Date: August 9, 2025  
 >
 > This research is protected under a dual-license to foster open academic
-> research while ensuring commercial applications are aligned with the project's ethical principles.<br>
+> research while ensuring commercial applications are aligned with the project's ethical principles.
 > Commercial use requires written permission from Justin K. Lietz.  
 > See LICENSE file for full terms.
 
 Note on scope and merge resolution
+
 - This file was reconciled to include a comprehensive macro banner and overview while enforcing the repository’s policy: RD is the canonical baseline; EFT/KG content is quarantined as future work and explicitly labeled.
 
 ## Macro Banner: Core Equations and Mappings
@@ -190,18 +192,20 @@ $$
 (EFT-EX)
 
 EFT references:  
+
 - [effective_field_theory_approach.md](derivation/effective_field_theory/effective_field_theory_approach.md)  
-- [fum_voxtrium_mapping.md](derivation/effective_field_theory/fum_voxtrium_mapping.md)
+- [VDM_voxtrium_mapping.md](derivation/effective_field_theory/VDM_voxtrium_mapping.md)
 
 ## Reproducibility and outputs
 
 - Figures → derivation/code/outputs/figures/  
 - Logs → derivation/code/outputs/logs/  
-- Filenames: <script>_<UTC timestamp>.png/json
+- Filenames: {script name}_{timestamp}.png/json
 
-fum_rt parity (independent runners; same metrics schema)  
-- Front-speed mirror: [rd_front_speed_runner.py](fum_rt/physics/rd_front_speed_runner.py)  
-- Dispersion mirror: [rd_dispersion_runner.py](fum_rt/physics/rd_dispersion_runner.py)
+VDM_rt parity (independent runners; same metrics schema)  
+
+- Front-speed mirror: [rd_front_speed_runner.py](VDM_rt/physics/rd_front_speed_runner.py)  
+- Dispersion mirror: [rd_dispersion_runner.py](VDM_rt/physics/rd_dispersion_runner.py)
 
 ## Design principles (condensed)
 
@@ -218,7 +222,7 @@ fum_rt parity (independent runners; same metrics schema)
 
 - Memory-steering derivations and runtime integrations are tracked separately and must reference RD canonical terms when mapping to dynamics.  
   See: [memory_steering_acceptance_verification.md](derivation/memory_steering/memory_steering_acceptance_verification.md)  
-- Runtime parity and plots reside under fum_rt/core/* and fum_rt/physics/* with explicit comments when driven by proven physics
+- Runtime parity and plots reside under VDM_rt/core/*and VDM_rt/physics/* with explicit comments when driven by proven physics
 
 ## Finite-domain EFT modes (quarantined)
 

@@ -1,8 +1,17 @@
 # Memory Steering — Acceptance & Verification
 
+>
+> Author: Justin K. Lietz  
+> ORCID: 0009-0008-9028-1366
+> Date: August 21, 2025
+>
+> This research is protected under a dual-license to foster open academic
+> research while ensuring commercial applications are aligned with the project's ethical principles.
+> Commercial use requires written permission from Justin K. Lietz.
+>
+> See LICENSE file for full terms.
+
 Tags: [PLAUSIBLE→PROVEN], [STABILITY], [REPRODUCIBILITY], [NON-INTERFERENCE]
-Date: 2025-08-21
-Owner:Justin K. Lietz
 
 Purpose
 - Define quantitative acceptance criteria and a reproducible verification protocol for the “memory steering” mechanism.

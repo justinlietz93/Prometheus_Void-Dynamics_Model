@@ -1,96 +1,140 @@
-#!/usr/bin/env python3
-# D2Q9 LBM (BGK) with periodic BCs and bounce-back no-slip walls.
-# Viscosity (lattice units): nu = c_s^2 * (tau - 0.5), c_s^2 = 1/3, dx=dt=1.
 """
-CHANGE REASON:
-- Adds the fluids sector minimal solver (LBM→NS) per TODO_up_next plan.
-- Mirrors the repository's proven practice: scripts emit figures + JSON metrics with a 'passed' gate.
-- This module is scoped; it does not alter RD canonical sector. It provides the operational path to NS.
+Copyright © 2025 Justin K. Lietz, Neuroca, Inc. All Rights Reserved.
+
+This research is protected under a dual-license to foster open academic
+research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from Justin K. Lietz.
+See LICENSE file for full terms.
+
+This module is scoped; it does not alter the reaction-diffusion canonical sector. It provides the operational path to Navier–Stokes benchmarks.
 
 References:
-- derivation: [fluids_limit.md](Prometheus_FUVDM/derivation/fluids_limit.md:1)
-- benchmarks: taylor_green_benchmark.py, lid_cavity_benchmark.py
+- derivation/fluid_dynamics/fluids_limit.md
+- code/fluid_dynamics/taylor_green_benchmark.py
+- code/fluid_dynamics/lid_cavity_benchmark.py
 """
 
 from __future__ import annotations
+
+import importlib.util
+import os
+from pathlib import Path
+import sys
+from types import ModuleType
+from typing import Any
+import logging
+
 import numpy as np
 from dataclasses import dataclass
 
-# Integrate FUVDM void dynamics (bounded, stabilizing)
-# --- FUVDM / Void dynamics (optional) ----------------------------------------
-import os, importlib.util
+universal_void_dynamics: Any | None = None
+VoidDebtModulation: Any | None = None
+VOID_SOURCE: str | None = None
 
-universal_void_dynamics = None
-VoidDebtModulation = None
-VOID_SOURCE = None
+LOGGER = logging.getLogger(__name__)
 
-def _load_module_by_path(path: str, modname: str):
-    if os.path.exists(path):
-        spec = importlib.util.spec_from_file_location(modname, path)
-        mod = importlib.util.module_from_spec(spec)
-        assert spec and spec.loader
-        spec.loader.exec_module(mod)
-        return mod
-    return None
+def _load_module_by_path(path: str, modname: str) -> ModuleType | None:
+    if not os.path.exists(path):
+        return None
+    spec = importlib.util.spec_from_file_location(modname, path)
+    if spec is None or spec.loader is None:
+        return None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
-# 1) Preferred: in-repo Prometheus_FUVDM files (package import)
-try:
-    from Prometheus_FUVDM.derivation.code.FUM_Void_Equations import universal_void_dynamics as _u
-    from Prometheus_FUVDM.derivation.code.FUM_Void_Debt_Modulation import VoidDebtModulation as _V
-    universal_void_dynamics, VoidDebtModulation = _u, _V
-    VOID_SOURCE = "Prometheus_FUVDM.derivation.code"
-except Exception:
-    # 2) Fallback: load by file path from derivation/code/ next to this physics folder
-    try:
-        _ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))  # → Prometheus_FUVDM/derivation/code
-        _eq_path = os.path.join(_ROOT, "FUM_Void_Equations.py")
-        _mod_path = os.path.join(_ROOT, "FUM_Void_Debt_Modulation.py")
-        _eq = _load_module_by_path(_eq_path, "FUM_Void_Equations_local")
-        _md = _load_module_by_path(_mod_path, "FUM_Void_Debt_Modulation_local")
-        if _eq and hasattr(_eq, "universal_void_dynamics"):
-            universal_void_dynamics = getattr(_eq, "universal_void_dynamics")
-            VOID_SOURCE = "file:derivation/code/FUM_Void_Equations.py"
-        if _md and hasattr(_md, "VoidDebtModulation"):
-            VoidDebtModulation = getattr(_md, "VoidDebtModulation")
+
+def _repo_root() -> Path:
+    here = Path(__file__).resolve()
+    for ancestor in [here] + list(here.parents):
+        if (ancestor / ".git").exists():
+            return ancestor
+    return here.parents[3]
+
+
+def _load_local_void_modules(root: Path) -> None:
+    global universal_void_dynamics, VoidDebtModulation, VOID_SOURCE
+    eq_candidates = [
+        root / "derivation" / "code" / "VDM_Void_Equations.py",
+        root / "derivation" / "memory_steering" / "VDM_Void_Equations.py",
+        root / "VDM_Void_Equations.py",
+    ]
+    mod_candidates = [
+        root / "derivation" / "code" / "VDM_Void_Debt_Modulation.py",
+        root / "derivation" / "memory_steering" / "VDM_Void_Debt_Modulation.py",
+        root / "VDM_Void_Debt_Modulation.py",
+    ]
+    for path in eq_candidates:
+        module = _load_module_by_path(str(path), f"{path.stem}_local")
+        if module and hasattr(module, "universal_void_dynamics"):
+            universal_void_dynamics = getattr(module, "universal_void_dynamics")
+            VOID_SOURCE = f"file:{path.relative_to(root)}"
+            break
+    for path in mod_candidates:
+        module = _load_module_by_path(str(path), f"{path.stem}_local")
+        if module and hasattr(module, "VoidDebtModulation"):
+            VoidDebtModulation = getattr(module, "VoidDebtModulation")
             if VOID_SOURCE is None:
-                VOID_SOURCE = "file:derivation/code/FUM_Void_Debt_Modulation.py"
-    except Exception:
-        pass
-    # 3) fum_rt adapter
-    if universal_void_dynamics is None:
-        try:
-            from fum_rt.core.void_dynamics_adapter import universal_void_dynamics as _u
-            from fum_rt.fum_advanced_math.void_dynamics.FUM_Void_Debt_Modulation import VoidDebtModulation as _V
-            universal_void_dynamics, VoidDebtModulation = _u, _V
-            VOID_SOURCE = "fum_rt"
-        except Exception:
-            # 4) demo fallback
-            try:
-                from FUM_Demo_original.FUM_Void_Equations import universal_void_dynamics as _u
-                from FUM_Demo_original.FUM_Void_Debt_Modulation import VoidDebtModulation as _V
-                universal_void_dynamics, VoidDebtModulation = _u, _V
-                VOID_SOURCE = "FUM_Demo_original"
-            except Exception:
-                pass
+                VOID_SOURCE = f"file:{path.relative_to(root)}"
+            break
 
-# Final fallback: add derivation/code to sys.path and import by name if still missing
+
+_ROOT = _repo_root()
+_load_local_void_modules(_ROOT)
+
+# Fallback: try via sys.path using repo root if modules are importable by name
+if universal_void_dynamics is None:
+    if str(_ROOT) not in sys.path:
+        sys.path.insert(0, str(_ROOT))
+    try:
+        import VDM_Void_Equations as _eq_pkg
+
+        if hasattr(_eq_pkg, "universal_void_dynamics"):
+            universal_void_dynamics = getattr(_eq_pkg, "universal_void_dynamics")
+            VOID_SOURCE = "import:VDM_Void_Equations"
+    except Exception as exc:  # pragma: no cover
+        LOGGER.debug("VDM_Void_Equations import failed: %s", exc)
+    try:
+        import VDM_Void_Debt_Modulation as _vdm_pkg
+
+        if hasattr(_vdm_pkg, "VoidDebtModulation"):
+            VoidDebtModulation = getattr(_vdm_pkg, "VoidDebtModulation")
+            if VOID_SOURCE is None:
+                VOID_SOURCE = "import:VDM_Void_Debt_Modulation"
+    except Exception as exc:  # pragma: no cover
+        LOGGER.debug("VDM_Void_Debt_Modulation import failed: %s", exc)
+
+# Fallbacks to external packages if local sources absent
 if universal_void_dynamics is None:
     try:
-        import sys
+        from VDM_rt.core.void_dynamics_adapter import universal_void_dynamics as _u
+        from VDM_rt.VDM_advanced_math.void_dynamics.VDM_Void_Debt_Modulation import VoidDebtModulation as _V
+
+        universal_void_dynamics, VoidDebtModulation = _u, _V
+        VOID_SOURCE = "VDM_rt"
+    except Exception as exc:  # pragma: no cover
+        LOGGER.debug("VDM_rt modules not available: %s", exc)
+        try:
+            from VDM_Demo_original.VDM_Void_Equations import universal_void_dynamics as _u
+            from VDM_Demo_original.VDM_Void_Debt_Modulation import VoidDebtModulation as _V
+
+            universal_void_dynamics, VoidDebtModulation = _u, _V
+            VOID_SOURCE = "VDM_Demo_original"
+        except Exception as demo_exc:  # pragma: no cover
+            LOGGER.debug("VDM_Demo_original import failed: %s", demo_exc)
         _ROOT2 = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
         if _ROOT2 not in sys.path:
             sys.path.insert(0, _ROOT2)
-        import FUM_Void_Equations as _eq2
+        import VDM_Void_Equations as _eq2
         universal_void_dynamics = getattr(_eq2, "universal_void_dynamics", None)
         if universal_void_dynamics is not None:
             VOID_SOURCE = "sys.path:derivation/code"
         try:
-            import FUM_Void_Debt_Modulation as _vdm2
+            import VDM_Void_Debt_Modulation as _vdm2
             VoidDebtModulation = getattr(_vdm2, "VoidDebtModulation", None)
-        except Exception:
-            pass
-    except Exception:
-        pass
+        except Exception as vdm_exc:  # pragma: no cover
+            LOGGER.debug("VDM_Void_Debt_Modulation import via sys.path failed: %s", vdm_exc)
+    except Exception as final_exc:  # pragma: no cover
+        LOGGER.debug("Fallback import chain failed: %s", final_exc)
 print(f"[LBM2D] Loaded. void_module={universal_void_dynamics is not None} source={VOID_SOURCE} file={__file__}")
 
 
@@ -115,7 +159,7 @@ class LBMConfig:
     periodic_x: bool = True
     periodic_y: bool = True
     # FUVDM void dynamics coupling (bounded stabilizer)
-    void_enabled: bool = True
+    void_enabled: bool = False
     void_domain: str = "standard_model"
     void_gain: float = 0.5
     void_use_modulation: bool = False
@@ -159,7 +203,7 @@ class LBM2D:
 
         # Fail-fast if user requested void but module not available
         if getattr(self.cfg, "void_enabled", False) and universal_void_dynamics is None:
-            raise RuntimeError("void_enabled=True but universal_void_dynamics not available; ensure Prometheus_FUVDM/derivation/code/FUM_Void_Equations.py is present or install fum_rt/FUM_Demo_original.")
+            raise RuntimeError("void_enabled=True but universal_void_dynamics not available; ensure Prometheus_FUVDM/derivation/code/VDM_Void_Equations.py is present or install VDM_rt/VDM_Demo_original.")
 
         self._set_equilibrium()
 

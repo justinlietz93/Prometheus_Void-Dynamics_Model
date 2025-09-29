@@ -1,25 +1,32 @@
-# Formal Derivation: The Continuum Limit of the FUM Recurrence
+# Formal Derivation: The Continuum Limit of the VDM Recurrence
 
-**Author:** Justin K. Lietz  
-**Date:** August 8, 2025
-
+>
+> Author: Justin K. Lietz  
+> ORCID: 0009-0008-9028-1366
+> Date: August 8, 2025
+>
+> This research is protected under a dual-license to foster open academic
+> research while ensuring commercial applications are aligned with the project's ethical principles.
+> Commercial use requires written permission from Justin K. Lietz.
+>
+> See LICENSE file for full terms.
 ---
 
-### 1. Objective
+## 1. Objective
 
 The primary goal of this derivation is to derive the reaction–diffusion PDE mapping
 ∂t φ = D ∇² φ + r φ − u φ²
-from the discrete update. A second‑order Lorentzian EFT derivation (Klein–Gordon–like) is maintained as future work in [derivation/effective_field_theory_approach.md](effective_field_theory_approach.md:1). This removes internal contradictions while preserving historical EFT references below as scoped.
+from the discrete update. A second-order Lorentzian EFT derivation (Klein–Gordon–like) is maintained as future work in [derivation/effective_field_theory_approach.md](effective_field_theory_approach.md:1). This removes internal contradictions while preserving historical EFT references below as scoped.
 
 ---
 
-### 2. The Knowns: Defining the Two Regimes
+## 2. The Knowns: Defining the Two Regimes
 
 We must clearly state our starting point (the discrete equation) and our target destination (the continuum equation).
 
-#### 2.1 The Discrete System (LHS)
+### 2.1 The Discrete System (LHS)
 
-From the `FUM_Void_Equations.py` source code, the state of a single node $i$, denoted by $W_i(t)$, evolves according to the rule:
+From the `VDM_Void_Equations.py` source code, the state of a single node $i$, denoted by $W_i(t)$, evolves according to the rule:
 
 $$
 \frac{W_i(t+\Delta t) - W_i(t)}{\Delta t} = \alpha W_i(t)(1 - W_i(t)) - \beta W_i(t) + \text{noise/phase terms}
@@ -55,7 +62,7 @@ Where $\Box \equiv \partial_\mu \partial^\mu = \frac{\partial^2}{\partial t^2} -
 
 To connect the discrete and continuum regimes, we must postulate a precise relationship between the discrete nodal states $W_i(t)$ and the continuous field $\phi(\vec{x}, t)$.
 
-**Postulate 3.1: The Field as a Local Density**
+#### Postulate 3.1: The Field as a Local Density
 
 The continuous scalar field $\phi(\vec{x}, t)$ at a spacetime point $x = (\vec{x}, t)$ is defined as the local spatial average density of the discrete states $W_i(t)$ in a small volume $V$ centered on the position $\vec{x}$.
 
@@ -72,10 +79,11 @@ This definition provides the crucial link: it defines how the macroscopic, smoot
 ### 4. Derivation of the Continuum Equation
 
 To proceed, we will rewrite the discrete equation of motion in terms of the field $\phi$. This involves two key steps:
+
 1. Approximating the discrete time difference with a time derivative.
 2. Approximating the interaction with discrete neighbors with spatial derivatives.
 
-#### 4.1 Temporal derivative and origin of second‑order dynamics (variational)
+#### 4.1 Temporal derivative and origin of second-order dynamics (variational)
 
 The left-hand side of the discrete equation is a first-order forward difference in time. In the limit $\Delta t \to 0$, this becomes the partial time derivative:
 $$
@@ -118,7 +126,7 @@ We now substitute our field postulate, $W_i(t) \approx \phi(\vec{x}_i, t)$, into
 $$
 \frac{\partial \phi}{\partial t} \approx D \nabla^2 \phi + (\alpha - \beta)\phi - \alpha\phi^2
 $$
-Here, $D$ is the diffusion coefficient that emerges from the neighbor coupling strength and lattice constants. On a regular lattice with per‑site coupling,
+Here, $D$ is the diffusion coefficient that emerges from the neighbor coupling strength and lattice constants. On a regular lattice with per-site coupling,
 $D = J a^2$ (or $D = (J/z)\,a^2$ if you average over $z$ neighbors). This is a **Reaction–Diffusion Equation**, renowned for generating complex patterns.
 
 Using $V'(\phi)$ from the discrete law, $V'(\phi)=\alpha\phi^2-(\alpha-\beta)\phi$, the variational equation yields
@@ -132,13 +140,15 @@ $$
 
 ### 5. Analysis of the Result and Baseline EFT Choice
 
-The derived continuum dynamics are nonlinear and exhibit a tachyonic instability about $\phi = 0$ stabilized by self‑interaction. For a well‑posed, bounded EFT we adopt the standard symmetric quartic as the default baseline:
+The derived continuum dynamics are nonlinear and exhibit a tachyonic instability about $\phi = 0$ stabilized by self-interaction. For a well-posed, bounded EFT we adopt the standard symmetric quartic as the default baseline:
 $$
 V_{\text{baseline}}(\phi)\;=\;-\frac{1}{2}\,\mu^2\,\phi^2\;+\;\frac{\lambda}{4}\,\phi^4,\qquad \mu^2>0,\ \lambda>0.
 $$
+
 - Linearizing about $\phi = 0$ gives $m_0^2 = -\mu^2 < 0$ (tachyonic).
 - The true minima are at $\phi = \pm v$ with $v = \mu/\sqrt{\lambda}$.
 - Fluctuations about either minimum have
+
 $$
 m_{\text{eff}}^2 \;=\; \left.\frac{d^2 V}{d\phi^2}\right|_{\phi=\pm v} \;=\; 2\,\mu^2.
 $$
@@ -173,7 +183,7 @@ $$
 
 #### 6.2 Optional cubic tilt and mapping to $(\alpha, \beta)$
 
-To prefer one vacuum and connect to the discrete‑to‑continuum coefficients, include a small cubic bias:
+To prefer one vacuum and connect to the discrete-to-continuum coefficients, include a small cubic bias:
 $$
 V(\phi)\;=\;-\frac{1}{2}\,\mu^2\,\phi^2\;+\;\frac{\lambda}{4}\,\phi^4\;+\;\frac{\gamma}{3}\,\phi^3,\qquad |\gamma|\ll \mu^2\sqrt{\lambda}.
 $$
@@ -190,11 +200,11 @@ $$
 \mu^2 \;\longleftrightarrow\; \alpha-\beta,\qquad
 \gamma \;\longleftrightarrow\; \alpha.
 $$
-In this bounded EFT the symmetric‑limit VEV is $v = \mu/\sqrt{\lambda}$; a small $\gamma$ tilts the potential to select a unique vacuum near $+v$. To leading order the fluctuation mass remains $m_{\text{eff}}^2 \approx 2\mu^2 + \mathcal{O}(\gamma)$.
+In this bounded EFT the symmetric-limit VEV is $v = \mu/\sqrt{\lambda}$; a small $\gamma$ tilts the potential to select a unique vacuum near $+v$. To leading order the fluctuation mass remains $m_{\text{eff}}^2 \approx 2\mu^2 + \mathcal{O}(\gamma)$.
 
 #### 6.3 Units and calibration
 
-Using the physical map in [derivation/fum_voxtrium_mapping.md](derivation/fum_voxtrium_mapping.md:44-80), one has $\mu$ in GeV, $\lambda$ dimensionless, and
+Using the physical map in [derivation/VDM_voxtrium_mapping.md](derivation/VDM_voxtrium_mapping.md:44-80), one has $\mu$ in GeV, $\lambda$ dimensionless, and
 $$
 m_{\text{eff}} = \sqrt{2}\,\mu
 $$

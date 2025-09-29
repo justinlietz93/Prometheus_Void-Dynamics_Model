@@ -9,13 +9,13 @@ Overview
 - Lead with proven RD validations (front speed, dispersion) with acceptance gates and PASS metrics.
 - Provide a minimal, per-node runtime guard based on the invariant drift for use in CI/runtime.
 
-Context (VDM): Void Dynamics (VDM) is an event-driven, sparse framework; the RD sector provides the canonical physics slice with reproducible gates. The QA invariant serves as a per-node drift diagnostic. Second‑order/EFT branches are explicitly out of scope here and quarantined to separate notes.
+Context (VDM): Void Dynamics (VDM) is an event-driven, sparse framework; the RD sector provides the canonical physics slice with reproducible gates. The QA invariant serves as a per-node drift diagnostic. Second-order/EFT branches are explicitly out of scope here and quarantined to separate notes.
 
 References (code)
 - Front speed experiment: [derivation/code/physics/reaction_diffusion/rd_front_speed_experiment.py](../../code/physics/reaction_diffusion/rd_front_speed_experiment.py)
 - Dispersion experiment: [derivation/code/physics/reaction_diffusion/rd_dispersion_experiment.py](../../code/physics/reaction_diffusion/rd_dispersion_experiment.py)
 - Front speed sweep: [derivation/code/physics/reaction_diffusion/rd_front_speed_sweep.py](../../code/physics/reaction_diffusion/rd_front_speed_sweep.py)
-- Logistic invariant validation: [derivation/code/physics/conservation_law/qfum_validate.py](../../code/physics/conservation_law/qfum_validate.py)
+- Logistic invariant validation: [derivation/code/physics/conservation_law/qVDM_validate.py](../../code/physics/conservation_law/qVDM_validate.py)
 - IO helpers: [figure_path()](../../code/common/io_paths.py:49), [log_path()](../../code/common/io_paths.py:53), [write_log()](../../code/common/io_paths.py:57)
 
 
@@ -56,7 +56,7 @@ Drift test and gates (double precision):
 - Time integrator RK4: $\,\max_t|Q(t)-Q(0)| \le 10^{-8}.$
 - Convergence study over $dt$: observed order $p \approx 4 \pm 0.4$, with fit $R^2 \ge 0.98$. For Euler, $p\approx 1\pm 0.2$.
 
-Implementations: [Q_invariant()](../../code/physics/conservation_law/qfum_validate.py:118), [fit_loglog()](../../code/physics/conservation_law/qfum_validate.py:153), [plot_Q_drift()](../../code/physics/conservation_law/qfum_validate.py:179).
+Implementations: [Q_invariant()](../../code/physics/conservation_law/qVDM_validate.py:118), [fit_loglog()](../../code/physics/conservation_law/qVDM_validate.py:153), [plot_Q_drift()](../../code/physics/conservation_law/qVDM_validate.py:179).
 
 
 2. Proven RD validations (PASS)
@@ -89,9 +89,9 @@ python derivation/code/physics/reaction_diffusion/rd_dispersion_experiment.py \
 3. QA invariant (no figures in RD packaging)
 - The on-site invariant is used solely as a per-node QA drift gate in RD pipelines. Figures are intentionally omitted here.
 - Acceptance (double precision RK4): $\max_t|Q(t)-Q(0)| \le 10^{-8}$ at $dt\approx 10^{-3}$; convergence slope $p\approx 4\pm 0.4$ with fit $R^2\ge 0.98$ on a $dt$ sweep.
-- Use the validator to produce audit logs when needed. Numerical caveat: at extremely small step sizes, ΔQ approaches machine precision and the observed slope p from a log–log fit can degrade; evaluate gates in the truncation‑dominated regime (moderate dt). Proof and figures: see [logarithmic_constant_of_motion.md](./logarithmic_constant_of_motion.md).
+- Use the validator to produce audit logs when needed. Numerical caveat: at extremely small step sizes, ΔQ approaches machine precision and the observed slope p from a log–log fit can degrade; evaluate gates in the truncation-dominated regime (moderate dt). Proof and figures: see [logarithmic_constant_of_motion.md](./logarithmic_constant_of_motion.md).
 ```
-python derivation/code/physics/conservation_law/qfum_validate.py \
+python derivation/code/physics/conservation_law/qVDM_validate.py \
   --r 0.15 --u 0.25 --W0 0.12 0.62 --T 40 \
   --dt 0.002 0.001 0.0005 --solver rk4
 ```
@@ -151,7 +151,7 @@ for n in range(steps):
 7. Reproducibility summary
 - Front speed: PASS with $R^2=0.999996$, rel-err $4.7\%$.
 - Dispersion: PASS with median rel-err $1.45\times 10^{-3}$, $R^2_{\text{array}}=0.999946$.
-- Invariant drift: PASS thresholds as specified above (see figures and JSON metrics produced by [qfum_validate.py](../../code/physics/conservation_law/qfum_validate.py)).
+- Invariant drift: PASS thresholds as specified above (see figures and JSON metrics produced by [qVDM_validate.py](../../code/physics/conservation_law/qVDM_validate.py)).
 
 
 Appendix: direct links

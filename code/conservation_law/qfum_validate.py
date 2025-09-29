@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 """
-Q_FUM Logistic Invariant Validation
+Copyright © 2025 Justin K. Lietz, Neuroca, Inc. All Rights Reserved.
+
+This research is protected under a dual-license to foster open academic
+research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from Justin K. Lietz.
+See LICENSE file for full terms.
+
+Q_VDM Logistic Invariant Validation
 
 Purpose
 - Numerically verify the logarithmic first integral
@@ -14,20 +20,20 @@ Purpose
 
 Usage
 - Basic run (double precision RK4):
-    python derivation/code/physics/conservation_law/qfum_validate.py \\
+    python derivation/code/physics/conservation_law/qVDM_validate.py \\
         --r 0.15 --u 0.25 --W0 0.12 0.62 --T 40 --dt 0.001 --solver rk4
 
 - Convergence sweep (3 stepsizes):
-    python derivation/code/physics/conservation_law/qfum_validate.py \\
+    python derivation/code/physics/conservation_law/qVDM_validate.py \\
         --r 0.15 --u 0.25 --W0 0.12 --T 10 --dt 0.002 0.001 0.0005 --solver rk4
 
 Outputs
 - Figures:
-    derivation/code/outputs/figures/conservation_law/qfum_solution_overlay_UTC.png
-    derivation/code/outputs/figures/conservation_law/qfum_Q_drift_UTC.png
-    derivation/code/outputs/figures/conservation_law/qfum_convergence_UTC.png
+    derivation/code/outputs/figures/conservation_law/qVDM_solution_overlay_UTC.png
+    derivation/code/outputs/figures/conservation_law/qVDM_Q_drift_UTC.png
+    derivation/code/outputs/figures/conservation_law/qVDM_convergence_UTC.png
 - JSON metrics:
-    derivation/code/outputs/logs/conservation_law/qfum_metrics_UTC.json
+    derivation/code/outputs/logs/conservation_law/qVDM_metrics_UTC.json
 
 Dependencies
 - numpy, matplotlib, json, argparse, datetime
@@ -51,7 +57,6 @@ import shutil
 
 # add repo-common IO helpers (derivation/code on sys.path)
 sys.path.append(str(Path(__file__).resolve().parents[2]))
-from common.io_paths import figure_path, log_path, write_log
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -63,8 +68,41 @@ LOG_DIR = os.path.join(BASE_OUTDIR, "logs", "conservation_law")
 ARXIV_FIG_DIR = "derivation/arxiv/RD_Methods_QA/figs"
 
 
+RUN_STAMP: str | None = None
+
+
 def utc_stamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+
+
+def current_stamp() -> str:
+    global RUN_STAMP
+    if RUN_STAMP is None:
+        RUN_STAMP = utc_stamp()
+    return RUN_STAMP
+
+
+def figure_path(domain: str, stem: str, failed: bool = False) -> Path:
+    base = Path(BASE_OUTDIR) / "figures" / domain
+    if failed:
+        base = base / "failed_runs"
+    base.mkdir(parents=True, exist_ok=True)
+    return base / f"{stem}_{current_stamp()}.png"
+
+
+def log_path(domain: str, stem: str, failed: bool = False) -> Path:
+    base = Path(BASE_OUTDIR) / "logs" / domain
+    if failed:
+        base = base / "failed_runs"
+    base.mkdir(parents=True, exist_ok=True)
+    return base / f"{stem}_{current_stamp()}.json"
+
+
+def write_log(path: Path | str, payload: Dict[str, object]) -> None:
+    target = Path(path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with target.open("w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2)
 
 
 def ensure_dirs(*paths: str) -> None:
@@ -230,7 +268,7 @@ def main():
 
     # only ensure arXiv figs dir; figure/log dirs are ensured at file save
     ensure_dirs(ARXIV_FIG_DIR)
-    stamp = utc_stamp()
+    stamp = current_stamp()
 
     run_metrics: List[RunMetrics] = []
 
@@ -303,14 +341,14 @@ def main():
 
     # Overlay/drift figures: prefer repo io_paths unless --outdir override provided
     if args.outdir is None:
-        sol_fig_final = str(figure_path("conservation_law", "qfum_solution_overlay", failed=failed_flag))
-        drift_fig_final = str(figure_path("conservation_law", "qfum_Q_drift", failed=failed_flag))
+        sol_fig_final = str(figure_path("conservation_law", "qVDM_solution_overlay", failed=failed_flag))
+        drift_fig_final = str(figure_path("conservation_law", "qVDM_Q_drift", failed=failed_flag))
     else:
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
         base_dir = Path(fig_dir_base) / ("failed_runs" if failed_flag else "")
         base_dir.mkdir(parents=True, exist_ok=True)
-        sol_fig_final = str(base_dir / f"{ts}_qfum_solution_overlay.png")
-        drift_fig_final = str(base_dir / f"{ts}_qfum_Q_drift.png")
+        sol_fig_final = str(base_dir / f"{ts}_qVDM_solution_overlay.png")
+        drift_fig_final = str(base_dir / f"{ts}_qVDM_Q_drift.png")
 
     plot_solution_overlay(sol_fig_final, t_p, W_num_p, W_an_p, r, u, W0_primary)
     plot_Q_drift(drift_fig_final, t_p, Q_p, r, u, W0_primary)
@@ -319,12 +357,12 @@ def main():
     conv_fig_final = ""
     if np.count_nonzero(mask) >= 2:
         if args.outdir is None:
-            conv_fig_final = str(figure_path("conservation_law", "qfum_convergence", failed=failed_flag))
+            conv_fig_final = str(figure_path("conservation_law", "qVDM_convergence", failed=failed_flag))
         else:
             ts = datetime.now().strftime("%Y%m%d_%H%M%S")
             base_dir = Path(fig_dir_base) / ("failed_runs" if failed_flag else "")
             base_dir.mkdir(parents=True, exist_ok=True)
-            conv_fig_final = str(base_dir / f"{ts}_qfum_convergence.png")
+            conv_fig_final = str(base_dir / f"{ts}_qVDM_convergence.png")
         plot_convergence(conv_fig_final, list(dts_arr[mask]), list(deltas_arr[mask]), slope, r2)
 
     # Produce arXiv copies ONLY on PASS
@@ -334,12 +372,12 @@ def main():
     if passed:
         try:
             os.makedirs(ARXIV_FIG_DIR, exist_ok=True)
-            sol_fig_arxiv = os.path.join(ARXIV_FIG_DIR, "qfum_solution_overlay.png")
-            drift_fig_arxiv = os.path.join(ARXIV_FIG_DIR, "qfum_Q_drift.png")
+            sol_fig_arxiv = os.path.join(ARXIV_FIG_DIR, "qVDM_solution_overlay.png")
+            drift_fig_arxiv = os.path.join(ARXIV_FIG_DIR, "qVDM_Q_drift.png")
             shutil.copyfile(sol_fig_final, sol_fig_arxiv)
             shutil.copyfile(drift_fig_final, drift_fig_arxiv)
             if conv_fig_final:
-                conv_fig_arxiv = os.path.join(ARXIV_FIG_DIR, "qfum_convergence.png")
+                conv_fig_arxiv = os.path.join(ARXIV_FIG_DIR, "qVDM_convergence.png")
                 shutil.copyfile(conv_fig_final, conv_fig_arxiv)
         except Exception:
             pass
@@ -351,13 +389,13 @@ def main():
 
     # Log JSON (prefer repo helper; respect --outdir override)
     if args.outdir is None:
-        out_json_path = log_path("conservation_law", "qfum_metrics", failed=(not passed))
+        out_json_path = log_path("conservation_law", "qVDM_metrics", failed=(not passed))
     else:
         out_dir = Path(log_dir_base)
         if not passed:
             out_dir = out_dir / "failed_runs"
         out_dir.mkdir(parents=True, exist_ok=True)
-        out_json_path = out_dir / f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_qfum_metrics.json"
+        out_json_path = out_dir / f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_qVDM_metrics.json"
     payload: Dict[str, object] = {
         "version": "1.0",
         "timestamp_utc": stamp,
@@ -393,25 +431,25 @@ def main():
     out_json = str(out_json_path)
 
     # Console summary
-    print("[QFUM] Primary run:")
+    print("[QVDM] Primary run:")
     print(f"  r={r:.6g}, u={u:.6g}, W0={W0_primary:.6g}, dt={dt_primary:.6g}, T={T:.6g}")
     print(f"  max |Q(t)-Q(0)| = {delta_Q_max_p:.3e}")
     if np.isfinite(slope):
-        print(f"[QFUM] Convergence: slope ~ {slope:.2f}, R^2={r2:.3f}")
+        print(f"[QVDM] Convergence: slope ~ {slope:.2f}, R^2={r2:.3f}")
         print(f"  Expected (RK4) ~ 4, Observed ~ {slope:.2f}")
 
-    print("[QFUM] Figures:")
+    print("[QVDM] Figures:")
     print(f"  {sol_fig_final}")
     print(f"  {drift_fig_final}")
     if conv_fig_final:
         print(f"  {conv_fig_final}")
-    print(f"[QFUM] {'PASSED' if passed else 'FAILED'}  (drift_ok={drift_ok}, conv_ok={conv_ok})")
-    print("[QFUM] ArXiv figs:")
+    print(f"[QVDM] {'PASSED' if passed else 'FAILED'}  (drift_ok={drift_ok}, conv_ok={conv_ok})")
+    print("[QVDM] ArXiv figs:")
     print(f"  {sol_fig_arxiv}")
     print(f"  {drift_fig_arxiv}")
     if conv_fig_arxiv:
         print(f"  {conv_fig_arxiv}")
-    print(f"[QFUM] Metrics JSON: {out_json}")
+    print(f"[QVDM] Metrics JSON: {out_json}")
 
 
 if __name__ == "__main__":

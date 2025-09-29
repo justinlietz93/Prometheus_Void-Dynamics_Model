@@ -1,4 +1,10 @@
 """
+Copyright © 2025 Justin K. Lietz, Neuroca, Inc. All Rights Reserved.
+
+This research is protected under a dual-license to foster open academic
+research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from Justin K. Lietz.
+See LICENSE file for full terms.
+
 Plotting helper for memory-steering experiments.
 
 - Parses outputs/memory_steering_results.csv (supports 4- or 5-column stability).
@@ -9,9 +15,9 @@ Plotting helper for memory-steering experiments.
   3) Stability band with write→decay protocol (Retention, Fidelity)
 
 Usage:
-- python3 -m fum_rt.utils.plot_memory_steering
+- python3 -m VDM_rt.utils.plot_memory_steering
   or
-- python3 fum_rt/utils/plot_memory_steering.py   (if PYTHONPATH=. is set)
+- python3 VDM_rt/utils/plot_memory_steering.py   (if PYTHONPATH=. is set)
 """
 
 import os
@@ -153,7 +159,7 @@ def pivot_heatmap(SB: np.ndarray, value_index: int = 3):
 def plot_all(src: str = os.path.join("outputs", "memory_steering_results.csv"),
              outdir: str = "outputs"):
     if not os.path.exists(src):
-        raise SystemExit(f"[error] Missing {src}. Generate it first with: python3 -m fum_rt.utils.memory_steering_experiments > {src}")
+        raise SystemExit(f"[error] Missing {src}. Generate it first with: python3 -m VDM_rt.utils.memory_steering_experiments > {src}")
     os.makedirs(outdir, exist_ok=True)
 
     Jx, Jp, Cx, Cy, SB, Sx, Smy, Sse, Sseed, Ssign = parse_results(src)
@@ -713,20 +719,20 @@ def plot_all(src: str = os.path.join("outputs", "memory_steering_results.csv"),
     print("Saved plots:", *saved)
 
     # Optional strict failure for CI
-    if _env_bool("FUM_STRICT", False) and not overall_pass:
+    if _env_bool("VDM_STRICT", False) and not overall_pass:
         raise SystemExit(2)
 
 
 if __name__ == "__main__":
     src = os.environ.get(
-        "FUM_RESULTS_CSV",
+        "VDM_RESULTS_CSV",
         os.path.join(
             "Prometheus_FUVDM", "derivation", "code", "outputs", "logs",
             "memory_steering", "memory_steering_results.csv"
         )
     )
     outdir = os.environ.get(
-        "FUM_RESULTS_OUT",
+        "VDM_RESULTS_OUT",
         os.path.join(
             "Prometheus_FUVDM", "derivation", "code", "outputs", "figures",
             "memory_steering"

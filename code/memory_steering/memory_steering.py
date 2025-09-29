@@ -5,7 +5,7 @@ This research is protected under a dual-license to foster open academic
 research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from Justin K. Lietz.
 See LICENSE file for full terms.
 
-Memory-driven steering on graphs: rigorous mapping to the FUM derivations + dimensionless implementation.
+Memory-driven steering on graphs: rigorous mapping to the VDM derivations + dimensionless implementation.
 
 How this maps to your derivations (clickable refs):
 - Fast φ-sector (propagation + mass gap): the continuum equation and invariants are already derived
@@ -28,7 +28,7 @@ How this maps to your derivations (clickable refs):
 
 - Dimensionless groups (scaling, not units) with chosen rulers L, T, M0, R0:
       Θ = η M0,    D_a = γ R0 T / M0,    Λ = δ T,    Γ = κ T / L².
-  In [derivation/fum_voxtrium_mapping.md](derivation/fum_voxtrium_mapping.md:44-80) the φ-sector uses (a, τ);
+  In [derivation/VDM_voxtrium_mapping.md](derivation/VDM_voxtrium_mapping.md:44-80) the φ-sector uses (a, τ);
   you can set L=a, T=τ for a shared ruler so this steering layer aligns with the φ units map.
 
 - Predictions (used for the tests in utils):
@@ -56,7 +56,7 @@ What this module provides:
 - y_junction_adjacency(...), collect_junction_choices(...): helpers to generate the logistic junction dataset.
 
 Use with the experiments runner:
-- See [fum_rt/utils/memory_steering_experiments.py](fum_rt/utils/memory_steering_experiments.py:1), which generates three
+- See [VDM_rt/utils/memory_steering_experiments.py](VDM_rt/utils/memory_steering_experiments.py:1), which generates three
   datasets/plots for the predictions above (junction logistic, curvature scaling, stability band).
 
 Author: Justin K. Lietz

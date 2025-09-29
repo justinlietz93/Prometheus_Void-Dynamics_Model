@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 """
-Taylor–Green vortex (2-D) viscosity recovery benchmark for the fluids sector.
+Copyright © 2025 Justin K. Lietz, Neuroca, Inc. All Rights Reserved.
+
+This research is protected under a dual-license to foster open academic
+research while ensuring commercial applications are aligned with the project's ethical principles. Commercial use requires written permission from Justin K. Lietz.
+See LICENSE file for full terms.
+
+Taylor-Green vortex (2-D) viscosity recovery benchmark for the fluids sector.
 
 CHANGE REASON:
 - Relocated into derivation/code/physics/fluid_dynamics per repo rules (no Prometheus_FUVDM/bench/).
@@ -8,23 +14,37 @@ CHANGE REASON:
 - Ensures JSON uses native Python types (bool/float) to avoid numpy serialization issues.
 
 Outputs (defaults):
-- Figures → derivation/code/outputs/figures/<script>_<timestamp>.png
-- Logs    → derivation/code/outputs/logs/<script>_<timestamp>.json
+- Figures → derivation/code/outputs/figures/{script name}_{timestamp}.png
+- Logs    → derivation/code/outputs/logs/{script name}_{timestamp}.json
 """
+import argparse
+import json
+import math
+import os
+import time
+from pathlib import Path
+import sys
 
-import os, json, time, math, argparse
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Ensure repo root on sys.path for absolute import 'Prometheus_FUVDM.*'
-import sys, pathlib
-_P = pathlib.Path(__file__).resolve()
-for _anc in [_P] + list(_P.parents):
-    if _anc.name == "Prometheus_FUVDM":
-        _ROOT = str(_anc.parent)
-        if _ROOT not in sys.path:
-            sys.path.insert(0, _ROOT)
-        break
+
+def _add_repo_root() -> None:
+    """Ensure the repository root is on sys.path for namespace imports."""
+    here = Path(__file__).resolve()
+    root = None
+    for ancestor in [here] + list(here.parents):
+        if (ancestor / ".git").exists():
+            root = ancestor
+            break
+    if root is None:
+        root = here.parents[2]
+    root_str = str(root)
+    if root_str not in sys.path:
+        sys.path.insert(0, root_str)
+
+
+_add_repo_root()
 
 from code.fluid_dynamics.fluids.lbm2d import LBM2D, LBMConfig, CS2  # noqa: E402
 

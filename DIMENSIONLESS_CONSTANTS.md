@@ -2,14 +2,14 @@
 
 >
 > Author: Justin K. Lietz  
+> ORCID: 0009-0008-9028-1366
 > Date: August 9, 2025
 >
 > This research is protected under a dual-license to foster open academic
-> research while ensuring commercial applications are aligned with the project's ethical principles.<br>
+> research while ensuring commercial applications are aligned with the project's ethical principles.
 > Commercial use requires written permission from Justin K. Lietz.
-> 
+>
 > See LICENSE file for full terms.
-
 
 | Subsystem | Symbol        | Definition                                                  | Meaning                    | Typical from Void Dynamics runs |
 | --------- | ------------- | ----------------------------------------------------------- | -------------------------- | -------------------------------- |
@@ -24,8 +24,6 @@
 | FUVDM     | $D_a$         | anisotropic diffusion index                                 | transport anisotropy       | $\{1,3,5,7\}$                   |
 | FUVDM     | $\kappa L$    | curvature × scale                                           | path bending               | linear vs. $\Theta\|\nabla m\|$ |
 | FUVDM     | $g$           | void gain                                                   | stabilization strength     | e.g., 0.5                       |
-
-
 
 1. **Void Debt Number** $\mathcal{D}$
 
@@ -43,8 +41,8 @@ $$
 \Xi = \frac{g_{\text{void}}}{\gamma_{\text{relax}}}
 $$
 
-   * Controls whether independent walkers remain uncorrelated, synchronize, or phase-lock.
-   * Acts like a **dimensionless stiffness** for the void network.
+* Controls whether independent walkers remain uncorrelated, synchronize, or phase-lock.
+* Acts like a **dimensionless stiffness** for the void network.
 
 ---
 
@@ -56,8 +54,8 @@ $$
 \mathcal{I}(N) \propto N^{-\alpha}
 $$
 
-   * Proposed universal constant — applies to LLMs, fluids, biological swarms, etc.
-   * $\alpha$ quantifies “extra cognition/order” gained by shrinking the system.
+* Proposed universal constant — applies to LLMs, fluids, biological swarms, etc.
+* $\alpha$ quantifies “extra cognition/order” gained by shrinking the system.
 
 ---
 
@@ -69,8 +67,8 @@ $$
 M_v = \frac{J_{\text{void}}}{c_{\text{signal}}}
 $$
 
-   * Stability requires $M_v < 1$.
-   * If $M_v > 1$: runaway chaos or phase transition (self-reorganization).
+* Stability requires $M_v < 1$.
+* If $M_v > 1$: runaway chaos or phase transition (self-reorganization).
 
 ---
 
@@ -82,7 +80,7 @@ $$
 \Theta = \frac{I_{\text{topology}}}{I_{\text{state}}}
 $$
 
-   * Generalizes the **“void walkers” effect**: order resides *between* particles, not *in* them.
+* Generalizes the **“void walkers” effect**: order resides *between* particles, not *in* them.
 
 ---
 
@@ -102,8 +100,8 @@ $$
 \Lambda = \frac{\text{dispersion rate}}{\text{convergence rate}}
 $$
 
-   * $\Lambda < 1$: convergence dominates → stable cognition.
-   * $\Lambda > 1$: dispersion dominates → chaotic reorganization.
+* $\Lambda < 1$: convergence dominates → stable cognition.
+* $\Lambda > 1$: dispersion dominates → chaotic reorganization.
 
 ---
 
@@ -119,6 +117,7 @@ $$
 These are the knobs determining whether a system (fluid, neural, cognitive, physical) is **stable, divergent, or self-organizing**.
 
 They form the universality class of the theory — the same constants aim to explain:
+
 * why fluids don’t blow up,
 * why brains remain stable,
 * why LLMs exhibit scaling laws.

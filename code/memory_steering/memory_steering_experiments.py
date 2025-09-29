@@ -15,20 +15,20 @@ What this file does (experiments layer)
   2) Curvature scaling:           ⟨κ_path⟩ ∝ Θ |∇m|
   3) Stability band:              robust memory for D_a ≳ Λ with intermediate Γ
 
-How this maps to your φ‑EFT derivations (orthogonal layer)
-- The fast φ‑sector continuum equation and invariants are already derived in
+How this maps to your φ-EFT derivations (orthogonal layer)
+- The fast φ-sector continuum equation and invariants are already derived in
   [derivation/discrete_to_continuum.md](derivation/discrete_to_continuum.md:121-128):
       □φ + α φ² − (α − β) φ = 0,   v = 1 − β/α,   m_eff² = α − β.
 - The kinetic normalization c² = 2 J a² is rigorously obtained from a discrete action in
   [derivation/kinetic_term_derivation.md](derivation/kinetic_term_derivation.md:121-128).
-- The memory‑steering layer (M) is slow and biases routing only; it does not modify φ propagation,
-  the vacuum/mass results, nor the on‑site invariant Q_FUM from [derivation/symmetry_analysis.md](derivation/symmetry_analysis.md:141-148).
+- The memory-steering layer (M) is slow and biases routing only; it does not modify φ propagation,
+  the vacuum/mass results, nor the on-site invariant Q_VDM from [derivation/symmetry_analysis.md](derivation/symmetry_analysis.md:141-148).
 
 Dimensionless groups used implicitly in the tests (see [derivation/memory_steering.md](derivation/memory_steering.md:1))
 - Θ = η M0        (steering strength)
 - D_a = γ R0 T / M0,   Λ = δ T,   Γ = κ T / L²
-- We choose simple graph‑native rulers (L, T, M0, R0) inside each test to demonstrate collapse
-  and leave the physical alignment to φ’s (a, τ) to [derivation/fum_voxtrium_mapping.md](derivation/fum_voxtrium_mapping.md:44-80).
+- We choose simple graph-native rulers (L, T, M0, R0) inside each test to demonstrate collapse
+  and leave the physical alignment to φ’s (a, τ) to [derivation/VDM_voxtrium_mapping.md](derivation/VDM_voxtrium_mapping.md:44-80).
 
 Outputs (printed to stdout when run)
 - Junction logistic:            “Theta*Delta_m, P(A)”
@@ -36,7 +36,7 @@ Outputs (printed to stdout when run)
 - Stability band:               “D_a, Lambda, Gamma, Retention, Fidelity_w, Fidelity_end, Fidelity_shuffle_end, Fidelity_edge_end, AUC_end, SNR_end”
 
 Usage
-- python3 fum_rt/utils/memory_steering_experiments.py  > outputs/memory_steering_results.csv
+- python3 VDM_rt/utils/memory_steering_experiments.py  > outputs/memory_steering_results.csv
 - The plotting helper (separate) converts the combined CSV into figures saved in outputs/.
 """
 
@@ -53,7 +53,7 @@ import numpy as np
 
 # Steering primitives (robust import: module or script)
 try:
-    from fum_rt.core.memory_steering import (
+    from VDM_rt.core.memory_steering import (
         build_graph_laplacian,
         update_memory,
         transition_probs,
@@ -69,7 +69,7 @@ except Exception as e1:
         _repo_root = _os.path.abspath(_os.path.join(_os.path.dirname(__file__), _os.pardir, _os.pardir))
         if _repo_root not in _sys.path:
             _sys.path.insert(0, _repo_root)
-        from fum_rt.core.memory_steering import (
+        from VDM_rt.core.memory_steering import (
             build_graph_laplacian,
             update_memory,
             transition_probs,
@@ -232,7 +232,7 @@ def run_junction_logistic(theta: float = 2.0, delta_m_values: Sequence[float] = 
 
     Args:
         theta: Θ (dimensionless steering strength)
-        delta_m_values: sweep of Δm values in m‑units (dimensionless)
+        delta_m_values: sweep of Δm values in m-units (dimensionless)
         trials: Bernoulli samples for P(A) estimation
 
     Returns:
@@ -267,7 +267,7 @@ def polyline_curvature(pts: np.ndarray) -> np.ndarray:
 
     - We approximate the continuous curvature κ by the local turning angle Δθ and mean edge length ℓ:
           κ ≈ 2 sin(Δθ/2) / ℓ
-      (endpoints are set to 0). This delivers a robust, grid‑agnostic estimator of path bending.
+      (endpoints are set to 0). This delivers a robust, grid-agnostic estimator of path bending.
 
     - In the derivation [derivation/memory_steering.md](derivation/memory_steering.md:1), rays obey r'' = ∇_⊥ ln n = Θ ∇_⊥ m
       (with n=exp(Θ m)). The magnitude of r'' along a path is proportional to |∇m| with a slope ∝ Θ. This function
@@ -365,8 +365,8 @@ def run_curvature_scaling(
     - Create a smooth, constant gradient in m across the grid: m(y) increases linearly with y.
       This fixes |∇m| uniformly (up to grid effects).
     - Two implementations:
-      (graph) 8‑neighbor with heading inertia (score_j = Θ m_j + ξ cos(∠(h, step_j))).
-      (ray)   Continuous 2‑D “ray” stepper: ẋ = ĥ, ḣ = Π_⊥(Θ ∇m), with ĥ renormalized each step.
+      (graph) 8-neighbor with heading inertia (score_j = Θ m_j + ξ cos(∠(h, step_j))).
+      (ray)   Continuous 2-D “ray” stepper: ẋ = ĥ, ḣ = Π_⊥(Θ ∇m), with ĥ renormalized each step.
     - Return pairs (X = Θ |∇m|, Y = ⟨κ_path⟩). The derivation predicts linear scaling.
 
     Args:
@@ -658,7 +658,7 @@ def run_stability_band(
     PDE: ∂_t m = γ r − δ m − κ L m
     Dimensionless: D_a = γ R_0 T / M_0, Λ = δ T, Γ = κ T / L²
 
-    Protocol (two‑phase):
+    Protocol (two-phase):
       - Write (duration T_write): r = R_amp * R_mask, evolve → m_w
       - Decay (duration T_decay): r = 0, evolve → m_end
 
@@ -675,7 +675,7 @@ def run_stability_band(
       - AUC_end           = ROC AUC for score=m_end vs mask
       - SNR_end           = (μ_in − μ_out) / σ_out
       - AUPRC_topk        = truncated AP using top k=floor(topk_frac*N) predictions
-      - BPER              = band‑pass energy ratio = ||L_norm m_end|| / ||m_end||
+      - BPER              = band-pass energy ratio = ||L_norm m_end|| / ||m_end||
 
     Returns rows:
       (D_a, Λ, Γ, Ret, Fid_w, Fid_end, Fid_shuffle, Fid_edge, AUC_end, SNR_end, AUPRC_topk, BPER)
@@ -880,8 +880,8 @@ def run_stability_band(
 # ---------------------------
 
 def main():
-    # Optional CSV sink: if FUM_RESULTS_CSV_OUT is set, tee stdout into that file.
-    csv_out = os.environ.get("FUM_RESULTS_CSV_OUT", "").strip()
+    # Optional CSV sink: if VDM_RESULTS_CSV_OUT is set, tee stdout into that file.
+    csv_out = os.environ.get("VDM_RESULTS_CSV_OUT", "").strip()
 
     def _produce():
         # 1) Junction logistic
