@@ -47,7 +47,9 @@
 ## ❗NOTE
 
 > **This organization is currently managed and operated by me (J. Lietz) alone as a solo developer / researcher. I may not respond by email right away. If you want to get my attention post in the discussion board briefly about what you'd like to talk about and let me know you sent me an email.**
-> 
+
+## 📜Background Conext
+
 > You may see reference to **FUM (Fully Unified Model** or **FUVDM (Fully Unified Void Dynamics Model)** within the repository, this is referencing the **VDM (Void Dynamics Model)**. These were earlier names given to the model for specific reasons, and it's been my decision to simplify and specify the name to improve clarity. **Fully Unified Model** was originally named so because of it's unique architecture.
 >
 > I effectively broke down every type of machine learning model to it's fundamental principles and strategies. Then I began unifying them into a single architecture. This created my first variant of the model I called **AMN (Adaptive Modular Network)**. **AMN** was able to learn to solve quadratic equations with ~85% accuracy in 65 seconds of training and only a handful of examples.
