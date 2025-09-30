@@ -2,7 +2,7 @@
 
 ***Current Status:*** 
 
-> Setting up reproducible code for the work I'm comfortable with sharing publicly. Code that directly runs my private Void Equations will call a private workflow and return the results so you can still see proof.
+> Cleaning up existing RD papers, adding code files to Zenodo, and writing new papers for Memory Steering + reproducibility code.
 
 ***Status Last Updated:*** Sep 29, 2025
 
