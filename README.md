@@ -25,6 +25,10 @@
 - **September 29, 2025:** First public code release + creation of private Void Dynamics package which can now be imported and run in this repository using workflows and repository secrets.
 - **September 28, 2025:** Posted two pre-prints to [Zenodo](https://doi.org/10.5281/zenodo.17220869). If you've published similar or relevant work on Reaction-Diffusion in the past 3 years on arXiv and want to support this work by endorsing me in a related category, submit an issue, post in the discussion board, or send me an email with `Subject: RD Endorsement` to get my attention. It would be much appreciated!
 - **August 21, 2025:** Launched public repo
+- ...
+- **March, 2025** Released first falsifiable, reproducible simulations that validated initial claims.
+- **February, 2025** SIE and Emergent KG + Real-Time TDA show very strong statistically significant findings, making feasible the entire model
+- **October, 2024** Initial realization of the idea.
 
 ## 🎯Planned:
 - Continue to slowly declassify private work to this repository.
