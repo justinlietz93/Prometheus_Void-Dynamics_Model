@@ -22,6 +22,7 @@
 > See LICENSE file or click the LICENSE badge above for full terms.
 
 ## 🔥News:
+- **October 23, 2025:** Created a sparsely populated [CANON_PROGRESS.md](/CANON_PROGRESS.md) document to post updates on private work to prevent this public repo from going stale.
 - **September 29, 2025:** First public code release + creation of private Void Dynamics package which can now be imported and run in this repository using workflows and repository secrets.
 - **September 28, 2025:** Posted two pre-prints to [Zenodo](https://doi.org/10.5281/zenodo.17220869). If you've published similar or relevant work on Reaction-Diffusion in the past 3 years on arXiv and want to support this work by endorsing me in a related category, submit an issue, post in the discussion board, or send me an email with `Subject: RD Endorsement` to get my attention. It would be much appreciated!
 - **August 21, 2025:** Launched public repo
