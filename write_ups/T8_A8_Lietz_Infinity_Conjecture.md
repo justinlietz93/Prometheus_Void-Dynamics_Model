@@ -77,7 +77,7 @@ $$
 \mathcal{I}(x) = \tfrac{1}{2}\log\!\det\!\big(I + \tau \,\nabla u(x)\nabla u(x)^\top\big),
 $$
 
-and require an analogous boundary concentration for $\mathcal{I}$: a fraction $\alpha_\mathcal{I}$ concentrates in $\mathcal{N}_\epsilon(\cup_\ell \Gamma_\ell)$ as $L\to\infty$.
+and require an analogous boundary concentration for $\mathcal{I}$: a fraction $\alpha_\mathcal{I}$ concentrates in $\mathcal{N}\_\epsilon(\cup\_\ell \Gamma\_\ell)$ as $L\to\infty$.
 
 **Exclusions.** First-order (barrier-crossing) bubble nucleation is not assumed; the onset is spinodal/tachyonic (global roll), consistent with VDM cosmogenesis.
 
@@ -167,7 +167,7 @@ Equivalently, absence of such hierarchical scale breaks implies either:
 
 - RD form: $\partial_t \phi = D\nabla^2\phi + r\phi - u\phi^2 - \lambda_3 \phi^3$ (choose symmetric φ⁴: $\lambda_3=0$ or biased φ³+φ⁴ with clear note).
 - Measure: $E_{\text{exc}}$, $N(L)$, $\rho$, $\alpha$, $\alpha_\mathcal{I}$, $c/c_\star$.
-- Ablations: interface-penalty term $+\mu\,(\#\text{interfaces})$ or curvature-penalty that suppresses subdivision.
+- Ablations: interface-penalty term $+\mu\,(\\#\text{interfaces})$ or curvature-penalty that suppresses subdivision.
 - Echo-steering option: use your CEG logic to test whether metriplectic micro-nudges accelerate hierarchy formation while preserving $c_\star$.
 
 ---
