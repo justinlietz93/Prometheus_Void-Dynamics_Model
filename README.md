@@ -2,9 +2,10 @@
 
 ***Current Status:*** 
 
-> Cleaning up existing RD papers, adding code files to Zenodo, and writing new papers for Memory Steering + reproducibility code.
+> The **WORKING** directory for this project is located on my personal account and can be found here: [justinlietz93/Prometheus_VDM](https://github.com/justinlietz93/Prometheus_VDM)
+> Applying physics discoveries to the VDM intelligence model
 
-***Status Last Updated:*** Sep 29, 2025
+***Status Last Updated:*** Nov 4, 2025
 
 > Author: Justin K. Lietz<br>
 <a href="https://orcid.org/0009-0008-9028-1366"><img src="https://img.shields.io/badge/ORCID-0009--0008--9028--1366-blue?" alt="ORCID: 0009-0008-9028-1366"></a> <br>
