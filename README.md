@@ -2,7 +2,7 @@
 
 ***Current Status:*** 
 
-> The **WORKING** directory for this project is located on my personal account and can be found here: [justinlietz93/Prometheus_VDM](https://github.com/justinlietz93/Prometheus_VDM)
+> The **WORKING** directory for this project is located on my personal account and can be found here: [justinlietz93/Prometheus_VDM](https://github.com/justinlietz93/Prometheus_VDM)  
 > Applying physics discoveries to the VDM intelligence model
 
 ***Status Last Updated:*** Nov 4, 2025
